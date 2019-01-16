@@ -1,0 +1,123 @@
+html, body { overflow: auto; height: 100%; }
+html {
+  font-family: 'Helvetica', sans-serif;
+  background-color: #eeeeee;
+  margin: 0;
+}
+body {
+  background-color: white;
+  max-width: 1100px;
+  margin: 0 auto;
+  box-shadow: 0 0 30px #888;
+}
+h1, h2, h3, h4 { font-family: 'Nunito', sans-serif; }
+aside header {
+  background-color: #3399dd;
+  color: white;
+  margin: 0;
+  margin-bottom: 1em;
+  padding: 1.5em 2em;
+}
+header h1 {
+  font-size: 3em;
+  margin: 0;
+}
+header h2 {
+  opacity: 0.7;
+  font-size: 1em;
+  margin: 0;
+}
+header a, nav a {
+  text-decoration: none;
+  color: inherit;
+}
+aside {
+  background-color: rgba(50, 150, 220, 0.1);
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 250px;
+}
+nav {
+  display: flex;
+  flex-direction: column;
+}
+nav a {
+  padding: 0.8em 2em;
+  /* text ------- [icon] */
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+nav a.selected {
+  background-color: rgba(50, 150, 220, 0.3);
+}
+nav a:hover:not(.selected) {
+  background-color: rgba(50, 150, 220, 0.1);
+}
+nav a .icon {
+  /* icons should be vertically and horizontally centered. */
+  display: inline-block;
+  font-size: 180%;
+  line-height: 1em;
+  text-align: center;
+  width: 1.2em;
+}
+main {
+  margin-left: 250px;
+  padding: 0 4em;
+}
+main img {
+  max-width: 100%;
+}
+main h1, main h2, main h3, main h4 {
+  color: rgb(0, 0, 128);
+  border-bottom: 1px solid #def;
+}
+hr {
+  border: none;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+/* Mini layout, for phones */
+@media (max-width: 600px) {
+  aside {
+    position: static;
+    width: 100%;
+    font-size: 80%;
+  }
+  aside header {
+    margin-bottom: 0;
+    padding: 1em;
+  }
+  aside header h2 {
+    display: none;
+  }
+  nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  /* [Icon] Text ---- */
+  nav a {
+    padding: 0.8em 1em;
+    margin: 0;
+    flex-direction: row;
+    white-space: nowrap;
+    justify-content: left;
+    flex: 1 1 0;
+    min-width: 115px;
+  }
+  nav a .icon {
+    margin-right: 0.1em;
+  }
+  nav hr {
+    margin: 0;
+  }
+  main {
+    margin-left: 0;
+    padding: 0 1em;
+  }
+}

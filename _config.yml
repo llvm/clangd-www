@@ -1,0 +1,5 @@
+title: clangd
+description: turn your editor into a C++ IDE
+plugins:
+- jekyll-optional-front-matter
+- jekyll-default-layout

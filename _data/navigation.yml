@@ -1,0 +1,13 @@
+- title: Getting Started
+  url: /installation.html
+  icon: '⚙️'
+- separator
+- title: Browse code
+  url: https://github.com/llvm/llvm-project/tree/master/clang-tools-extra/clangd
+  icon: '📄'
+- title: Bug tracker
+  url: https://github.com/clangd/clangd/issues
+  icon: '🐞'
+- title: Mailing list
+  url: http://lists.llvm.org/pipermail/clangd-dev/
+  icon: '✉️'
