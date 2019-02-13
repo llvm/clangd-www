@@ -85,7 +85,7 @@ hr {
 details {
   background-color: rgba(50, 150, 220, 0.08);
   margin-bottom: 0.5em;
-  padding-left: 1em;
+  padding: 0 1em;
   overflow: hidden; /* Suppress margin-collapsing */
 }
 details[open] {
@@ -99,14 +99,15 @@ details summary {
   border-width: 1px;
   border-style: solid none;
   padding: 0.2em;
-  margin-left: -1em;
+  margin: 0 -1em;
 }
 details summary:hover {
   background-color: rgba(50, 150, 220, 0.2);
   cursor: pointer;
 }
+pre > code { display: block; }
 code {
-  background-color: rgba(255, 255, 0, 0.05);
+  background-color: #ffe;
   border: 1px solid #feb;
   padding: 1px;
 }
