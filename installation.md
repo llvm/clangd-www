@@ -105,10 +105,55 @@ and **may** be easier to install.
 
 <details>
 <summary markdown="span">Emacs</summary>
-[lsp-mode](https://github.com/emacs-lsp/lsp-mode) supports clangd. You'll
-probably want to install `flycheck`, `lsp-ui`, and `company-mode`.
-
 [eglot](https://github.com/joaotavora/eglot) can be configured to work with clangd.
+
+Install eglot with `M-x package-install RET eglot RET`.
+
+Add the following to `~/.emacs` to enable clangd:
+
+```
+(require 'eglot)
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+```
+
+After restarting you should see diagnostics for errors in your code, and `M-x
+completion-at-point` should work.
+
+![Diagnostics in Emacs](emacs_diagnostics.png)
+
+eglot supports many of clangd's features, with caveats:
+ - code completion, though the interaction is quite poor (even with
+   `company-mode`, see below)
+ - diagnostics and fixes
+ - find definitions and references (`M-x xref-find-definitions` etc)
+ - hover and highlights
+ - code actions (`M-x eglot-code-actions`)
+
+### company-mode
+
+eglot does have basic integration with company-mode, which provides a more
+fluent completion UI.
+
+You can install it with `M-x package-install RET company RET`, and enable it
+with `M-x company-mode`.
+
+**company-clang is enabled by default**, and will interfere with clangd.
+Disable it in `M-x customize-variable RET company-backends RET`.
+
+Completion still has some major limitations:
+ - completions are alphabetically sorted, not ranked.
+ - only pure-prefix completions are shown - no fuzzy matches.
+ - completion triggering seems to be a bit hit-and-miss.
+
+![Completion in company-mode](emacs_company.png)
+
+### Under the hood
+
+- **Debug logs**: available in the `EGLOT stderr` buffer.
+- **Command-line flags and alternate binary**: instead of adding `"clangd"`
+  to `eglot-server-programs`, add `("/path/to/clangd" "-log=verbose")` etc.
 </details>
 
 <details>
@@ -129,6 +174,7 @@ vscode-clangd has excellent support for all clangd features, including:
  - diagnostics and fixes
  - find declarations, references, and definitions
  - find symbol in file (`Ctrl-P @foo`) or workspace (`Ctrl-P #foo`)
+ - hover and highlights
  - code actions
 
 ### Under the hood
@@ -143,6 +189,35 @@ vscode-clangd has excellent support for all clangd features, including:
 <details>
 <summary markdown="span">Sublime Text</summary>
 [tomv564/LSP](https://github.com/tomv564/LSP) works with clangd out of the box.
+
+Select **Tools**-->**Install Package Control** (if you haven't installed it yet).
+
+Press `Ctrl-Shift-P` and select **Package Control: Install Package**. Select
+**LSP**.
+
+Press `Ctrl-Shift-P` and select **LSP: Enable Language Server Globally**. Select
+**clangd**.
+
+Open a C++ file, and you should see diagnostics and completion:
+
+![Completion in Sublime Text](sublime_completion.png)
+
+vscode-clangd has excellent support for all most clangd features, including:
+ - code completion (a bit noisy due to how snippets are presented)
+ - diagnostics and fixes
+ - find definition and references
+ - hover and highlights
+ - code actions
+
+### Under the hood
+
+Settings can be tweaked under **Preferences**-->**Package Settings**-->**LSP**.
+
+- **Debug logs**: add `"log_stderr": true`
+- **Command-line flags and alternate clangd binary**: inside the
+  `"clients": {"clangd": { ... } }` section, add
+  `"command": ["/path/to/clangd", "-log=verbose"]` etc.
+
 </details>
 
 If you don't have strong feelings about an editor, we suggest you try out
