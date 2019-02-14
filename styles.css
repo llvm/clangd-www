@@ -1,14 +1,19 @@
-html, body { overflow: auto; height: 100%; }
 html {
   font-family: 'Helvetica', sans-serif;
   background-color: #eeeeee;
   margin: 0;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: overlay;
+  display: flex;
+  justify-content: center;
 }
 body {
   background-color: white;
   max-width: 1100px;
-  margin: 0 auto;
+  margin: 0;
   box-shadow: 0 0 30px #888;
+  display: flex;
 }
 h1, h2, h3, h4 { font-family: 'Nunito', sans-serif; }
 aside header {
@@ -33,11 +38,7 @@ header a, nav a {
 }
 aside {
   background-color: rgba(50, 150, 220, 0.1);
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 250px;
+  flex: 0 0 250px;
 }
 nav {
   display: flex;
@@ -66,8 +67,8 @@ nav a .icon {
   width: 1.2em;
 }
 main {
-  margin-left: 250px;
   padding: 0 4em;
+  flex: 1 1 700px;
 }
 main img {
   max-width: 100%;
@@ -113,10 +114,11 @@ code {
 }
 /* Mini layout, for phones */
 @media (max-width: 600px) {
+  body { flex-direction: column; }
+  main { padding: 0 1em; }
   aside {
-    position: static;
-    width: 100%;
     font-size: 80%;
+    flex: 0 1 auto;
   }
   aside header {
     margin-bottom: 0;
@@ -144,9 +146,5 @@ code {
   }
   nav hr {
     margin: 0;
-  }
-  main {
-    margin-left: 0;
-    padding: 0 1em;
   }
 }
