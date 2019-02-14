@@ -87,7 +87,7 @@ details {
   background-color: rgba(50, 150, 220, 0.08);
   margin-bottom: 0.5em;
   padding: 0 1em;
-  overflow: hidden; /* Suppress margin-collapsing */
+  overflow-y: hidden; /* Suppress margin-collapsing */
 }
 details[open] {
   border-bottom: 1px solid rgba(0, 0, 128, 0.2);
@@ -114,7 +114,10 @@ code {
 }
 /* Mini layout, for phones */
 @media (max-width: 600px) {
-  body { flex-direction: column; }
+  body {
+    flex-direction: column;
+    max-width: 100%;
+  }
   main { padding: 0 1em; }
   aside {
     font-size: 80%;
@@ -147,4 +150,5 @@ code {
   nav hr {
     margin: 0;
   }
+  pre { white-space: pre-wrap; }
 }

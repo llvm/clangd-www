@@ -24,7 +24,7 @@ LLVM from [releases.llvm.org](http://releases.llvm.org/download.html).
 Alongside `bin/clangd` you will need at least `lib/clang/*/include`:
 ```
 cp clang+llvm-7.0.0/bin/clangd /usr/local/bin/clangd
-cp -r clang+llvm-7.0.0/lib/clang/ /usr/loca/lib/
+cp -r clang+llvm-7.0.0/lib/clang/ /usr/local/lib/
 ```
 </details>
 
@@ -218,6 +218,14 @@ Settings can be tweaked under **Preferences**-->**Package Settings**-->**LSP**.
   `"clients": {"clangd": { ... } }` section, add
   `"command": ["/path/to/clangd", "-log=verbose"]` etc.
 
+</details>
+
+<details>
+<summary markdown="span">Other editors</summary>
+There is a directory of LSP clients at [langserver.org](http://langserver.org).
+
+A generic client should be configured to run the command `clangd`, and
+communicate via the language server protocol on standard input/output.
 </details>
 
 If you don't have strong feelings about an editor, we suggest you try out
