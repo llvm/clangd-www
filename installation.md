@@ -54,7 +54,7 @@ sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-8 100
 Most distributions include clangd in a `clang-tools` package, or in the full
 `llvm` distribution.
 
-For some platforms, binaries are also avaliable at [releases.llvm.org](http://releases.llvm.org/download.html)
+For some platforms, binaries are also avaliable at [releases.llvm.org](http://releases.llvm.org/download.html).
 </details>
 
 ## Editor plugins
@@ -158,11 +158,12 @@ Completion still has some major limitations:
 
 <details>
 <summary markdown="span">Visual Studio Code</summary>
-The official plugin is 
+The official extension is 
 [vscode-clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)
 and can be installed from within VSCode.
 
-Choose **View** --> **Extensions**, then search for "clangd".
+Choose **View** --> **Extensions**, then search for "clangd". (Make sure
+the Microsoft C/C++ extension is **not** installed).
 
 After restarting, you should see red underlines underneath errors, and
 you should get rich code completions including e.g. function parameters.
@@ -202,7 +203,7 @@ Open a C++ file, and you should see diagnostics and completion:
 
 ![Completion in Sublime Text](sublime_completion.png)
 
-vscode-clangd has excellent support for all most clangd features, including:
+The LSP package has excellent support for all most clangd features, including:
  - code completion (a bit noisy due to how snippets are presented)
  - diagnostics and fixes
  - find definition and references
