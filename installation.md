@@ -43,7 +43,7 @@ sudo apt-get install clang-tools-8
 ```
 If that's not found, at least `clang-tools-7` should be available.
 
-This will install clangd as `/usr/bin/clangd-8`. Make it default:
+This will install clangd as `/usr/bin/clangd-8`. Make it the default `clangd`:
 ```
 sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-8 100
 ```
@@ -70,9 +70,12 @@ Here are some plugins we know work well with clangd:
 clangd support. **This is not on by default**, you must install it with
 `install.py --clangd-completer`.
 
-We recommend letting clangd fully control code completion. In `.vimrc` add:
+We recommend changing a couple of YCM's default settings. In `.vimrc` add:
 ```
+" Let clangd fully control code completion
 let g:ycm_clangd_uses_ycmd_caching = 0
+" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
+let g:ycm_clangd_binary_path = exepath("clangd")
 ```
 
 You should see errors highlighted and completions as you type.
