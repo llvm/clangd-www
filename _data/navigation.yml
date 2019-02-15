@@ -2,6 +2,9 @@
   url: /installation.html
   icon: '⚙️'
 - separator
+- title: Protocol extensions
+  url: /extensions.html
+  icon: '⊕'
 - title: Browse code
   url: https://github.com/llvm/llvm-project/tree/master/clang-tools-extra/clangd
   icon: '📄'
