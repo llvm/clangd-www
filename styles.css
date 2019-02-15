@@ -170,4 +170,5 @@ code {
     margin: 0;
   }
   pre { white-space: pre-wrap; }
+  code { overflow-wrap: break-word; }
 }
