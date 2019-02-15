@@ -14,6 +14,8 @@ We try to do this sparingly. The most important considerations are:
 These extensions may evolve or disappear over time. If you use them, try to
 recover gracefully if the structures aren't what's expected.
 
+{% include toc.md %}
+
 ## Switch between source/header
 
 Lets editors switch between the main source file (`*.cpp`) and header (`*.h`).
