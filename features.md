@@ -25,12 +25,14 @@ clangd can update the code for you.
 
 If a missing symbol was seen in a file you've edited recently, clangd will
 suggest inserting it.
+{:.v9}
 
 (screenshot)
 
 ### clang-tidy checks
+{:.v9}
 
-clangd 9 embeds [clang-tidy](https://clang.llvm.org/extra/clang-tidy/) which
+clangd embeds [clang-tidy](https://clang.llvm.org/extra/clang-tidy/) which
 provides extra hints about code problems: bug-prone patterns, performance traps,
 and style issues.
 
@@ -52,6 +54,7 @@ Abbreviating words may help you find the right result faster. If you type in
 `camelCase` but the function you're looking for is `snake_case`, that's OK.
 
 ### Namespace and include insertion
+{:.v8}
 
 clangd will sometimes suggest results from other files and namespaces. In this
 case the correct qualifier and `#include` directive will be inserted.
@@ -68,9 +71,13 @@ you fill them in.
 
 ## Cross-references
 
-These features let you navigate your codebase. They work across files.
-(In clangd 7 and 8, they cover files you've opened. Clangd 9 will automatically
-index your whole project).
+These features let you navigate your codebase.
+
+They work across the files you've opened.
+{:.v7}
+
+clangd will also automatically index your whole project.
+{:.v9}
 
 ### Find definition/declaration
 
@@ -80,6 +87,7 @@ Jump to the definition or declaration of a symbol under the cursor.
 
 (Some editors only expose "find definition" - hit it again to jump to the
 declaration).
+{:.v9}
 
 This also works on #include lines, to jump to the included file.
 

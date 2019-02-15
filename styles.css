@@ -112,6 +112,25 @@ code {
   border: 1px solid #feb;
   padding: 1px;
 }
+
+/* Version marker ornaments */
+.v6::before, .v7::before, .v8::before, .v9::before {
+  color: #008;
+  border-radius: 3px;
+  padding: 0.2em 0.6em;
+  font-family: sans-serif;
+  font-weight: 500;
+  background-color: rgba(0, 128, 255, 0.2);
+  float: right;
+  line-height: 1.5em;
+  text-align: center;
+  font-size: x-small;
+}
+.v6::before { content: "clangd-6"; }
+.v7::before { content: "clangd-7"; }
+.v8::before { content: "clangd-8"; }
+.v9::before { content: "clangd-9"; }
+
 /* Mini layout, for phones */
 @media (max-width: 600px) {
   body {

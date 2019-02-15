@@ -17,9 +17,9 @@ recover gracefully if the structures aren't what's expected.
 {% include toc.md %} 
 
 ## Switch between source/header
+{:.v6}
 
 Lets editors switch between the main source file (`*.cpp`) and header (`*.h`).
-Since clangd 6.
 
 **New client->server request**: `textDocument/switchSourceHeader`.
   - Params: `TextDocumentIdentifier`: an open file.
@@ -30,10 +30,10 @@ If the corresponding file can't be determined, `""` is returned.
 [bug?](https://github.com/clangd/clangd/issues/12)
 
 ## File status
+{:.v8}
 
 Provides information about activity on clangd's per-file worker thread.
 This can be relevant to users as building the AST blocks many other operations.
-Since clangd 8.
 
 **New server->client notification**: `textDocument/clangd.fileStatus`
   - Sent when the current activity for a file changes. Replaces previous
@@ -46,12 +46,12 @@ Since clangd 8.
   - Enables receiving `textDocument/clangd.fileStatus` notifications.
 
 ## Compilation commands
+{:.v8}
 
 clangd relies on having accurate compilation commands to correctly interpret a
 file. Typically these are discovered via a `compile_commands.json` file in
 a parent directory. These extensions allow editors to supply the commands over
 LSP instead.
-Since clangd 8 (limited support earlier).
 
 **New initialization option**: `initializationOptions.compilationDatabasePath : string`
   - Specifies the directory containing the compilation database (e.g.
@@ -70,6 +70,7 @@ Since clangd 8 (limited support earlier).
   - Values are `{workingDirectory: string, compilationCommand: string[]}`
 
 ## Force diagnostics generation
+{:.v7}
 
 Clangd does not regenerate diagnostics for every version of a file (e.g. after
 every keystroke), as that would be too slow. Its heuristics ensure:
@@ -77,7 +78,6 @@ every keystroke), as that would be too slow. Its heuristics ensure:
  - if you stop editing, diagnostics will catch up
 This extension allows editors to force diagnostics to be generated/not generated
 at a particular revision.
-Since clangd 7.
 
 **New property of `textDocument/didChange` request**: `wantDiagnostics : bool`
  - if true, diagnostics will be produced for exactly this version.
@@ -87,10 +87,10 @@ Since clangd 7.
    one in a bounded amount of time.
 
 ## Diagnostic categories
+{:.v8}
 
 Clang groups diagnostics into categories (e.g. "Inline Assembly Issue").
 Clangd can emit these categories for interested editors.
-Since clangd 8.
 
 **New property of `Diagnostic` object**: `category : string`:
  - A human-readable name for a group of related diagnostics.
@@ -100,12 +100,12 @@ Since clangd 8.
  - Requests that clangd send `Diagnostic.category`.
 
 ## Inline fixes for diagnostics
+{:.v8}
 
 LSP specifies that code actions for diagnostics (fixes) are retrieved
 asynchronously using `textDocument/codeAction`. However clangd always computes
 these eagerly, and providing them alongside diagnostics can improve the UX in
 editors.
-Since clangd 8.
 
 **New property of `Diagnostic` object**: `codeActions : CodeAction[]`:
  - All the code actions that address this diagnostic.
@@ -114,11 +114,11 @@ Since clangd 8.
  - Requests that clangd send `Diagnostic.codeActions`.
 
 ## Symbol info request
+{:.v8}
 
 This attempts to resolve the symbol under the cursor, without retrieving
 further information (like definition location, which may require consulting an
 index). This was added to support integration with indexes outside clangd.
-Since clangd 8.
 
 **New client->server request**: `textDocument/symbolInfo`:
  - Params: `TextDocumentPositionParams`
