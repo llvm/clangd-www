@@ -1,6 +1,9 @@
 - title: Getting Started
   url: /installation.html
   icon: '⚙️'
+- title: Features
+  url: /features.html
+  icon: '✓'
 - separator
 - title: Protocol extensions
   url: /extensions.html
