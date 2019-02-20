@@ -76,6 +76,7 @@ Clangd does not regenerate diagnostics for every version of a file (e.g. after
 every keystroke), as that would be too slow. Its heuristics ensure:
  - diagnostics do not get too stale
  - if you stop editing, diagnostics will catch up
+
 This extension allows editors to force diagnostics to be generated/not generated
 at a particular revision.
 
