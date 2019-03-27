@@ -138,7 +138,8 @@ This unusual is an unfortunate legacy of VSCode's JavaScript implementation.
 
 clangd allows clients to use UTF-8 offsets instead. This allows clients that always speak UTF-8 (in violation of the protocol) to work correctly, and those that are UTF-8 native to avoid unneccesary transcoding (which may be slow if implemented in e.g. vimscript).
 
-**New client capability**: `offsetEncoding : string[]`
+**New client capability**: `offsetEncoding : string[]`:
+
   Lists the encodings the client supports, in preference order. It SHOULD include `"utf-16"`. If not present, it is assumed to be `["utf-16"]`
   
   Well-known encodings are:
@@ -146,10 +147,10 @@ clangd allows clients to use UTF-8 offsets instead. This allows clients that alw
   - `utf-16`: `character` counts code units
   - `utf-32`: `character` counts codepoints
 
-**New InitializeResponse property**: `offsetEncoding: string`
-  Specifies the encoding that was selected by the server, and should be used.
-  This should be one of the requested encodings, or `"utf-16"` if none ore supported.
-  Only sent if the client capability was specified (or the equivalent command-line flag `-offset-encoding=utf-8`).
+**New InitializeResponse property**: `offsetEncoding: string`:
+  - Specifies the encoding that was selected by the server, and should be used.
+  - This should be one of the requested encodings, or `"utf-16"` if none ore supported.
+  - Only sent if the client capability was specified (or the equivalent command-line flag `-offset-encoding=utf-8`).
   
 **Advice for clients using this extension**:
   - clients that only support UTF-8 should send `offsetEncoding: ["utf-8"]` in their client capabilities.
