@@ -130,4 +130,37 @@ index). This was added to support integration with indexes outside clangd.
    - `usr : string`: the clang-specific "unified symbol resolution" identifier
    - `id : string?`: the clangd-specific opaque symbol ID
 
+## UTF-8 offsets
+{:.v9}
 
+LSP specifies that offsets within lines are in UTF-16 code units (for `Position`s and also delta-encoded document updates).
+This unusual is an unfortunate legacy of VSCode's JavaScript implementation.
+
+clangd allows clients to use UTF-8 offsets instead. This allows clients that always speak UTF-8 (in violation of the protocol) to work correctly, and those that are UTF-8 native to avoid unneccesary transcoding (which may be slow if implemented in e.g. vimscript).
+
+**New client capability**: `offsetEncoding : string[]`
+  Lists the encodings the client supports, in preference order. It SHOULD include `"utf-16"`. If not present, it is assumed to be `["utf-16"]`
+  
+  Well-known encodings are:
+  - `utf-8`: `character` counts bytes
+  - `utf-16`: `character` counts code units
+  - `utf-32`: `character` counts codepoints
+
+**New InitializeResponse property**: `offsetEncoding: string`
+  Specifies the encoding that was selected by the server, and should be used.
+  This should be one of the requested encodings, or `"utf-16"` if none ore supported.
+  Only sent if the client capability was specified (or the equivalent command-line flag `-offset-encoding=utf-8`).
+  
+**Advice for clients using this extension**:
+  - clients that only support UTF-8 should send `offsetEncoding: ["utf-8"]` in their client capabilities.
+    This will cause the server to use UTF-8 if supported.
+  - clients that prefer UTF-8 but can use UTF-16 should send `offsetEncoding: ["utf-8", "utf-16"]` and observe the selected encoding in the `InitializeResponse`, defaulting to UTF-16 if it's not present.
+    This will negotiate UTF-8 with servers that support it.
+  - clients that prefer UTF-16 may send `offsetEncoding: ["utf-16"]` or simply not use the extension.
+ 
+**Advice for servers using this extension**:
+  - servers that only support UTF-8 should send `offsetEncoding: "utf-8"` in their InitializeResponse.
+    This will enable UTF-8 in clients that support it.
+  - servers that support both UTF-8 and UTF-16 should check whether the client capabilities mentions `"utf-8"` as supported, and use it if so. The selected encoding should be reported in the `InitializeResponse`.
+    This allows UTF-8 to be used when the client prefers it.
+  - servers that only support UTF-16 can add `offsetEncoding: "utf-16"` or simply not use the extension.
