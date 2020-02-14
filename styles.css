@@ -114,7 +114,7 @@ code {
 }
 
 /* Version marker ornaments */
-.v6::before, .v7::before, .v8::before, .v9::before {
+.v6::before, .v7::before, .v8::before, .v9::before, v10::before {
   color: #008;
   border-radius: 3px;
   padding: 0.2em 0.6em;
@@ -130,6 +130,7 @@ code {
 .v7::before { content: "clangd-7"; }
 .v8::before { content: "clangd-8"; }
 .v9::before { content: "clangd-9"; }
+.v10::before { content: "clangd-10"; }
 
 /* Mini layout, for phones */
 @media (max-width: 600px) {

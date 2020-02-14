@@ -165,3 +165,24 @@ clangd allows clients to use UTF-8 offsets instead. This allows clients that alw
   - servers that support both UTF-8 and UTF-16 should check whether the client capabilities mentions `"utf-8"` as supported, and use it if so. The selected encoding should be reported in the `InitializeResponse`.
     This allows UTF-8 to be used when the client prefers it.
   - servers that only support UTF-16 can add `offsetEncoding: "utf-16"` or simply not use the extension.
+
+## Code completion scores
+{:.v10}
+
+LSP gives servers limited control over completion display order through the
+`sortText` attribute. Clangd uses several signals such as number of usages to
+ensure the most likely completions are near the top.
+
+However as the user continues to type, editors filter and re-rank the results
+on the client side. This re-ranking should take into account the signals from
+the server, but LSP does not expose them.
+
+**New CompletionItem property**: `score: number`:
+  - The quality of the result, independent of how well it fuzzy-matches the word
+    being completed. (Value is >= 0, higher is better).
+  - Clients that fuzzy client-side filtering should multiply `score` by their
+    fuzzy-match score and sort by the result.
+  - Clients with non-fuzzy client-side filtering only should sort by `score`.
+  - Clients that don't support client-side filtering should ignore this and
+    use `sortText`, which incorporates `score` and fuzzy-matching.
+
