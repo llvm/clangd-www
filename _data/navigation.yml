@@ -5,15 +5,22 @@
   url: /features.html
   icon: '✓'
 - separator
+- title: Design
+  url: /design/
+  icon: '✨'
 - title: Protocol extensions
   url: /extensions.html
   icon: '⊕'
+- separator
 - title: Browse code
   url: https://github.com/llvm/llvm-project/tree/master/clang-tools-extra/clangd
   icon: '📄'
 - title: Bug tracker
   url: https://github.com/clangd/clangd/issues
   icon: '🐞'
-- title: Mailing list
-  url: http://lists.llvm.org/pipermail/clangd-dev/
-  icon: '✉️'
+- title: Forum
+  url: https://llvm.discourse.group/c/llvm-project/clangd/34
+  icon: '💡'
+- title: Chat (#clangd)
+  url: https://discord.gg/xS7Z362
+  icon: '💬'

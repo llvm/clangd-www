@@ -65,6 +65,8 @@ nav a .icon {
   line-height: 1em;
   text-align: center;
   width: 1.2em;
+  /* Get color emoji if we can */
+  font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
 }
 main {
   padding: 0 4em;
@@ -131,6 +133,18 @@ code {
 .v8::before { content: "clangd-8"; }
 .v9::before { content: "clangd-9"; }
 .v10::before { content: "clangd-10"; }
+
+.main-article {
+  text-align: center;
+  font-style: italic;
+  background-color: rgba(0,0,0,0.05);
+  padding: 0.3em 0;
+  margin: -0.5em 0;
+  text-decoration: none;
+}
+.main-article::before {
+  content: "→ Main article: ";
+}
 
 /* Mini layout, for phones */
 @media (max-width: 600px) {
