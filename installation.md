@@ -80,7 +80,7 @@ let g:ycm_clangd_binary_path = exepath("clangd")
 
 You should see errors highlighted and completions as you type.
 
-![Code completion in YouCompleteMe](ycm_completion.png)
+![Code completion in YouCompleteMe](screenshots/ycm_completion.png)
 
 YouCompleteMe supports many of clangd's features:
 
@@ -124,7 +124,7 @@ Add the following to `~/.emacs` to enable clangd:
 After restarting you should see diagnostics for errors in your code, and `M-x
 completion-at-point` should work.
 
-![Diagnostics in Emacs](emacs_diagnostics.png)
+![Diagnostics in Emacs](screenshots/emacs_diagnostics.png)
 
 eglot supports many of clangd's features, with caveats:
  - code completion, though the interaction is quite poor (even with
@@ -150,7 +150,7 @@ Completion still has some major limitations:
  - only pure-prefix completions are shown - no fuzzy matches.
  - completion triggering seems to be a bit hit-and-miss.
 
-![Completion in company-mode](emacs_company.png)
+![Completion in company-mode](screenshots/emacs_company.png)
 
 ### Under the hood
 
@@ -171,7 +171,7 @@ the Microsoft C/C++ extension is **not** installed).
 After restarting, you should see red underlines underneath errors, and
 you should get rich code completions including e.g. function parameters.
 
-![Code completion in VSCode](basic_completion.png)
+![Code completion in VSCode](screenshots/basic_completion.png)
 
 vscode-clangd has excellent support for all clangd features, including:
  - code completion
@@ -204,7 +204,7 @@ Press `Ctrl-Shift-P` and select **LSP: Enable Language Server Globally**. Select
 
 Open a C++ file, and you should see diagnostics and completion:
 
-![Completion in Sublime Text](sublime_completion.png)
+![Completion in Sublime Text](screenshots/sublime_completion.png)
 
 The LSP package has excellent support for all most clangd features, including:
  - code completion (a bit noisy due to how snippets are presented)
