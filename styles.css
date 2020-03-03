@@ -115,6 +115,10 @@ code {
   padding: 1px;
 }
 
+.tip {
+  color: #00796b;
+}
+
 /* Version marker ornaments */
 .v6::before, .v7::before, .v8::before, .v9::before, .v10::before {
   color: #008;
