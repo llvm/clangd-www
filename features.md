@@ -114,6 +114,16 @@ Searching for symbols within the scope of the whole project is also possible.
 
 ![screenshot: navigation](screenshots/navigation.gif)
 
+## Hover
+{:.v10}
+
+Hover over a symbol to see more information about it, such as its type,
+documentation, and definition.
+
+![screenshot: hover](screenshots/hover.png)
+
+Hovering over `auto` will show the underlying type.
+
 ## Formatting
 
 clangd embeds [clang-format](https://clang.llvm.org/docs/ClangFormat.html),
