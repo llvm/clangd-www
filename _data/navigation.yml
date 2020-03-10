@@ -4,6 +4,9 @@
 - title: Features
   url: /features.html
   icon: '✓'
+- title: Troubleshooting
+  url: /troubleshooting.html
+  icon: '💥'
 - separator
 - title: Design
   url: /design/
