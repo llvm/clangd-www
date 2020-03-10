@@ -7,24 +7,19 @@ To use clangd, you need:
 
 ## Installing clangd
 
-You'll want a **recent** version of clangd: 7.0 was the first really usable
-release, and 8.0 is much better.
+You'll want a **recent** version of clangd. The current release is 10.0.
 
 After installing, `clangd --version` should print `clangd version 7.0.0` or later.
+
+(Version numbers are based on LLVM. clangd 7 was the first usable release).
+
+### Installling with a package manager
 
 <details>
 <summary markdown="span">Mac OS X</summary>
 Clangd can be installed (along with LLVM) via [Homebrew](https://brew.sh):
 ```
 brew install llvm
-```
-
-If you don't want to use homebrew, you can download the a binary release of
-LLVM from [releases.llvm.org](http://releases.llvm.org/download.html).
-Alongside `bin/clangd` you will need at least `lib/clang/*/include`:
-```
-cp clang+llvm-7.0.0/bin/clangd /usr/local/bin/clangd
-cp -r clang+llvm-7.0.0/lib/clang/ /usr/local/lib/
 ```
 </details>
 
@@ -35,27 +30,36 @@ Download the LLVM installer from [releases.llvm.org](http://releases.llvm.org/do
 
 <details>
 <summary markdown="span">Debian/Ubuntu</summary>
-Installing the `clang-tools` package will usually give you an old version.
+Installing the `clangd` package will usually give you a slightly older version.
 
-Try to install the latest release (8.0):
+Try to install the latest packaged release (9.0):
 ```
-sudo apt-get install clang-tools-8
+sudo apt-get install clangd-9
 ```
-If that's not found, at least `clang-tools-7` should be available.
+If that's not found, at least `clangd-9` or `clangd-8` should be available.
+Versions before 8 were part of the `clang-tools` pacakge.
 
-This will install clangd as `/usr/bin/clangd-8`. Make it the default `clangd`:
+This will install clangd as `/usr/bin/clangd-9`. Make it the default `clangd`:
 ```
-sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-8 100
+sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-9 100
 ```
 </details>
 
 <details>
 <summary markdown="span">Other systems</summary>
-Most distributions include clangd in a `clang-tools` package, or in the full
-`llvm` distribution.
+Most distributions include clangd in a `clangd` package, in a `clang-tools`
+package, or in the full `llvm` distribution.
 
 For some platforms, binaries are also avaliable at [releases.llvm.org](http://releases.llvm.org/download.html).
 </details>
+
+### Standalone .zip releases
+
+You can also download binaries directly for macOS, windows, and Linux (x86-64):
+[latest stable release](https://github.com/clangd/clangd/releases/latest).
+
+If you live on the bleeding edge, snapshot pre-releases are built weekly and
+available on the [github releases page](https://github.com/clangd/clangd/releases).
 
 ## Editor plugins
 
