@@ -2,7 +2,7 @@
 
 This is the **source code** of clangd's website.
 
-The website itself can be found at https://clangd.github.io/.
+The website itself can be found at https://clangd.llvm.org/.
 
 ## I'm in the right place, how do I build the docs?
 
