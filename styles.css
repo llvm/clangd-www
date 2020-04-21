@@ -27,6 +27,18 @@ header h1 {
   font-size: 3em;
   margin: 0;
 }
+header h1 a {
+  display: flex;
+  white-space: nowrap;
+}
+header #logo-text {
+  flex-grow: 1;
+}
+header #logo {
+  height: 1em;
+  align-self: center;
+  margin-left: 0.2em;
+}
 header h2 {
   opacity: 0.7;
   font-size: 1em;
