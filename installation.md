@@ -131,8 +131,7 @@ completion-at-point` should work.
 ![Diagnostics in Emacs](screenshots/emacs_diagnostics.png)
 
 eglot supports many of clangd's features, with caveats:
- - code completion, though the interaction is quite poor (even with
-   `company-mode`, see below)
+ - code completion, enhaced by `company-mode`, see below
  - diagnostics and fixes
  - find definitions and references (`M-x xref-find-definitions` etc)
  - hover and highlights
@@ -146,19 +145,11 @@ fluent completion UI.
 You can install it with `M-x package-install RET company RET`, and enable it
 with `M-x company-mode`.
 
-**company-clang is enabled by default**, and will interfere with clangd.
-Disable it in `M-x customize-variable RET company-backends RET`.
-
-Completion still has some major limitations:
- - completions are alphabetically sorted, not ranked.
- - only pure-prefix completions are shown - no fuzzy matches.
- - completion triggering seems to be a bit hit-and-miss.
-
 ![Completion in company-mode](screenshots/emacs_company.png)
 
 ### Under the hood
 
-- **Debug logs**: available in the `EGLOT stderr` buffer.
+- **Debug logs**: available in the `EGLOT events` buffer.
 - **Command-line flags and alternate binary**: instead of adding `"clangd"`
   to `eglot-server-programs`, add `("/path/to/clangd" "-log=verbose")` etc.
 </details>
