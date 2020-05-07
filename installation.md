@@ -17,9 +17,25 @@ After installing, `clangd --version` should print `clangd version 7.0.0` or late
 
 <details>
 <summary markdown="span">Mac OS X</summary>
+ 
 Clangd can be installed (along with LLVM) via [Homebrew](https://brew.sh):
 ```
 brew install llvm
+```
+
+Alternatively, clangd is already bundled in Apple's [xcode command line tools](https://developer.apple.com/xcode/features/) if you installed it before via `xcode-select --install`. To check this, running `/Library/Developer/CommandLineTools/usr/bin/clangd --version` should print `clangd version 7.0.0` or later.
+
+You just need to add `/Library/Developer/CommandLineTools/usr/bin` to your PATH by adding the following line to your `.bashrc` or `.zshrc`:
+
+```sh
+# Add to the end of PATH so some older system binaries won't conflict with newer installed versions
+export PATH="$PATH:/Library/Developer/CommandLineTools/usr/bin"
+```
+
+or symlink it to your `/usr/local/bin` if the other binaries in the xcode command line tools are conflicting with something you installed:
+
+```sh
+ln -s /Library/Developer/CommandLineTools/usr/bin/clangd /usr/local/bin/clangd
 ```
 </details>
 
