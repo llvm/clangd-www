@@ -40,7 +40,6 @@ and style issues.
 
 clangd respects your project's `.clang-tidy` file which controls the checks to
 run. Not all checks work within clangd.
-You must pass the `-clang-tidy` flag to enable this feature.
 
 
 ## Code completion
