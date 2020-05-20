@@ -69,9 +69,8 @@ should work with any of them, though feature set and interface may vary.
 Here are some plugins we know work well with clangd:
 
 <details>
-<summary markdown="span">Vim/Neovim</summary>
-We recommend to use [coc.nvim](https://github.com/neoclide/coc.nvim) + [coc-clangd](https://github.com/clangd/coc-clangd)
-in Vim/Neovim.
+<summary markdown="span">Vim</summary>
+We recommend to use [coc.nvim](https://github.com/neoclide/coc.nvim). [coc-clangd](https://github.com/clangd/coc-clangd) is a small extension which configures coc.nvim to work with clangd in Vim/Neovim.
 
 1. install [Node.js](https://nodejs.org/), both `coc.nvim` and `coc-clangd` run on Node.js.
 2. install `coc.nvim` by [vim-plug](https://github.com/junegunn/vim-plug)
@@ -79,37 +78,69 @@ in Vim/Neovim.
    - add `Plug 'neoclide/coc.nvim', {'branch': 'release'}` to `.vimrc/init.vim`
    - run `:PlugInstall` in Vim
 3. in Vim, run `:CocInstall coc-clangd`
-4. `coc-clangd` will try to find clangd from your $PATH, if not found, you can
-run `:CocCommand clangd.install` to install the [latest release](https://github.com/clangd/clangd/releases) from GitHub
-5. follow [Project setup](#project-setup) to generate `compile_commands.json` for your project
+4. If you haven't installed clangd yet, run `:CocCommand clangd.install` to install the [latest release](https://github.com/clangd/clangd/releases) from GitHub
 
 You should see completions and diagnostics as you type.
 
 ![Code completion in coc.nvim](screenshots/coc_completion.png)
 
-`coc.nvim` + `coc-clangd` has excellent support for all `clangd` features, including:
+`coc.nvim` has excellent support for `clangd` features, including:
 
  - code completions
  - diagnostics and fixes
  - find declarations, references, and definitions
  - find symbol in file or workspace
- - hover and highlights, you can use [jackguo380/vim-lsp-cxx-highlight](https://github.com/jackguo380/vim-lsp-cxx-highlight)
- for additional semantic highlighting
+ - hover and highlights
+ - semantic highlighting with [jackguo380/vim-lsp-cxx-highlight](https://github.com/jackguo380/vim-lsp-cxx-highlight)
  - code actions
 
-`clangd` supports some [extensions](/extensions.html) that are not in the official
-[Language Server Protocol specification](https://microsoft.github.io/language-server-protocol/specification).
-`coc-clangd` adds support for:
+ ### Under the hood
 
- - Switching between header and implementation file: `:CocCommand clangd.switchSourceHeader`
- - File status monitor, shows on statusline
- - Describe symbol under the cursor: `:CocCommand clangd.symbolInfo`
- - Completions that adjust text near the cursor (e.g. correcting `.` to `->`)
+ - **Debug logs**: run `:CocCommand workspace.showOutput` and choose `clangd log` to see clangd logs.
+ - **Command-line flags**: these can be passed in the `clangd.arguments` array
+  in your `coc-settings.json`. (Run `:CocConfig` to open `coc-settings.json`).
+ - **Alternate clangd binary**: set the `clangd.path` string in `coc-settings.json`.
 
 ---
 
-You can also use [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe) or
-[LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim/wiki/Clangd) with `clangd`.
+[YouCompleteMe](https://valloric.github.io/YouCompleteMe/) can be installed with
+clangd support. **This is not on by default**, you must install it with
+`install.py --clangd-completer`.
+
+We recommend changing a couple of YCM's default settings. In `.vimrc` add:
+```
+" Let clangd fully control code completion
+let g:ycm_clangd_uses_ycmd_caching = 0
+" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
+let g:ycm_clangd_binary_path = exepath("clangd")
+```
+
+You should see errors highlighted and completions as you type.
+
+![Code completion in YouCompleteMe](screenshots/ycm_completion.png)
+
+YouCompleteMe supports many of clangd's features:
+
+ - code completion
+ - diagnostics and fixes (`:YcmCompleter FixIt`)
+ - find declarations, references, and definitions (`:YcmCompleter GoTo` etc)
+ - rename symbol (`:YcmCompleter RefactorRename`)
+
+ ### Under the hood
+
+ - **Debug logs**: run `:YcmDebugInfo` to see clangd status, and `:YcmToggleLogs`
+  to view clangd's debug logs.
+- **Command-line flags**: Set `g:ycm_clangd_args` in `.vimrc`, e.g.:
+```
+let g:ycm_clangd_args = ['-log=verbose', '-pretty']
+```
+- **Alternate clangd binary**: set `g:ycm_clangd_binary_path` in `.vimrc`.
+
+---
+
+[LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim)
+also has [instructions for using clangd](https://github.com/autozimu/LanguageClient-neovim/wiki/Clangd),
+and **may** be easier to install.
 </details>
 
 <details>
