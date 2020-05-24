@@ -155,7 +155,7 @@ with `M-x company-mode`.
 
 ---
 
-[lsp-mode](https://github.com/emacs-lsp/lsp-mode) can also be configured to work with clangd, and has support for some specific features.
+[lsp-mode](https://github.com/emacs-lsp/lsp-mode) can also be configured to work with clangd. It has support for all standard clangd features and some of the extensions, like completion scores, or type hierarchies.
 
 Install lsp-mode with `M-x package-install RET lsp-mode RET`.
 
