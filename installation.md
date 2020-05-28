@@ -196,6 +196,18 @@ You can search for workspace symbols using a package like [lsp-ivy](https://gith
 ### Additional UI features
 
 Additional UI features like peek references, peek definition, etc. are available as a separate package, [lsp-ui](https://github.com/emacs-lsp/lsp-ui)
+
+### Under the hood
+
+- **Debug logs**: Evaluate `(setq lsp-log-io t)` to inspect the communication between client and server. Then, execute `M-x lsp-workspace-show-log` to view clangd's debug logs.
+- **Command-line flags**: Configure the `lsp-clients-clangd-args` variable in your Emacs init file, e.g.:
+```
+(setq lsp-clients-clangd-args '("-log=verbose" "-pretty"))
+```
+- **Alternate clangd binary**: Configure the `lsp-clients-clangd-executable` variable in your Emacs init file, e.g.:
+```
+(setq lsp-clients-clangd-executable "~/Projects/llvm-project/build-Release/bin/clangd")
+```
 </details>
 
 <details>
