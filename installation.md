@@ -167,35 +167,11 @@ Add the following to `~/.emacs` to enable lsp-mode:
 (add-hook 'c++-mode-hook #'lsp)
 ```
 
-### Indexing status
+### Integration with other packages:
 
-lsp-mode can process indexing notifications from clangd and show you progress in the mode line.
-
-![Indexing status in lsp-mode](screenshots/lsp_mode_indexing.png)
-
-### Clang-tidy error explanations
-
-The clangd Flycheck integration in lsp-mode shows error explanations from the LLVM website for clang-tidy linting issues.
-This is very useful when you need context before applying a clang-tidy fix. Press `M-x flycheck-explain-error-at-point` when the point is at a clang-tidy error.
-
-![clang-tidy error explanations in lsp-mode](screenshots/lsp_mode_clang_tidy_explanations.png)
-
-### Type signatures in mode line
-
-When the point is at a symbol, lsp-mode extracts a function prototype and shows it in the mode line. Simply placing the
-point on top of an auto variable, for example, will show its type.
-
-![Mode line signatures in lsp-mode](screenshots/lsp_mode_signature.png)
-
-### Find workspace symbols
-
-You can search for workspace symbols using a package like [lsp-ivy](https://github.com/emacs-lsp/lsp-ivy) or [helm-lsp](https://github.com/emacs-lsp/helm-lsp)
-
-![Find workspace symbols in lsp-mode](screenshots/lsp_mode_workspace_symbols.png)
-
-### Additional UI features
-
-Additional UI features like peek references, peek definition, etc. are available as a separate package, [lsp-ui](https://github.com/emacs-lsp/lsp-ui)
+ - See documentation for clang-tidy linting issues with `M-x flycheck-explain-error-at-point`.
+ - Search for workspace symbols using [lsp-ivy](https://github.com/emacs-lsp/lsp-ivy) or [helm-lsp](https://github.com/emacs-lsp/helm-lsp).
+ - [lsp-ui](https://github.com/emacs-lsp/lsp-ui) provides extra UI features like peek references or peek definition.
 
 ### Under the hood
 
