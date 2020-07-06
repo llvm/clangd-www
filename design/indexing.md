@@ -1,7 +1,7 @@
 # The clangd index
 
 The index stores information about the whole codebase. It's used to provide LSP
-features where the AST af the current file doesn't have the information we need.
+features where the AST of the current file doesn't have the information we need.
 
 ## Exposed data
 
