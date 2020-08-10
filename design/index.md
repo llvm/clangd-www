@@ -6,6 +6,12 @@ A language server's main responsibilites are:
  - providing the editor with up-to-date diagnostics (warnings/errors)
  - responding to requests from the editor (such as go-to-definition)
 
+Most of the design documentation focuses on the concepts, if you're interested
+in the implementation we try to keep the code well-documented.
+
+[code walkthrough](/design/code.html)
+{:.main-article}
+
 ## Request handling
 
 clangd is based on the `clang` compiler, and at its core runs the clang parser

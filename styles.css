@@ -129,6 +129,9 @@ code {
   border: 1px solid #feb;
   padding: 1px;
 }
+a[href^="https://code.woboq.org/"] {
+  font-family: monospace;
+}
 
 .tip {
   color: #00796b;
