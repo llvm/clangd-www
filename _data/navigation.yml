@@ -1,9 +1,12 @@
 - title: Getting Started
   url: /installation.html
-  icon: '⚙️'
+  icon: '▶'
 - title: Features
   url: /features.html
   icon: '✓'
+- title: Configuration
+  url: /config.html
+  icon: '⚙️'
 - title: Troubleshooting
   url: /troubleshooting.html
   icon: '💥'
