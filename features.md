@@ -160,14 +160,14 @@ Known limitations
 #### Within-file rename
 {:.v7}
 
-The default mode only allows to rename a local symbol (one which is only used in
-current file).
+This mode only allows to rename a local symbol (one which is only used in
+current file). It is enabled with the command-line flag
+`-cross-file-rename=false`.
 
 #### Cross-file rename
 {:.v10}
 
-This mode allows renaming symbols used in several files. It is enabled with the
-command-line flag `-cross-file-rename`.
+This default mode allows renaming symbols used in several files.
 
 It uses the [project index](design/indexing.html) to find all renamed references
 quickly, so works best when the index is up-to-date.
