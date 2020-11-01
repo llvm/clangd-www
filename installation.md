@@ -7,7 +7,7 @@ To use clangd, you need:
 
 ## Installing clangd
 
-You'll want a **recent** version of clangd. The current release is 10.0.
+You'll want a **recent** version of clangd. The current release is 11.0.
 
 After installing, `clangd --version` should print `clangd version 7.0.0` or later.
 
