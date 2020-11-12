@@ -14,7 +14,7 @@ pre-release snapshot before you try anything else!
 
 ## Gathering logs
 
-Your editor should make clangd's `stderr` log available (see [installation][]
+Your editor should make clangd `stderr` log available (see [installation][]
 for how). These describe the messages exchanged between the editor and `clangd`,
 and what clangd was thinking.
 

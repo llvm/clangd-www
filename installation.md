@@ -13,7 +13,7 @@ After installing, `clangd --version` should print `clangd version 7.0.0` or late
 
 (Version numbers are based on LLVM. clangd 7 was the first usable release).
 
-### Installling with a package manager
+### Installing with a package manager
 
 <details>
 <summary markdown="span">Mac OS X</summary>
@@ -33,16 +33,20 @@ Download the LLVM installer from [releases.llvm.org](http://releases.llvm.org/do
 Installing the `clangd` package will usually give you a slightly older version.
 
 Try to install the latest packaged release (9.0):
-```
+
+```bash
 sudo apt-get install clangd-9
 ```
+
 If that's not found, at least `clangd-9` or `clangd-8` should be available.
-Versions before 8 were part of the `clang-tools` pacakge.
+Versions before 8 were part of the `clang-tools` package.
 
 This will install clangd as `/usr/bin/clangd-9`. Make it the default `clangd`:
-```
+
+```bash
 sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-9 100
 ```
+
 </details>
 
 <details>
@@ -50,7 +54,7 @@ sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-9 100
 Most distributions include clangd in a `clangd` package, in a `clang-tools`
 package, or in the full `llvm` distribution.
 
-For some platforms, binaries are also avaliable at [releases.llvm.org](http://releases.llvm.org/download.html).
+For some platforms, binaries are also available at [releases.llvm.org](http://releases.llvm.org/download.html).
 </details>
 
 ### Standalone .zip releases
@@ -75,7 +79,8 @@ clangd support. **This is not on by default**, you must install it with
 `install.py --clangd-completer`.
 
 We recommend changing a couple of YCM's default settings. In `.vimrc` add:
-```
+
+```vim
 " Let clangd fully control code completion
 let g:ycm_clangd_uses_ycmd_caching = 0
 " Use installed clangd, not YCM-bundled clangd which doesn't get updates.
@@ -86,21 +91,23 @@ You should see errors highlighted and completions as you type.
 
 ![Code completion in YouCompleteMe](screenshots/ycm_completion.png)
 
-YouCompleteMe supports many of clangd's features:
+YouCompleteMe supports many features of clangd:
 
- - code completion
- - diagnostics and fixes (`:YcmCompleter FixIt`)
- - find declarations, references, and definitions (`:YcmCompleter GoTo` etc)
- - rename symbol (`:YcmCompleter RefactorRename`)
+- code completion
+- diagnostics and fixes (`:YcmCompleter FixIt`)
+- find declarations, references, and definitions (`:YcmCompleter GoTo` etc)
+- rename symbol (`:YcmCompleter RefactorRename`)
 
 ### Under the hood
 
 - **Debug logs**: run `:YcmDebugInfo` to see clangd status, and `:YcmToggleLogs`
   to view clangd's debug logs.
 - **Command-line flags**: Set `g:ycm_clangd_args` in `.vimrc`, e.g.:
-```
+
+```vim
 let g:ycm_clangd_args = ['-log=verbose', '-pretty']
 ```
+
 - **Alternate clangd binary**: set `g:ycm_clangd_binary_path` in `.vimrc`.
 
 ---
@@ -118,7 +125,7 @@ Install eglot with `M-x package-install RET eglot RET`.
 
 Add the following to `~/.emacs` to enable clangd:
 
-```
+```emacs
 (require 'eglot)
 (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
 (add-hook 'c-mode-hook 'eglot-ensure)
@@ -130,12 +137,13 @@ completion-at-point` should work.
 
 ![Diagnostics in Emacs](screenshots/emacs_diagnostics.png)
 
-eglot supports many of clangd's features, with caveats:
- - code completion, enhaced by `company-mode`, see below
- - diagnostics and fixes
- - find definitions and references (`M-x xref-find-definitions` etc)
- - hover and highlights
- - code actions (`M-x eglot-code-actions`)
+eglot supports many features of clangd, with caveats:
+
+- code completion, enhanced by `company-mode`, see below
+- diagnostics and fixes
+- find definitions and references (`M-x xref-find-definitions` etc)
+- hover and highlights
+- code actions (`M-x eglot-code-actions`)
 
 ### company-mode
 
@@ -152,11 +160,12 @@ with `M-x company-mode`.
 - **Debug logs**: available in the `EGLOT events` buffer.
 - **Command-line flags and alternate binary**: instead of adding `"clangd"`
   to `eglot-server-programs`, add `("/path/to/clangd" "-log=verbose")` etc.
+
 </details>
 
 <details>
 <summary markdown="span">Visual Studio Code</summary>
-The official extension is 
+The official extension is
 [vscode-clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)
 and can be installed from within VSCode.
 
@@ -169,12 +178,12 @@ you should get rich code completions including e.g. function parameters.
 ![Code completion in VSCode](screenshots/basic_completion.png)
 
 vscode-clangd has excellent support for all clangd features, including:
- - code completion
- - diagnostics and fixes
- - find declarations, references, and definitions
- - find symbol in file (`Ctrl-P @foo`) or workspace (`Ctrl-P #foo`)
- - hover and highlights
- - code actions
+- code completion
+- diagnostics and fixes
+- find declarations, references, and definitions
+- find symbol in file (`Ctrl-P @foo`) or workspace (`Ctrl-P #foo`)
+- hover and highlights
+- code actions
 
 ### Under the hood
 
@@ -210,7 +219,7 @@ The LSP package has excellent support for all most clangd features, including:
 
 ### Under the hood
 
-Settings can be tweaked under **Preferences**-->**Package Settings**-->**LSP**.
+Tweak settings via **Preferences**-->**Package Settings**-->**LSP**.
 
 - **Debug logs**: add `"log_stderr": true`
 - **Command-line flags and alternate clangd binary**: inside the
@@ -254,7 +263,7 @@ it with:
 ```cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1```
 
 `compile_commands.json` will be written to your build directory.
-You should symlink it (or simply copy it) to the root of your source tree, if
+You should symlink it (or copy it) to the root of your source tree, if
 they are different.
 
 ```ln -s ~/myproject/compile_commands.json ~/myproject-build/```

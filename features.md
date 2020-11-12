@@ -41,7 +41,6 @@ and style issues.
 clangd respects your project's `.clang-tidy` file which controls the checks to
 run. Not all checks work within clangd.
 
-
 ## Code completion
 
 You'll see suggestions as you type based on what methods, variables, etc are
@@ -66,7 +65,6 @@ Some editors will show you the parameters of the function you're calling, as
 you fill them in.
 
 ![screenshot: signature help](screenshots/signature_help.gif)
-
 
 ## Cross-references
 
@@ -98,7 +96,6 @@ Show all references to a symbol under the cursor.
 
 Some editors will automatically highlight local references to the selected
 symbol as you move around a file.
-
 
 ## Navigation
 
@@ -135,7 +132,6 @@ clangd respects your project's `.clang-format` file which controls styling
 options.
 
 (Format-as-you-type is experimental and doesn't work well yet).
-
 
 ## Refactoring
 

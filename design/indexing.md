@@ -63,10 +63,10 @@ is found, the compile command for each source file is placed on a queue.
 Before indexing each file, the index checks for a cached `*.idx` file on disk.
 After indexing, it writes this file. This avoids reindexing on startup if
 nothing changed since last time.
-These files are located in `.cache/clangd/index/` next to `compile_commands.json`.
-For headers with no CDB, such as the standard library, they are in `clangd/index`
-under the user's cache directory (`$XDG_CACHE_HOME`, `DARWIN_USER_CACHE_DIR`, or
-`%LocalAppData%`).
+These files are located in `.cache/clangd/index/` next to
+`compile_commands.json`. For headers with no CDB, such as the standard
+library, they are in `clangd/index` under the user's cache directory
+(`$XDG_CACHE_HOME`, `DARWIN_USER_CACHE_DIR`, or `%LocalAppData%`).
 
 ### Static index
 
@@ -78,6 +78,5 @@ the whole codebase. This is used:
   CPU/RAM/battery
 
 With the `-index-file` option, clangd will load an index produced by the
-`clangd-indexer` tool.
-In future, we hope to support a remote RPC-based static index which can be
-shared between developers on large projects.
+`clangd-indexer` tool. In the future, we hope to support a remote RPC-based
+static index which can be shared between developers on large projects.
