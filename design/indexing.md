@@ -78,6 +78,6 @@ the whole codebase. This is used:
   CPU/RAM/battery
 
 With the `-index-file` option, clangd will load an index produced by the
-`clangd-indexer` tool.
-In future, we hope to support a remote RPC-based static index which can be
-shared between developers on large projects.
+`clangd-indexer` tool. We support remote RPC-based static index which can be
+shared between developers on large projects. For more information, please see
+[remote index](/remote-index.md).
