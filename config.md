@@ -143,3 +143,41 @@ clang's parser, such as incoming references.
 Whether files are built in the background to produce a project index.
 This is checked for translation units only, not headers they include.
 Legal values are `Build` (the default) or `Skip`.
+
+## ClangTidy
+
+Configure how clang-tidy runs over your files.
+
+The settings are merged with any settings found in .clang-tidy
+configiration files with these ones taking precedence.
+
+### Add
+
+List of checks to enable, can be globs.
+
+### Remove
+
+List of checks to disable, can be globs.
+
+This takes precedence over Add, this supports enabling all checks from a module apart from some specific checks.
+
+Example to use all modernize module checks apart from use trailing return type:
+
+```
+ ClangTidy:
+   Add: modernize*
+   Remove: modernize-use-trailing-return-type
+```
+
+### CheckOptions
+
+Key-value pairs of options for clang-tidy checks.
+Available options for all checks can be found [here](https://clang.llvm.org/extra/clang-tidy/checks/list.html).
+
+Note the format here is slightly different to `.clang-tidy` configuration files as we don't specify `key: <key>, value: <value>`.
+Instead just use `<key>: <value>`
+```
+ClangTidy:
+  CheckOptions:
+    readability-identifier-naming.VariableCase: CamelCase
+```
