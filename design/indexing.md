@@ -80,16 +80,15 @@ the whole codebase. This is used:
 With the `-index-file` option, clangd will load an index produced by the
 `clangd-indexer` tool.
 
-### Remote index We support remote RPC-based static index which can be
+### Remote index
 
-For large projects (e.g. LLVM and Chromium) global index takes a long time to
-build (3-4 hours on powerful very machines for Chrome-sized project) and
-induces a large memory overhead (up to 6GB on RAM) to serve within clangd.
+For large codebases (e.g. LLVM and Chromium) global index can take a long
+time to build (multiple hours even on very powerful machines for Chrome-sized
+projects) and induces a large memory overhead (multiple GB of RAM) to serve
+within clangd.
 
 Remote index allows serving index on a separate machine and connecting to it
 from your device. This means you don't have to build the index yourself
-anymore, clangd will use significantly less memory. You can work from your
-laptop or just a machine not powerful enough to process the whole codebase
-and still get access to features that rely on indexing the whole project.
-shared between developers on large projects. For more details, see [remote
-index](/remote-index.md).
+anymore and clangd will use significantly less memory less memory. Hence
+developers can work from less powerful machines, while still using clangd to
+its fullest. For more details, see [remote index](/remote-index.md).
