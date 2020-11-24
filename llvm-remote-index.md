@@ -19,7 +19,7 @@ available:
 
 * [clangd/index/remote](https://github.com/llvm/llvm-project/tree/master/clang-tools-extra/clangd/index/remote):
   `clangd-index-server` and client implementation
-* [llvm-remote-index](https://github.com/clangd/llvm-remote-index) for
+* [llvm-remote-index](https://github.com/clangd/llvm-remote-index):
   indexing, data pipelines and deployment scripts
 
 The service is hosted on GCP by clangd team, with sponsorship of Google.
@@ -27,8 +27,8 @@ The service is hosted on GCP by clangd team, with sponsorship of Google.
 Whole LLVM codebase (`-DLLVM_ENABLE_PROJECTS="all"`) is indexed on a daily
 basis, index snapshots are available in [clangd/llvm-remote-index
 releases](https://github.com/clangd/llvm-remote-index/releases). We only
-index the main branch of LLVM and check for the new idex version every 6
-hours on the deployment server. The server also checks for new versions of
+index the main branch of LLVM and periodically check for the new idex version
+on the deployment server. The server also checks for new versions of
 `clangd-index-server` which is fetched from [clangd/clangd
 snapshots](https://github.com/clangd/clangd/releases).
 
