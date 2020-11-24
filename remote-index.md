@@ -3,7 +3,7 @@
 ## How it works
 
 Remote index works in two separate components, an indexing pipeline and a
-serving infrastructure. The former produces monolithic index files for a
+serving infrastructure. The former produces monolithic index file for a
 project of interest and the latter serves information from a monolithic index
 file to clangd clients using a [gRPC](https://grpc.io/)-based server.
 
@@ -33,6 +33,7 @@ and configurations for the service can be found at
 repo is aimed to be a sample and common ground for clangd remote-index-server
 instances, so feel free to fork and modify it to your needs, or contribute
 any functionality that you think might be useful to others.
+
 ## Getting remote index support in clangd
 
 As of today, you either need to build clangd from sources or use one of the
@@ -82,10 +83,3 @@ are:
 - `--project-root` absolute path for the project source root on local
   machine, e.g. `$HOME/src/llvm-project/`. This is used to convert relative
   paths provided by server into absolute paths on the local machine.
-
-To use remote index feature, you need to get clangd with remote index support
-and add the following flags to clangd invocation: `--remote-index-address`
-pointing to the address the server is running on (e.g. `0.0.0.0:50051` if
-you're running it locally) and `--project-root` which is the _absolute path_
-where the sources of the project you are working on are stored (e.g.
-`/home/$USER/src/llvm-project/`).

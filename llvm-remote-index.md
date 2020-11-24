@@ -2,27 +2,27 @@
 
 There's currently a test instance of clangd remote-index for LLVM project at
 `llvm.clangd-index-staging.dev`. The service is maintained at best effort,
-and is not an official approved by LLVM yet.
+and is not an official LLVM product.
 
 After getting a clangd with remote-index support as described in
 [here](./remote-index.md#getting-remote-index-support-in-clangd), you can
 point it at `llvm.clangd-index-staging.dev:50051` either through
 [config](./config.md) or [command line
-flags](`--remote-index-address=llvm.clangd-index-staging.dev:50051` and
-`--project-root` --- absolute path pointing to the root of your
-`llvm-project` directory on your machine).
+flags](./remote-index.md#using-remote-index-feature).
 
 ## Overview
 
 The service is provided to make development of LLVM on less powerful machines
 easier and make the development process more accessible. The whole service
 implementation, including infrastructure, is open source and publicly
-available
-([clangd/index/remote](https://github.com/llvm/llvm-project/tree/master/clang-tools-extra/clangd/index/remote)
-for `clangd-index-server` and client implementation,
-[llvm-remote-index](https://github.com/clangd/llvm-remote-index) for
-indexing, data pipelines and deployment). The service is hosted on GCP by
-clangd team, with sponsorship of Google.
+available:
+
+* [clangd/index/remote](https://github.com/llvm/llvm-project/tree/master/clang-tools-extra/clangd/index/remote):
+  `clangd-index-server` and client implementation
+* [llvm-remote-index](https://github.com/clangd/llvm-remote-index) for
+  indexing, data pipelines and deployment scripts
+
+The service is hosted on GCP by clangd team, with sponsorship of Google.
 
 Whole LLVM codebase (`-DLLVM_ENABLE_PROJECTS="all"`) is indexed on a daily
 basis, index snapshots are available in [clangd/llvm-remote-index
@@ -38,15 +38,15 @@ Remote index service is offered for free to everyone on internet, mainly
 benefiting people working on the open-source LLVM project. The service is run
 on best-effort basis and this is not an official LLVM product.
 
-The source code we serve is the open source version of LLVM: we fetch the
-sources from the [LLVM monorepo](https://github.com/llvm/llvm-project) main
-branch and do not modify the sources in any way. The infrastructure we use
-and the code we run is publicly available
+Source code that is served is the open source version of LLVM: sources from
+the [LLVM monorepo](https://github.com/llvm/llvm-project) main branch are
+fetched without any modifications. The infrastructure used and the code being
+run is publicly available
 ([clangd/index/remote](https://github.com/llvm/llvm-project/tree/master/clang-tools-extra/clangd/index/remote)
 for server and client implementation,
 [llvm-remote-index](https://github.com/clangd/llvm-remote-index) for
 indexing, data pipelines and deployment). Google generously donated the
-funding for Google Cloud Platform instance we use, but this is a public
+funding for Google Cloud Platform instance that is used, but it is a public
 instance (same as any instance open source developers can use themselves).
 
 Requests from user contain some data from clangd instance such as the file
@@ -55,8 +55,8 @@ index signals. Full description of transferred data is
 [`Index.proto`](https://github.com/llvm/llvm-project/blob/master/clang-tools-extra/clangd/index/remote/Index.proto)
 and
 [`Service.proto`](https://github.com/llvm/llvm-project/blob/master/clang-tools-extra/clangd/index/remote/Service.proto)
-files. We do not store any of this data and we do not store any data about
-specific users: as soon as the request is complete we throw away the data
+files. No data is stored longer than needed and no user-specific data is
+stored at all: as soon as the request is complete we throw away the data
 keeping only the aggregate statistics (request latencies, number of requests,
 etc) and logs without any personal data to ensure service stability and
 diagnose issues. As the result, personal data is not stored anywhere.
