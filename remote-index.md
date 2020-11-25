@@ -1,66 +1,69 @@
 # Remote index
 
+A [project-wide index](/design/indexing.html) can be slow to build, particlarly
+for large projects on slower machines like laptops. A "remote index" allows
+a shared server to host the index instead.
+
 ## How it works
 
-Remote index works in two separate components, an indexing pipeline and a
-serving infrastructure. The former produces monolithic index file for a
-project of interest and the latter serves information from a monolithic index
-file to clangd clients using a [gRPC](https://grpc.io/)-based server.
+The remote index has three components:
+ - the **indexer** is a batch process that should run on a powerful machine.
+   It parses all the code for your project, and produces an index file.
+ - the **server** exposes the index over a network. It loads the index file into
+   memory, and exposes a [gRPC](https://grpc.io) service to query it.
+ - the **client** is part of clangd, which runs on your development machine.
+   It connects to the server and requests information (such as the definition
+   of a symbol) in real-time.
 
-## Indexing pipeline
+Each of these components are open-source and part of
+[llvm/llvm-project/clang-tools-extra/clangd](https://github.com/llvm/llvm-project/tree/master/clang-tools-extra/clangd/).
 
-Indexing pipeline uses `clangd-indexer` under the hood and collects symbols
-that can be exported from headers (functions, classes, types, etc). Running
-`clangd-indexer` is expensive and produced index is not incremental, so using
-the remote index most likely results in a stale index that is periodically
-updated on the server.
+## Indexer
 
-## Serving Infrastructure
+`clangd-indexer` collects symbols that can be exported from headers
+(functions, classes, types, etc).
+It's usually necessary to run the build system for your project first,
+to produce `compile_commands.json` and possibly generate source files.
 
-`clangd-index-server` is an RPC service that processes index requests. Clangd
-forwards requests to the server whenever it requires global index (e.g. find
-references request, index-based code completion). Because the serving machine
-paths to the source files are different from the client machine, portability is
-achieved by stripping local project prefix of the serving machine and replacing
-it with local project prefix (`--project-root` flag).
+Running `clangd-indexer` is expensive and produced index is not incremental.
+Usually the index is produced periodically and so is always slightly stale.
 
-Remote index implementation is open source and you can find the code at
-[clang-tools-extra/clangd/index/remote](https://github.com/llvm/llvm-project/tree/master/clang-tools-extra/clangd/index/remote).
+## Server
 
-There's a non-official test [service](./llvm-remote-index.md) for LLVM. Code
-and configurations for the service can be found at
-[clangd/llvm-remote-index](https://github.com/clangd/llvm-remote-index). That
-repo is aimed to be a sample and common ground for clangd remote-index-server
-instances, so feel free to fork and modify it to your needs, or contribute
-any functionality that you think might be useful to others.
+`clangd-index-server` is an RPC server that processes index requests. Clangd
+issues requests to the server whenever it uses its global index (e.g. find
+references request, index-based code completion).
 
-## Getting remote index support in clangd
+The source code lives under different paths on different machines.
+The `--project-root` flags specifies the source root on the indexer machine,
+this prefix will be stripped. The client will add its own prefix as appropriate.
 
-As of today, you either need to build clangd from sources or use one of the
-unofficial snapshots at [clangd/clangd
-releases](https://github.com/clangd/clangd/releases).
+## clangd client
 
-If you just want to use clangd with remote index support, downloading weekly
-releases might be easier. As building from sources usually requires a lot
-more resources and configuration, and doesn't provide much value if you are
-not planning to edit the source code.
+The official LLVM releases do not yet include remote index support, but
+unofficial weekly snapshots are available for common platforms.
+
+You can also build from source. This requires more effort and time, so is
+mostly useful if you are interested in modifying or debugging the source code.
 
 ### Downloading latest release from GitHub
 
 Weekly snapshots of clangd are available on GitHub [clangd/clangd
 releases](https://github.com/clangd/clangd/releases). These binaries are
-built with remote index support, so you can directly use those.
+built with remote index support.
 
-**NOTE**: Snapshots are marked as "pre-release" so the [latest
-release](https://github.com/clangd/clangd/releases/latest) points to the
-latest _major LLVM release_ (e.g. 11.0.0). Remote index feature is not enabled
-in the major releases we provide yet but we plan to do that in the future.
+**NOTE**: Snapshots are marked as "pre-release" so the ["latest
+release"](https://github.com/clangd/clangd/releases/latest) points to the
+latest _major LLVM release_ (e.g. 11.0.0). Remote index is not enabled
+in the major releases yet.
 
 ### Building from sources
 
-Remote index support for clangd is turned off by default, so you need to
-provide `-DCLANGD_ENABLE_REMOTE=On` in addition to your standard [LLVM
-setup](https://llvm.org/docs/CMake.html).
+In general you can follow the [LLVM instructions](https://llvm.org/docs/CMake.html)
+to build `llvm-project` with CMake. You'll need the following CMake flags:
+
+- `-DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra` (to build clangd)
+- `-DCLANGD_ENABLE_REMOTE=On` (remote index is off by default)
 
 Remote index implementation depends on gRPC and Protobuf libraries. You'll
 need to provide these dependencies either via [compiling gRPC from
@@ -71,15 +74,22 @@ macOS). If your installation cannot be discovered by CMake automatically or
 you want to use a custom installation, you can use `-DGRPC_INSTALL_PATH` to
 tell CMake about a particular directory.
 
+Once you have cmake set up, you can build the `clangd` target, and optionally
+`clangd-index-server` and `clangd-indexer`.
+
 ## Using remote index feature
 
-After getting a clangd with remote index support, you can provide server
-configuration via command line flags or config files. You can find more
-details about config files [here](/config.md). Necessary command line flags
-are:
+When using clangd with remote index support, you can specify the server to
+connect to in two ways:
 
-- `--remote-index-address` which is the address:port of the server, e.g.
-  `127.0.0.1:50051`.
-- `--project-root` absolute path for the project source root on local
-  machine, e.g. `$HOME/src/llvm-project/`. This is used to convert relative
-  paths provided by server into absolute paths on the local machine.
+- [clangd configuration files](/config.html) (recommended)
+- clangd flags `--remote-index-address` and `--project-root` (best for testing)
+
+Either way, you'll need to specify a server address such as `127.0.0.1:50051`,
+and the project root on your local machine, e.g. `/home/me/src/my-project/`.
+The project root is used to translate paths from the server to your machine.
+
+An unofficial test [service](/llvm-remote-index.html) is available for LLVM.
+The [configuration scripts](https://github.com/clangd/llvm-remote-index) for
+this service may be a useful starting point if you want to host an index.
+
