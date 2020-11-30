@@ -144,12 +144,38 @@ Whether files are built in the background to produce a project index.
 This is checked for translation units only, not headers they include.
 Legal values are `Build` (the default) or `Skip`.
 
+### External
+
+Used to define an external index source:
+
+- On-disk monolithic index produced by `clangd-indexer` or
+- Address of a [remote-index-server](./remote-index.md).
+
+`MountPoint` can be used to specify source root for the index. This is necessary
+to handle relative path conversions. Overall schema looks like this:
+
+```yaml
+Index:
+  External:
+    File: /abs/path/to/an/index.idx
+    # OR
+    Server: my.index.server.com:50051
+    MountPoint: /files/under/this/project/
+```
+
+- Exactly one of `File` or `Server` needs to be specified.
+- `MountPoint` defaults to location of the config fragment if not provided, must
+  be absolute in global config and relative in local config.
+- Declaring an `External` index disables background-indexing implicitly for
+  files under the `MountPoint`. Users can turn it back on, by explicitly
+  mentioning `Background: Build` in a later fragment.
+
 ## ClangTidy
 
 Configure how clang-tidy runs over your files.
 
 The settings are merged with any settings found in .clang-tidy
-configiration files with these ones taking precedence.
+configuration files with the ones from clangd configs taking precedence.
 
 ### Add
 
