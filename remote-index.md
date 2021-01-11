@@ -7,6 +7,7 @@ a shared server to host the index instead.
 ## How it works
 
 The remote index has three components:
+
  - the **indexer** is a batch process that should run on a powerful machine.
    It parses all the code for your project, and produces an index file.
  - the **server** exposes the index over a network. It loads the index file into
@@ -20,8 +21,8 @@ Each of these components are open-source and part of
 
 ## Indexer
 
-`clangd-indexer` collects symbols that can be exported from headers
-(functions, classes, types, etc).
+`clangd-indexer` collects symbols that can be exported from headers (functions,
+classes, types, etc).
 It's usually necessary to run the build system for your project first,
 to produce `compile_commands.json` and possibly generate source files.
 
