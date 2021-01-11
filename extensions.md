@@ -190,17 +190,19 @@ the server, but LSP does not expose them.
 {:v12}
 
 C++ has a complicated grammar and semantic structure that's not always obvious
-from the source. Inspecting the clang AST can lend some insight.
-Despite the name, it captures semantics as well as syntax (e.g. implicit casts).
+from the source. Inspecting the Clang AST can lend some insight.
+Despite the origin of the name (Abstract Syntax Tree), it captures semantics as
+well as syntax (e.g. implicit casts).
 
 **New client->server request**: `textDocument/ast`:
  - Params: `ASTParams` object with properties:
    - `textDocument : TextDocumentIdentifier`: the open file to inspect
-   - `range : Range`: identifies the AST node to fetch.
+   - `range : Range`: the region of the source code whose AST is fetched.
      The highest-level node that entirely contains the range is returned.
  - Result: `ASTNode` object with properties:
    - `role : string`: the general kind of node, such as "expression".
      Corresponds to clang's base AST node type, such as Expr.
+     The most common are "expression", "statement", "type" and "declaration".
    - `kind : string`: the specific kind of node, such as "BinaryOperator".
      Corresponds to clang's concrete node class, with Expr etc suffix dropped.
    - `detail : string?`: brief additional details, such as '||'.
