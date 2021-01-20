@@ -103,11 +103,9 @@ YouCompleteMe supports many features of clangd:
 - **Debug logs**: run `:YcmDebugInfo` to see clangd status, and `:YcmToggleLogs`
   to view clangd's debug logs.
 - **Command-line flags**: Set `g:ycm_clangd_args` in `.vimrc`, e.g.:
-
 ```vim
 let g:ycm_clangd_args = ['-log=verbose', '-pretty']
 ```
-
 - **Alternate clangd binary**: set `g:ycm_clangd_binary_path` in `.vimrc`.
 
 ---

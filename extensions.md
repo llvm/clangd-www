@@ -34,7 +34,7 @@ If the corresponding file can't be determined, `""` is returned.
 ## File status
 {:.v8}
 
-Provides information about activity on clangd per-file worker thread.
+Provides information about activity on clangd's per-file worker thread.
 This can be relevant to users as building the AST blocks many other operations.
 
 **New server->client notification**: `textDocument/clangd.fileStatus`
@@ -171,7 +171,7 @@ Well-known encodings are:
 **New InitializeResponse property**: `offsetEncoding: string`:
 
 - Specifies the encoding that was selected by the server, and should be used.
-- This should be one of the requested encodings, or `"utf-16"` if none ore
+- This should be one of the requested encodings, or `"utf-16"` if none are
   supported.
 - Only sent if the client capability was specified (or the equivalent
 command-line flag `-offset-encoding=utf-8`).

@@ -81,7 +81,7 @@ to work, particularly on Mac. These live in [CommandMangler].
 ### Diagnostics
 
 During parsing, clang emits diagnostics through a `DiagnosticConsumer` callback.
-clangd [StoreDiags] implementation converts them into [Diag] objects,
+clangd's [StoreDiags] implementation converts them into [Diag] objects,
 which capture the relationships between diagnostics, fixes, and notes.
 These are exposed in `ParsedAST`.
 (clang-tidy diagnostics are generated separately in `buildAST()`, but also end

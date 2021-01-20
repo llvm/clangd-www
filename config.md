@@ -44,7 +44,7 @@ Project configuration applies to files under its tree (`proj/.clangd` configures
 Configuration is combined when this is sensible. In case of conflicts, user
 config has the highest precedence, then inner project, then outer project.
 
-## Schema
+# Schema
 
 At the top-level, a fragment is a key-value mapping that divides the document
 into "blocks" of related options, each of which is a key-value mapping.
@@ -52,7 +52,7 @@ into "blocks" of related options, each of which is a key-value mapping.
 In most places where an array of scalar values can be specified, a single value
 is also acceptable. e.g. `Add: -Wall` is equivalent to `Add: [-Wall]`.
 
-### If
+## If
 
 Conditions in the `If` block restrict when a fragment applies.
 
@@ -74,15 +74,15 @@ Conditions based on a file's path use the following form:
 
 If no file is being processed, these conditions will not match.
 
-#### PathMatch
+### PathMatch
 
 The file being processed must fully match a regular expression.
 
-#### PathExclude
+### PathExclude
 
 The file being processed must *not* fully match a regular expression.
 
-### CompileFlags
+## CompileFlags
 
 Affects how a source file is parsed.
 
@@ -102,11 +102,11 @@ searches for `compile_commands.json` in parents of the source file.
 
 This section modifies how the compile command is constructed.
 
-#### Add
+### Add
 
 List of flags to append to the compile command.
 
-#### Remove
+### Remove
 
 List of flags to remove from the compile command.
 
@@ -127,7 +127,7 @@ Example:
 
 Flags added by the same CompileFlags entry will not be removed.
 
-### Index
+## Index
 
 Controls how clangd understands code outside the current file.
 
@@ -136,10 +136,10 @@ Index:
   Background: Skip     # Disable slow background indexing of these files.
 ```
 
-clangd indexes provide information about symbols that isn't available to
+clangd's indexes provide information about symbols that isn't available to
 clang's parser, such as incoming references.
 
-#### Background
+### Background
 
 Whether files are built in the background to produce a project index.
 This is checked for translation units only, not headers they include.
