@@ -272,7 +272,7 @@ they are different.
 [Bear](https://github.com/rizsotto/Bear) is a tool to generate a
 compile_commands.json file by recording a complete build.
 
-For a `make`-based build, you can run `make clean; bear make` to generate the
+For a `make`-based build, you can run `make clean; bear -- make` to generate the
 file (and run a clean build!).
 </details>
 

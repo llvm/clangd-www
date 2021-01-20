@@ -144,3 +144,67 @@ clang's parser, such as incoming references.
 Whether files are built in the background to produce a project index.
 This is checked for translation units only, not headers they include.
 Legal values are `Build` (the default) or `Skip`.
+
+### External
+
+Used to define an external index source:
+
+- On-disk monolithic index produced by `clangd-indexer` or
+- Address of a [remote-index-server](./remote-index.md).
+
+`MountPoint` can be used to specify source root for the index. This is necessary
+to handle relative path conversions. Overall schema looks like this:
+
+```yaml
+Index:
+  External:
+    File: /abs/path/to/an/index.idx
+    # OR
+    Server: my.index.server.com:50051
+    MountPoint: /files/under/this/project/
+```
+
+- Exactly one of `File` or `Server` needs to be specified.
+- `MountPoint` defaults to location of the config fragment if not provided, must
+  be absolute in global config and relative in local config.
+- Declaring an `External` index disables background-indexing implicitly for
+  files under the `MountPoint`. Users can turn it back on, by explicitly
+  mentioning `Background: Build` in a later fragment.
+
+## ClangTidy
+
+Configure how clang-tidy runs over your files.
+
+The settings are merged with any settings found in .clang-tidy
+configuration files with the ones from clangd configs taking precedence.
+
+### Add
+
+List of checks to enable, can be globs.
+
+### Remove
+
+List of checks to disable, can be globs.
+
+This takes precedence over Add, this supports enabling all checks from a module apart from some specific checks.
+
+Example to use all modernize module checks apart from use trailing return type:
+
+```
+ ClangTidy:
+   Add: modernize*
+   Remove: modernize-use-trailing-return-type
+```
+
+### CheckOptions
+
+Key-value pairs of options for clang-tidy checks.
+Available options for all checks can be found [here](https://clang.llvm.org/extra/clang-tidy/checks/list.html).
+
+Note the format here is slightly different to `.clang-tidy` configuration files as we don't specify `key: <key>, value: <value>`.
+Instead just use `<key>: <value>`
+```
+ClangTidy:
+  CheckOptions:
+    readability-identifier-naming.VariableCase: CamelCase
+```

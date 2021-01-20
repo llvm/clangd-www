@@ -220,3 +220,56 @@ the server, but LSP does not expose them.
 - Clients with non-fuzzy client-side filtering only should sort by `score`.
 - Clients that don't support client-side filtering should ignore this and
   use `sortText`, which incorporates `score` and fuzzy-matching.
+
+## AST
+{:v12}
+
+C++ has a complicated grammar and semantic structure that's not always obvious
+from the source. Inspecting the Clang AST can lend some insight.
+Despite the origin of the name (Abstract Syntax Tree), it captures semantics as
+well as syntax (e.g. implicit casts).
+
+**New client->server request**: `textDocument/ast`:
+ - Params: `ASTParams` object with properties:
+   - `textDocument : TextDocumentIdentifier`: the open file to inspect
+   - `range : Range`: the region of the source code whose AST is fetched.
+     The highest-level node that entirely contains the range is returned.
+ - Result: `ASTNode` object with properties:
+   - `role : string`: the general kind of node, such as "expression".
+     Corresponds to clang's base AST node type, such as Expr.
+     The most common are "expression", "statement", "type" and "declaration".
+   - `kind : string`: the specific kind of node, such as "BinaryOperator".
+     Corresponds to clang's concrete node class, with Expr etc suffix dropped.
+   - `detail : string?`: brief additional details, such as '||'.
+     Information present here depends on the node kind.
+   - `arcana : string?`: one line dump of information, similar to that printed
+     by `clang -Xclang -ast-dump`. Only available for certain types of nodes.
+   - `range : Range`: the part of the code that produced this node.
+     Missing for implicit nodes, nodes produced by macro expansion, etc.
+   - `children : ASTNode[]?`: descendants describing the internal structure.
+     The tree of nodes is similar to that printed by `clang -Xclang -ast-dump`,
+     or that traversed by `clang::RecursiveASTVisitor`.
+
+**New server capability**: `astProvider : bool`:
+ - Signals that the server supports `textDocmuent/ast` requests.
+
+## Memory usage
+{:v12}
+
+clangd can use a lot of memory. It can be valuable to understand where it goes.
+We expose a hierarchy where memory is associated with a tree of components.
+e.g. an AST may be stored under `clangd_server.tuscheduler."main.cpp".ast`.
+
+The actual component hierarchy is subject to change between versions, and
+the memory usage is only estimated (it mostly counts objects rather than
+tracking allocations directly).
+
+**New client->server request**: `$/memoryUsage`:
+ - Params: none
+ - Result: `MemoryTree` object with properties:
+   - `_total : number`: number of bytes used, including child components
+   - `_self : number`: number of bytes used, excluding child components
+   - `[component] : MemoryTree`: memory usage of a named child component
+
+**New server capability**: `memoryUsageProvider : bool`:
+ - Signals that the server supports `$/memoryUsage` requests.
