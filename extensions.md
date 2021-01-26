@@ -134,7 +134,7 @@ index). This was added to support integration with indexes outside clangd.
 {:.v9}
 
 LSP specifies that offsets within lines are in UTF-16 code units (for `Position`s and also delta-encoded document updates).
-This unusual is an unfortunate legacy of VSCode's JavaScript implementation.
+This choice of encoding is a legacy of VSCode's JavaScript implementation.
 
 clangd allows clients to use UTF-8 offsets instead. This allows clients that always speak UTF-8 (in violation of the protocol) to work correctly, and those that are UTF-8 native to avoid unneccesary transcoding (which may be slow if implemented in e.g. vimscript).
 
@@ -148,9 +148,9 @@ clangd allows clients to use UTF-8 offsets instead. This allows clients that alw
   - `utf-32`: `character` counts codepoints
 
 **New InitializeResponse property**: `offsetEncoding: string`:
-  - Specifies the encoding that was selected by the server, and should be used.
-  - This should be one of the requested encodings, or `"utf-16"` if none ore supported.
-  - Only sent if the client capability was specified (or the equivalent command-line flag `-offset-encoding=utf-8`).
+  - Specifies the encoding that the server selected, which should be used.
+  - This should be one of the requested encodings, or `"utf-16"` if none were supported.
+  - Only sent if the client capability was specified (or otherwise negotiated, e.g. clangd flag `-offset-encoding=utf-8`).
   
 **Advice for clients using this extension**:
   - clients that only support UTF-8 should send `offsetEncoding: ["utf-8"]` in their client capabilities.
