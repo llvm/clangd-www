@@ -171,7 +171,6 @@ Index:
   mentioning `Background: Build` in a later fragment.
 
 ## Diagnostics 
-
 {:.v12}
 
 ### Suppress
