@@ -187,7 +187,7 @@ the server, but LSP does not expose them.
     use `sortText`, which incorporates `score` and fuzzy-matching.
 
 ## AST
-{:v12}
+{:.v12}
 
 C++ has a complicated grammar and semantic structure that's not always obvious
 from the source. Inspecting the Clang AST can lend some insight.
@@ -219,7 +219,7 @@ well as syntax (e.g. implicit casts).
  - Signals that the server supports `textDocmuent/ast` requests.
 
 ## Memory usage
-{:v12}
+{:.v12}
 
 clangd can use a lot of memory. It can be valuable to understand where it goes.
 We expose a hierarchy where memory is associated with a tree of components.
