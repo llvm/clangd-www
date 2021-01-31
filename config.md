@@ -170,18 +170,36 @@ Index:
   files under the `MountPoint`. Users can turn it back on, by explicitly
   mentioning `Background: Build` in a later fragment.
 
-## ClangTidy
+## Diagnostics 
+{:.v12}
+
+### Suppress
+
+Diagnostic codes that should be suppressed.
+
+ Valid values are:
+ - `*`, to disable all diagnostics
+ - diagnostic codes exposed by clangd (e.g `unknown_type`, `-Wunused-result`)
+ - clang internal diagnostic codes (e.g. `err_unknown_type`)
+ - warning categories (e.g. `unused-result`)
+ - clang-tidy check names (e.g. `bugprone-narrowing-conversions`)
+
+This is a simple filter. Diagnostics can be controlled in other ways
+(e.g. by disabling a clang-tidy check, or the `-Wunused` compile flag).
+This often has other advantages, such as skipping some analysis.
+
+### ClangTidy
 
 Configure how clang-tidy runs over your files.
 
 The settings are merged with any settings found in .clang-tidy
 configuration files with the ones from clangd configs taking precedence.
 
-### Add
+#### Add
 
 List of checks to enable, can be globs.
 
-### Remove
+#### Remove
 
 List of checks to disable, can be globs.
 
@@ -195,7 +213,7 @@ Example to use all modernize module checks apart from use trailing return type:
    Remove: modernize-use-trailing-return-type
 ```
 
-### CheckOptions
+#### CheckOptions
 
 Key-value pairs of options for clang-tidy checks.
 Available options for all checks can be found [here](https://clang.llvm.org/extra/clang-tidy/checks/list.html).
