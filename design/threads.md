@@ -64,4 +64,5 @@ parser hits it.
 
 As this doesn't reuse the AST, it can run on a separate thread rather than the
 ASTWorker. It does use the preamble, but we don't wait for it to be up-to-date.
-Since completion is extremely, it just uses whichever is immediately available.
+Since completion is extremely time sensitive, it just uses whichever is
+immediately available.
