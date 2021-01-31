@@ -179,13 +179,13 @@ Diagnostic codes that should be suppressed.
 
  Valid values are:
  - `*`, to disable all diagnostics
- - diagnostic codes exposed by clangd (e.g unknown_type, -Wunused-result)
- - clang internal diagnostic codes (e.g. err_unknown_type)
- - warning categories (e.g. unused-result)
- - clang-tidy check names (e.g. bugprone-narrowing-conversions)
+ - diagnostic codes exposed by clangd (e.g `unknown_type`, `-Wunused-result`)
+ - clang internal diagnostic codes (e.g. `err_unknown_type`)
+ - warning categories (e.g. `unused-result`)
+ - clang-tidy check names (e.g. `bugprone-narrowing-conversions`)
 
 This is a simple filter. Diagnostics can be controlled in other ways
-(e.g. by disabling a clang-tidy check, or the -Wunused compile flag).
+(e.g. by disabling a clang-tidy check, or the `-Wunused` compile flag).
 This often has other advantages, such as skipping some analysis.
 
 ### ClangTidy
