@@ -17,7 +17,7 @@ The remote index has three components:
    of a symbol) in real-time.
 
 Each of these components are open-source and part of
-[llvm/llvm-project/clang-tools-extra/clangd](https://github.com/llvm/llvm-project/tree/master/clang-tools-extra/clangd/).
+[llvm/llvm-project/clang-tools-extra/clangd](https://github.com/llvm/llvm-project/tree/main/clang-tools-extra/clangd/).
 
 ## Indexer
 
