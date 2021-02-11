@@ -16,7 +16,7 @@ easier and make the development process more accessible. The whole service
 implementation, including infrastructure, is open source and publicly
 available:
 
-* [clangd/index/remote](https://github.com/llvm/llvm-project/tree/master/clang-tools-extra/clangd/index/remote):
+* [clangd/index/remote](https://github.com/llvm/llvm-project/tree/main/clang-tools-extra/clangd/index/remote):
   `clangd-index-server` and client implementation
 * [llvm-remote-index](https://github.com/clangd/llvm-remote-index):
   indexing, data pipelines and deployment scripts
@@ -40,9 +40,9 @@ it is a public instance running and serving unmodified LLVM code.
 The requests clangd sends to server contain information about the code such as
 the file path you are editing, partial token before the cursor and other
 index signals. Request details:
-[`Index.proto`](https://github.com/llvm/llvm-project/blob/master/clang-tools-extra/clangd/index/remote/Index.proto)
+[`Index.proto`](https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/index/remote/Index.proto)
 and
-[`Service.proto`](https://github.com/llvm/llvm-project/blob/master/clang-tools-extra/clangd/index/remote/Service.proto)
+[`Service.proto`](https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/index/remote/Service.proto)
 This data is needed to provide index results, is discarded after serving the
 request, and is not stored.
 

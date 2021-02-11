@@ -19,7 +19,7 @@
   icon: '⊕'
 - separator
 - title: Browse code
-  url: https://github.com/llvm/llvm-project/tree/master/clang-tools-extra/clangd
+  url: https://github.com/llvm/llvm-project/tree/main/clang-tools-extra/clangd
   icon: '📄'
 - title: Bug tracker
   url: https://github.com/clangd/clangd/issues
