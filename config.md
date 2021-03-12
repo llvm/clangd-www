@@ -208,9 +208,10 @@ This takes precedence over Add, this supports enabling all checks from a module 
 Example to use all modernize module checks apart from use trailing return type:
 
 ```
- ClangTidy:
-   Add: modernize*
-   Remove: modernize-use-trailing-return-type
+Diagnostics:
+  ClangTidy:
+    Add: modernize*
+    Remove: modernize-use-trailing-return-type
 ```
 
 #### CheckOptions
@@ -221,7 +222,8 @@ Available options for all checks can be found [here](https://clang.llvm.org/extr
 Note the format here is slightly different to `.clang-tidy` configuration files as we don't specify `key: <key>, value: <value>`.
 Instead just use `<key>: <value>`
 ```
-ClangTidy:
-  CheckOptions:
-    readability-identifier-naming.VariableCase: CamelCase
+Diagnostics:
+  ClangTidy:
+    CheckOptions:
+      readability-identifier-naming.VariableCase: CamelCase
 ```
