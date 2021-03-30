@@ -1,13 +1,11 @@
-# Unofficial LLVM remote index service
+# LLVM remote index service
 
-A clangd [remote index](/remote-index.html) server for the LLVM project is
-currently available for testing.
-The service is unsupported and is not an official LLVM product.
+A clangd [remote index](/remote-index.html) server for the [LLVM
+project](https://github.com/llvm/llvm-project) is currently available.
 
 To use it, you'll need clangd with remote-index support. Set the server address
-to `llvm.clangd-index-staging.dev:50051`, and the project root to your
-`llvm-project` directory. Details on how to do this are at
-[remote index](/remote-index.html).
+to `clangd-index.llvm.org:5900`, and the project root to your `llvm-project`
+directory. Details on how to do this are at [remote index](/remote-index.html).
 
 ## Overview
 
@@ -33,9 +31,9 @@ server periodically fetches the newest data.
 
 This index service is offered for free to all developers, and is mostly useful
 to people working on the open-source LLVM project. The service is run on a
-best-effort basis and is not an official LLVM product.
-Google donated the funding for Google Cloud Platform instance that is used, but
-it is a public instance running and serving unmodified LLVM code.
+best-effort basis. Google donated the funding for Google Cloud Platform
+instance that is used, but it is a public instance running and serving
+unmodified LLVM code.
 
 The requests clangd sends to server contain information about the code such as
 the file path you are editing, partial token before the cursor and other

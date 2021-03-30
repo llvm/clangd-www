@@ -18,6 +18,13 @@
   url: /extensions.html
   icon: '⊕'
 - separator
+- title: Remote Index
+  url: /remote-index.html
+  icon: '💻'
+- title: LLVM Remote Index service
+  url: /llvm-remote-index.html
+  icon: '🐲'
+- separator
 - title: Browse code
   url: https://github.com/llvm/llvm-project/tree/main/clang-tools-extra/clangd
   icon: '📄'
