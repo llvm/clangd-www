@@ -126,6 +126,16 @@ Example:
 
 Flags added by the same CompileFlags entry will not be removed.
 
+### CompilationDatabase
+{:.v12}
+
+Directory to search for compilation database (compile_comands.json etc).
+Valid values are:
+- A single path to a directory (absolute, or relative to the fragment)
+- Ancestors: search all parent directories (the default)
+- None: do not use a compilation database, just default flags.
+
+
 ## Index
 
 Controls how clangd understands code outside the current file.
@@ -169,6 +179,17 @@ Index:
 - Declaring an `External` index disables background-indexing implicitly for
   files under the `MountPoint`. Users can turn it back on, by explicitly
   mentioning `Background: Build` in a later fragment.
+
+## Style
+
+Describes the style of the codebase, beyond formatting.
+
+### FullyQualifiedNamespaces
+
+Namespaces that should always be fully qualified, meaning no "using"
+declarations, always spell out the whole name (with or without leading::). 
+All nested namespaces are affected as well.
+Affects availability of the AddUsing tweak.
 
 ## Diagnostics 
 {:.v12}
@@ -227,3 +248,9 @@ Diagnostics:
     CheckOptions:
       readability-identifier-naming.VariableCase: CamelCase
 ```
+## Completion
+{:.v13}
+
+### AllScopes
+Whether code completion should include suggestions from scopes that are
+not visible. The required scope prefix will be inserted.
