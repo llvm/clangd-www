@@ -145,6 +145,7 @@ This is checked for translation units only, not headers they include.
 Legal values are `Build` (the default) or `Skip`.
 
 ### External
+{:.v12}
 
 Used to define an external index source:
 
