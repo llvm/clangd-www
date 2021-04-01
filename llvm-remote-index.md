@@ -5,7 +5,20 @@ project](https://github.com/llvm/llvm-project) is currently available.
 
 To use it, you'll need clangd with remote-index support. Set the server address
 to `clangd-index.llvm.org:5900`, and the project root to your `llvm-project`
-directory. Details on how to do this are at [remote index](/remote-index.html).
+directory. One way of doing it would be putting this under
+`~/.config/clangd/config.yaml`:
+
+```yaml
+If:
+  PathMatch: /path/to/llvm/.*
+Index:
+  External:
+    Server: clangd-index.llvm.org:5900
+    MountPoint: /path/to/llvm/
+```
+
+For more details on remote index configuration, see [remote
+index](/remote-index.html).
 
 ## Overview
 
