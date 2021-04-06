@@ -4,6 +4,7 @@ clangd supports some features that are not in the official
 [Language Server Protocol specification](https://microsoft.github.io/language-server-protocol/specification).
 
 We try to do this sparingly. The most important considerations are:
+
 - **Editor support**: How many users will the feature be available to?
 - **Standardization**: Is the feature stable? is it likely to be adopted by more
   editors over time?
@@ -14,7 +15,7 @@ We try to do this sparingly. The most important considerations are:
 These extensions may evolve or disappear over time. If you use them, try to
 recover gracefully if the structures aren't what's expected.
 
-{% include toc.md %} 
+{% include toc.md %}
 
 ## Switch between source/header
 {:.v6}
@@ -141,7 +142,7 @@ clangd allows clients to use UTF-8 offsets instead. This allows clients that alw
 **New client capability**: `offsetEncoding : string[]`:
 
   Lists the encodings the client supports, in preference order. It SHOULD include `"utf-16"`. If not present, it is assumed to be `["utf-16"]`
-  
+
   Well-known encodings are:
   - `utf-8`: `character` counts bytes
   - `utf-16`: `character` counts code units
@@ -151,14 +152,14 @@ clangd allows clients to use UTF-8 offsets instead. This allows clients that alw
   - Specifies the encoding that the server selected, which should be used.
   - This should be one of the requested encodings, or `"utf-16"` if none were supported.
   - Only sent if the client capability was specified (or otherwise negotiated, e.g. clangd flag `-offset-encoding=utf-8`).
-  
+
 **Advice for clients using this extension**:
   - clients that only support UTF-8 should send `offsetEncoding: ["utf-8"]` in their client capabilities.
     This will cause the server to use UTF-8 if supported.
   - clients that prefer UTF-8 but can use UTF-16 should send `offsetEncoding: ["utf-8", "utf-16"]` and observe the selected encoding in the `InitializeResponse`, defaulting to UTF-16 if it's not present.
     This will negotiate UTF-8 with servers that support it.
   - clients that prefer UTF-16 may send `offsetEncoding: ["utf-16"]` or simply not use the extension.
- 
+
 **Advice for servers using this extension**:
   - servers that only support UTF-8 should send `offsetEncoding: "utf-8"` in their InitializeResponse.
     This will enable UTF-8 in clients that support it.

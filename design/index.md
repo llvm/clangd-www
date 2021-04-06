@@ -34,11 +34,11 @@ C/C++/Objective-C are designed so that you can parse one source file at a time,
 without needing to see the whole program. This means that the resulting AST
 lacks certain information:
 
- - if you call a function, we can find a declaration for it, but we may not
-   have seen its definition
- - there's no way to find all the references to a struct you defined
- - code completion can suggest variables that are in scope, but not those
-   where you'd need to add an `#include`
+- if you call a function, we can find a declaration for it, but we may not
+  have seen its definition
+- there's no way to find all the references to a struct you defined
+- code completion can suggest variables that are in scope, but not those
+  where you'd need to add an `#include`
 
 To solve this, clangd maintains a database of symbols found anywhere in the
 program, called the index. This is extracted from each open file as it is
@@ -46,4 +46,3 @@ parsed, and also by parsing the whole project in the background.
 
 [the clangd index](/design/indexing.html)
 {:.main-article}
-

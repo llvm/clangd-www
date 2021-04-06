@@ -14,12 +14,9 @@ Configuration is stored in YAML files. These are either:
   Generally this should be used for shared and checked-in settings.
 
 - **user configuration**: a `config.yaml` file in an OS-specific directory:
-
   - *Windows*: `%LocalAppData%\clangd\config.yaml`, typically
     `C:\Users\Bob\AppData\Local\clangd\config.yaml`.
-
   - *macOS*: `~/Library/Preferences/clangd/config.yaml`
-
   - *Linux and others*: `$XDG_CONFIG_HOME/clangd/config.yaml`, typically
     `~/.config/clangd/config.yaml`.
 
@@ -56,7 +53,7 @@ is also acceptable. e.g. `Add: -Wall` is equivalent to `Add: [-Wall]`.
 
 Conditions in the `If` block restrict when a fragment applies.
 
-```
+```yaml
 If:                               # Apply this config conditionally
   PathMatch: .*\.h                # to all headers...
   PathExclude: include/llvm-c/.*  # except those under include/llvm-c/
@@ -86,7 +83,7 @@ The file being processed must *not* fully match a regular expression.
 
 Affects how a source file is parsed.
 
-```
+```yaml
 CompileFlags:                     # Tweak the parse settings
   Add: [-xc++, -Wall]             # treat all files as C++, enable more warnings
   Remove: -W*                     # strip all other warning-related flags
@@ -120,6 +117,7 @@ List of flags to remove from the compile command.
 In all cases, `-Xclang` is also removed where needed.
 
 Example:
+
 - Command: `clang++ --include-directory=/usr/include -DFOO=42 foo.cc`
 - Configuration: `Remove: [-I, -DFOO=*]`
 - Result: `clang++ foo.cc`
@@ -130,7 +128,7 @@ Flags added by the same CompileFlags entry will not be removed.
 
 Controls how clangd understands code outside the current file.
 
-```
+```yaml
 Index:
   Background: Skip     # Disable slow background indexing of these files.
 ```
@@ -171,19 +169,20 @@ Index:
   files under the `MountPoint`. Users can turn it back on, by explicitly
   mentioning `Background: Build` in a later fragment.
 
-## Diagnostics 
+## Diagnostics
 {:.v12}
 
 ### Suppress
 
 Diagnostic codes that should be suppressed.
 
- Valid values are:
- - `*`, to disable all diagnostics
- - diagnostic codes exposed by clangd (e.g `unknown_type`, `-Wunused-result`)
- - clang internal diagnostic codes (e.g. `err_unknown_type`)
- - warning categories (e.g. `unused-result`)
- - clang-tidy check names (e.g. `bugprone-narrowing-conversions`)
+Valid values are:
+
+- `*`, to disable all diagnostics
+- diagnostic codes exposed by clangd (e.g `unknown_type`, `-Wunused-result`)
+- clang internal diagnostic codes (e.g. `err_unknown_type`)
+- warning categories (e.g. `unused-result`)
+- clang-tidy check names (e.g. `bugprone-narrowing-conversions`)
 
 This is a simple filter. Diagnostics can be controlled in other ways
 (e.g. by disabling a clang-tidy check, or the `-Wunused` compile flag).
@@ -208,7 +207,7 @@ This takes precedence over Add, this supports enabling all checks from a module 
 
 Example to use all modernize module checks apart from use trailing return type:
 
-```
+```yaml
 Diagnostics:
   ClangTidy:
     Add: modernize*
@@ -220,9 +219,11 @@ Diagnostics:
 Key-value pairs of options for clang-tidy checks.
 Available options for all checks can be found [here](https://clang.llvm.org/extra/clang-tidy/checks/list.html).
 
-Note the format here is slightly different to `.clang-tidy` configuration files as we don't specify `key: <key>, value: <value>`.
-Instead just use `<key>: <value>`
-```
+Note the format here is slightly different to `.clang-tidy` configuration
+files as we don't specify `key: <key>, value: <value>`. Instead just use
+`<key>: <value>`
+
+```yaml
 Diagnostics:
   ClangTidy:
     CheckOptions:
