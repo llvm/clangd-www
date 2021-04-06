@@ -171,7 +171,7 @@ Index:
   files under the `MountPoint`. Users can turn it back on, by explicitly
   mentioning `Background: Build` in a later fragment.
 
-## Diagnostics 
+## Diagnostics
 {:.v12}
 
 ### Suppress

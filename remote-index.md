@@ -1,6 +1,6 @@
 # Remote index
 
-A [project-wide index](/design/indexing.html) can be slow to build, particlarly
+A [project-wide index](/design/indexing.html) can be slow to build, particularly
 for large projects on slower machines like laptops. A "remote index" allows
 a shared server to host the index instead.
 

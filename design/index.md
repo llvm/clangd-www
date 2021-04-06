@@ -1,6 +1,6 @@
 # Design of clangd
 
-A language server's main responsibilites are:
+A language server's main responsibilities are:
 
  - keeping track of open files and unsaved changes
  - providing the editor with up-to-date diagnostics (warnings/errors)

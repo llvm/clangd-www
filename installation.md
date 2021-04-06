@@ -13,7 +13,7 @@ After installing, `clangd --version` should print `clangd version 7.0.0` or late
 
 (Version numbers are based on LLVM. clangd 7 was the first usable release).
 
-### Installling with a package manager
+### Installing with a package manager
 
 <details>
 <summary markdown="span">Mac OS X</summary>
@@ -37,7 +37,7 @@ Try to install the latest packaged release (9.0):
 sudo apt-get install clangd-9
 ```
 If that's not found, at least `clangd-9` or `clangd-8` should be available.
-Versions before 8 were part of the `clang-tools` pacakge.
+Versions before 8 were part of the `clang-tools` package.
 
 This will install clangd as `/usr/bin/clangd-9`. Make it the default `clangd`:
 ```
@@ -50,7 +50,7 @@ sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-9 100
 Most distributions include clangd in a `clangd` package, in a `clang-tools`
 package, or in the full `llvm` distribution.
 
-For some platforms, binaries are also avaliable at [releases.llvm.org](http://releases.llvm.org/download.html).
+For some platforms, binaries are also available at [releases.llvm.org](http://releases.llvm.org/download.html).
 </details>
 
 ### Standalone .zip releases
@@ -131,7 +131,7 @@ completion-at-point` should work.
 ![Diagnostics in Emacs](screenshots/emacs_diagnostics.png)
 
 eglot supports many of clangd's features, with caveats:
- - code completion, enhaced by `company-mode`, see below
+ - code completion, enhanced by `company-mode`, see below
  - diagnostics and fixes
  - find definitions and references (`M-x xref-find-definitions` etc)
  - hover and highlights
@@ -156,7 +156,7 @@ with `M-x company-mode`.
 
 <details>
 <summary markdown="span">Visual Studio Code</summary>
-The official extension is 
+The official extension is
 [vscode-clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)
 and can be installed from within VSCode.
 
