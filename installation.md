@@ -17,10 +17,18 @@ After installing, `clangd --version` should print `clangd version 7.0.0` or late
 
 <details>
 <summary markdown="span">Mac OS X</summary>
+ 
 Clangd can be installed (along with LLVM) via [Homebrew](https://brew.sh):
 ```
 brew install llvm
 ```
+
+or with [MacPorts](https://www.macports.org/):
+
+```
+sudo port install clang-11
+```
+
 </details>
 
 <details>
