@@ -145,29 +145,18 @@ including declaration, definition and references.
 
 Most symbols are renameable, such as classes, variables, functions and methods.
 
+Renaming a symbol will affect usages of the name across the project.
+{:.v11}
+
 Known limitations
 
 - References in templates and macro bodies may not be renamed (difficult to
   analyze in general)
 - References in comments and disabled preprocessor sections are not yet renamed
 - Related symbols (e.g. overriden methods in a class hierarchy) are not yet renamed
+- Renaming symbols used in several files uses the [project index](design/indexing.html), and works best when it is up-to-date
 
 > TIP: the rename workflow highly depends on the editor you are using. Some
 > editors, e.g. VSCode, provide a way to preview the rename changes before
 > applying them; while some just apply the changes directly.
 {:.tip}
-
-#### Within-file rename
-{:.v7}
-
-This mode only allows to rename a local symbol (one which is only used in
-current file). It is enabled with the command-line flag
-`-cross-file-rename=false`.
-
-#### Cross-file rename
-{:.v10}
-
-This default mode allows renaming symbols used in several files.
-
-It uses the [project index](design/indexing.html) to find all renamed references
-quickly, so works best when the index is up-to-date.
