@@ -67,7 +67,6 @@ you fill them in.
 
 ![screenshot: signature help](screenshots/signature_help.gif)
 
-
 ## Cross-references
 
 These features let you navigate your codebase.
@@ -98,7 +97,6 @@ Show all references to a symbol under the cursor.
 
 Some editors will automatically highlight local references to the selected
 symbol as you move around a file.
-
 
 ## Navigation
 
@@ -134,8 +132,7 @@ comments.
 clangd respects your project's `.clang-format` file which controls styling
 options.
 
-(Format-as-you-type is experimental and doesn't work well yet).
-
+Format-as-you-type is experimental and doesn't work well yet.
 
 ## Refactoring
 

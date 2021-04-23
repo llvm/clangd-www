@@ -29,12 +29,12 @@ Instead, they determine the affected file and place the action on `TUScheduler`.
 This class maintains a set of `ASTWorker`s, each is responsible for one file.
 The `ASTWorker` has a queue of operations, and a thread consuming them:
 
- - throwing away operations that are obsolete:
-   - reads that have been cancelled
-   - writes immediately followed by writes (e.g. two consecutive keystrokes)
- - executing the first operation that is still valid:
-   - writes: rebuilding the AST (and preamble if needed), publishing diagnostics
-   - reads: passing the AST to the action callback
+- throwing away operations that are obsolete:
+  - reads that have been cancelled
+  - writes immediately followed by writes (e.g. two consecutive keystrokes)
+- executing the first operation that is still valid:
+  - writes: rebuilding the AST (and preamble if needed), publishing diagnostics
+  - reads: passing the AST to the action callback
 
 This ensures there's only one AST and one preamble per open file, operations on
 one file don't block another, and that reads see exactly the writes issued
@@ -47,8 +47,8 @@ the first change isn't ideal.
 
 Suppose the user quickly types `foo();`. Building after the `f` is typed means:
 
- - we'll always see a diagnostic "unknown identifier `f`", which is annoying.
- - we'll never see the correct diagnostics until after 2 rebuilds
+- we'll always see a diagnostic "unknown identifier `f`", which is annoying.
+- we'll never see the correct diagnostics until after 2 rebuilds
 
 To address this, writes are debounced: rebuilding doesn't start until either a
 read is received or a short deadline expires (user stopped typing).

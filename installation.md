@@ -1,9 +1,10 @@
 # Getting started
 
 To use clangd, you need:
- - clangd installed
- - a plugin for your editor
- - to tell clangd how your project is built
+
+- clangd installed
+- a plugin for your editor
+- to tell clangd how your project is built
 
 ## Installing clangd
 
@@ -41,16 +42,20 @@ Download the LLVM installer from [releases.llvm.org](http://releases.llvm.org/do
 Installing the `clangd` package will usually give you a slightly older version.
 
 Try to install the latest packaged release (9.0):
-```
+
+```bash
 sudo apt-get install clangd-9
 ```
+
 If that's not found, at least `clangd-9` or `clangd-8` should be available.
 Versions before 8 were part of the `clang-tools` package.
 
 This will install clangd as `/usr/bin/clangd-9`. Make it the default `clangd`:
-```
+
+```bash
 sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-9 100
 ```
+
 </details>
 
 <details>
@@ -96,19 +101,21 @@ You should see errors highlighted and completions as you type.
 
 YouCompleteMe supports many of clangd's features:
 
- - code completion
- - diagnostics and fixes (`:YcmCompleter FixIt`)
- - find declarations, references, and definitions (`:YcmCompleter GoTo` etc)
- - rename symbol (`:YcmCompleter RefactorRename`)
+- code completion
+- diagnostics and fixes (`:YcmCompleter FixIt`)
+- find declarations, references, and definitions (`:YcmCompleter GoTo` etc)
+- rename symbol (`:YcmCompleter RefactorRename`)
 
 ### Under the hood
 
 - **Debug logs**: run `:YcmDebugInfo` to see clangd status, and `:YcmToggleLogs`
   to view clangd's debug logs.
 - **Command-line flags**: Set `g:ycm_clangd_args` in `.vimrc`, e.g.:
-```
-let g:ycm_clangd_args = ['-log=verbose', '-pretty']
-```
+
+  ```vim
+  let g:ycm_clangd_args = ['-log=verbose', '-pretty']
+  ```
+
 - **Alternate clangd binary**: set `g:ycm_clangd_binary_path` in `.vimrc`.
 
 ---
@@ -126,7 +133,7 @@ Install eglot with `M-x package-install RET eglot RET`.
 
 Add the following to `~/.emacs` to enable clangd:
 
-```
+```elisp
 (require 'eglot)
 (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
 (add-hook 'c-mode-hook 'eglot-ensure)
@@ -139,11 +146,12 @@ completion-at-point` should work.
 ![Diagnostics in Emacs](screenshots/emacs_diagnostics.png)
 
 eglot supports many of clangd's features, with caveats:
- - code completion, enhanced by `company-mode`, see below
- - diagnostics and fixes
- - find definitions and references (`M-x xref-find-definitions` etc)
- - hover and highlights
- - code actions (`M-x eglot-code-actions`)
+
+- code completion, enhanced by `company-mode`, see below
+- diagnostics and fixes
+- find definitions and references (`M-x xref-find-definitions` etc)
+- hover and highlights
+- code actions (`M-x eglot-code-actions`)
 
 ### company-mode
 
@@ -177,12 +185,13 @@ you should get rich code completions including e.g. function parameters.
 ![Code completion in VSCode](screenshots/basic_completion.png)
 
 vscode-clangd has excellent support for all clangd features, including:
- - code completion
- - diagnostics and fixes
- - find declarations, references, and definitions
- - find symbol in file (`Ctrl-P @foo`) or workspace (`Ctrl-P #foo`)
- - hover and highlights
- - code actions
+
+- code completion
+- diagnostics and fixes
+- find declarations, references, and definitions
+- find symbol in file (`Ctrl-P @foo`) or workspace (`Ctrl-P #foo`)
+- hover and highlights
+- code actions
 
 ### Under the hood
 
@@ -210,11 +219,12 @@ Open a C++ file, and you should see diagnostics and completion:
 ![Completion in Sublime Text](screenshots/sublime_completion.png)
 
 The LSP package has excellent support for all most clangd features, including:
- - code completion (a bit noisy due to how snippets are presented)
- - diagnostics and fixes
- - find definition and references
- - hover and highlights
- - code actions
+
+- code completion (a bit noisy due to how snippets are presented)
+- diagnostics and fixes
+- find definition and references
+- hover and highlights
+- code actions
 
 ### Under the hood
 
@@ -259,13 +269,17 @@ Clangd will look in the parent directories of the files you edit looking for it.
 If your project builds with CMake, it can generate this file. You should enable
 it with:
 
-```cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1```
+```bash
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+```
 
 `compile_commands.json` will be written to your build directory.
 You should symlink it (or simply copy it) to the root of your source tree, if
 they are different.
 
-```ln -s ~/myproject/compile_commands.json ~/myproject-build/```
+```bash
+ln -s ~/myproject/compile_commands.json ~/myproject-build/
+```
 </details>
 
 <details>

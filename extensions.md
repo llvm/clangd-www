@@ -4,6 +4,7 @@ clangd supports some features that are not in the official
 [Language Server Protocol specification](https://microsoft.github.io/language-server-protocol/specification).
 
 We try to do this sparingly. The most important considerations are:
+
 - **Editor support**: How many users will the feature be available to?
 - **Standardization**: Is the feature stable? is it likely to be adopted by more
   editors over time?
