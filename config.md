@@ -13,9 +13,8 @@ Configuration is stored in YAML files. These are either:
 
   Generally this should be used for shared and checked-in settings.
 
-  **NOTE**: Before 11.0.0 version, `.clangd` in the source tree was used to
-  store temporary files. If you still have `.clangd` directory in your
-  projects, you can safely delete it - newer versions of clangd do not use it.
+  (Existing _directories_ named `.clangd` can be deleted.
+  These were used for temporary storage by clangd before version 11.)
 
 - **user configuration**: a `config.yaml` file in an OS-specific directory:
 
