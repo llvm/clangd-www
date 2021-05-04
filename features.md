@@ -67,7 +67,6 @@ you fill them in.
 
 ![screenshot: signature help](screenshots/signature_help.gif)
 
-
 ## Cross-references
 
 These features let you navigate your codebase.
@@ -98,7 +97,6 @@ Show all references to a symbol under the cursor.
 
 Some editors will automatically highlight local references to the selected
 symbol as you move around a file.
-
 
 ## Navigation
 
@@ -134,8 +132,7 @@ comments.
 clangd respects your project's `.clang-format` file which controls styling
 options.
 
-(Format-as-you-type is experimental and doesn't work well yet).
-
+Format-as-you-type is experimental and doesn't work well yet.
 
 ## Refactoring
 
@@ -148,29 +145,18 @@ including declaration, definition and references.
 
 Most symbols are renameable, such as classes, variables, functions and methods.
 
+Renaming a symbol will affect usages of the name across the project.
+{:.v11}
+
 Known limitations
 
 - References in templates and macro bodies may not be renamed (difficult to
   analyze in general)
 - References in comments and disabled preprocessor sections are not yet renamed
 - Related symbols (e.g. overriden methods in a class hierarchy) are not yet renamed
+- Renaming symbols used in several files uses the [project index](design/indexing.html), and works best when it is up-to-date
 
 > TIP: the rename workflow highly depends on the editor you are using. Some
 > editors, e.g. VSCode, provide a way to preview the rename changes before
 > applying them; while some just apply the changes directly.
 {:.tip}
-
-#### Within-file rename
-{:.v7}
-
-The default mode only allows to rename a local symbol (one which is only used in
-current file).
-
-#### Cross-file rename
-{:.v10}
-
-This mode allows renaming symbols used in several files. It is enabled with the
-command-line flag `-cross-file-rename`.
-
-It uses the [project index](design/indexing.html) to find all renamed references
-quickly, so works best when the index is up-to-date.

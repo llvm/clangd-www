@@ -1,6 +1,6 @@
 # Remote index
 
-A [project-wide index](/design/indexing.html) can be slow to build, particlarly
+A [project-wide index](/design/indexing.html) can be slow to build, particularly
 for large projects on slower machines like laptops. A "remote index" allows
 a shared server to host the index instead.
 
@@ -8,22 +8,21 @@ a shared server to host the index instead.
 
 The remote index has three components:
 
- - the **indexer** is a batch process that should run on a powerful machine.
-   It parses all the code for your project, and produces an index file.
- - the **server** exposes the index over a network. It loads the index file into
-   memory, and exposes a [gRPC](https://grpc.io) service to query it.
- - the **client** is part of clangd, which runs on your development machine.
-   It connects to the server and requests information (such as the definition
-   of a symbol) in real-time.
+- the **indexer** is a batch process that should run on a powerful machine.
+  It parses all the code for your project, and produces an index file.
+- the **server** exposes the index over a network. It loads the index file into
+  memory, and exposes a [gRPC](https://grpc.io) service to query it.
+- the **client** is part of clangd, which runs on your development machine.
+  It connects to the server and requests information (such as the definition
+  of a symbol) in real-time.
 
 Each of these components are open-source and part of
 [llvm/llvm-project/clang-tools-extra/clangd](https://github.com/llvm/llvm-project/tree/main/clang-tools-extra/clangd/).
 
 ## Indexer
 
-`clangd-indexer` collects symbols that can be exported from headers (functions,
-classes, types, etc).
-It's usually necessary to run the build system for your project first,
+`clangd-indexer` collects public symbols from headers (functions, classes,
+types, etc). It's necessary to run the build system for your project first,
 to produce `compile_commands.json` and possibly generate source files.
 
 Running `clangd-indexer` is expensive and produced index is not incremental.
@@ -45,7 +44,7 @@ The official LLVM releases do not yet include remote index support, but
 unofficial weekly snapshots are available for common platforms.
 
 You can also build from source. This requires more effort and time, so is
-mostly useful if you are interested in modifying or debugging the source code.
+useful if you are interested in modifying or debugging the source code.
 
 ### Downloading latest release from GitHub
 
@@ -93,4 +92,3 @@ The project root is used to translate paths from the server to your machine.
 An unofficial test [service](/llvm-remote-index.html) is available for LLVM.
 The [configuration scripts](https://github.com/clangd/llvm-remote-index) for
 this service may be a useful starting point if you want to host an index.
-
