@@ -83,7 +83,7 @@ Here are some plugins we know work well with clangd:
 
 <details>
 <summary markdown="span">Vim</summary>
-[YouCompleteMe](https://valloric.github.io/YouCompleteMe/) can be installed with
+[YouCompleteMe](https://ycm-core.github.io/YouCompleteMe/) can be installed with
 clangd support. **This is not on by default**, you must install it with
 `install.py --clangd-completer`.
 
