@@ -1,7 +1,8 @@
 # LLVM remote index service
 
 A clangd [remote index](/remote-index.html) server for the [LLVM
-project](https://github.com/llvm/llvm-project) is currently available.
+project](https://github.com/llvm/llvm-project) is currently available at
+[clangd-index.llvm.org/](http://clangd-index.llvm.org/).
 
 To use it, you'll need clangd with remote-index support. Set the server address
 to `clangd-index.llvm.org:5900`, and the project root to your `llvm-project`
