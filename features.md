@@ -154,7 +154,7 @@ Known limitations
   analyze in general)
 - References in comments and disabled preprocessor sections are not yet renamed
 - Related symbols (e.g. overriden methods in a class hierarchy) are not yet renamed
-- Renaming symbols used in several files uses the [project index](design/indexing.html), and works best when it is up-to-date
+- Renaming symbols used in several files uses the [project index](design/indexing), and works best when it is up-to-date
 
 > TIP: the rename workflow highly depends on the editor you are using. Some
 > editors, e.g. VSCode, provide a way to preview the rename changes before

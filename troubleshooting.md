@@ -132,5 +132,5 @@ It will be more useful if you have `llvm-symbolizer` on your PATH.
 This is typically part of the `llvm` package.
 It may be installed as e.g. `llvm-symbolizer-10`, and you need to add a symlink.
 
-[installation]: /installation.html
+[installation]: /installation
 [bug report]: https://github.com/clangd/clangd/issues

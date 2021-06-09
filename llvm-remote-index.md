@@ -1,6 +1,6 @@
 # LLVM remote index service
 
-A clangd [remote index](/design/remote-index.html) server for the [LLVM
+A clangd [remote index](/design/remote-index) server for the [LLVM
 project](https://github.com/llvm/llvm-project) is currently available at
 [clangd-index.llvm.org](http://clangd-index.llvm.org/).
 
@@ -19,7 +19,7 @@ Index:
 ```
 
 For more details on remote index configuration, see [remote
-index](/design/remote-index.html).
+index](/design/remote-index).
 
 ## Overview
 

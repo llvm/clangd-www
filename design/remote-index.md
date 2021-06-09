@@ -4,7 +4,7 @@ redirect_from: /remote-index.html
 ---
 # Remote index
 
-A [project-wide index](/design/indexing.html) can be slow to build, particularly
+A [project-wide index](/design/indexing) can be slow to build, particularly
 for large projects on slower machines like laptops. A "remote index" allows
 a shared server to host the index instead.
 
@@ -86,13 +86,13 @@ Once you have cmake set up, you can build the `clangd` target, and optionally
 When using clangd with remote index support, you can specify the server to
 connect to in two ways:
 
-- [clangd configuration files](/config.html) (recommended)
+- [clangd configuration files](/config) (recommended)
 - clangd flags `--remote-index-address` and `--project-root` (best for testing)
 
 Either way, you'll need to specify a server address such as `127.0.0.1:50051`,
 and the project root on your local machine, e.g. `/home/me/src/my-project/`.
 The project root is used to translate paths from the server to your machine.
 
-An unofficial test [service](/llvm-remote-index.html) is available for LLVM.
+An unofficial test [service](/llvm-remote-index) is available for LLVM.
 The [configuration scripts](https://github.com/clangd/llvm-remote-index) for
 this service may be a useful starting point if you want to host an index.

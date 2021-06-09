@@ -9,7 +9,7 @@ A language server's main responsibilities are:
 Most of the design documentation focuses on the concepts, if you're interested
 in the implementation we try to keep the code well-documented.
 
-[code walkthrough](/design/code.html)
+[code walkthrough](/design/code)
 {:.main-article}
 
 ## Request handling
@@ -25,7 +25,7 @@ There is one such loop for each open file. The `TUScheduler` class manages a
 collection of `ASTWorker`s, each running on its own thread. Most operations run
 on these threads, though code completion is a notable exception.
 
-[threads and request handling](/design/threads.html)
+[threads and request handling](/design/threads)
 {:.main-article}
 
 ## Index
@@ -44,5 +44,5 @@ To solve this, clangd maintains a database of symbols found anywhere in the
 program, called the index. This is extracted from each open file as it is
 parsed, and also by parsing the whole project in the background.
 
-[the clangd index](/design/indexing.html)
+[the clangd index](/design/indexing)
 {:.main-article}

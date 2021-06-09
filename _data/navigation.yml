@@ -1,14 +1,14 @@
 - title: Getting Started
-  url: /installation.html
+  url: /installation
   icon: '▶'
 - title: Features
-  url: /features.html
+  url: /features
   icon: '✓'
 - title: Configuration
-  url: /config.html
+  url: /config
   icon: '⚙️'
 - title: Troubleshooting
-  url: /troubleshooting.html
+  url: /troubleshooting
   icon: '💥'
 - separator
 - title: Design
@@ -16,19 +16,19 @@
   icon: '✨'
   children:
     - title: Code walkthrough
-      url: /design/code.html
+      url: /design/code
     - title: Threads & requests
-      url: /design/threads.html
+      url: /design/threads
     - title: The clangd index
-      url: /design/indexing.html
+      url: /design/indexing
     - title: Remote index
-      url: /design/remote-index.html
+      url: /design/remote-index
 - title: Protocol extensions
-  url: /extensions.html
+  url: /extensions
   icon: '⊕'
 - separator
 - title: LLVM Remote Index service
-  url: /llvm-remote-index.html
+  url: /llvm-remote-index
   icon: '🐲'
 - separator
 - title: Browse code

@@ -264,8 +264,8 @@ clangd as an LSP server, and test a few hard-to-isolate features.
 [llvm-project]: https://github.com/llvm/llvm-project
 [woboq]: https://code.woboq.org/llvm/clang-tools-extra/clangd/
 
-[threads and request handling]: /design/threads.html
-[the clangd index]: /design/indexing.html
+[threads and request handling]: /design/threads
+[the clangd index]: /design/indexing
 
 [clangd]: https://code.woboq.org/llvm/clang-tools-extra/clangd/
 [index/]: https://code.woboq.org/llvm/clang-tools-extra/clangd/index/
