@@ -27,8 +27,13 @@
       {% if entry == 'separator' %}
         <hr>
       {% else %}
-      <a href="{{entry.url | relative_url}}" class="{%if page.url == entry.url%}selected{%endif%}">
+      <a href="{{entry.url | relative_url}}" class="{%if page.url contains entry.url%}selected{%endif%} {%if entry.children%}folder{%endif%}">
         <span class="icon">{{entry.icon}}</span><span>{{ entry.title }}</span></a>
+        {%if page.url contains entry.url%}
+          {% for child in entry.children %}
+        <a href="{{child.url | relative_url}}" class="child {%if page.url == child.url%}selected{%endif%}">{{child.title}}</a>
+          {% endfor %}
+        {%endif%}
       {% endif %}
     {% endfor %}</nav>
   </aside>

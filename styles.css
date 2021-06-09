@@ -60,12 +60,22 @@ nav a {
   padding: 0.8em 2em;
   /* text ------- [icon] */
   display: flex;
-  flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
+  /* use as a parent for absolute positioning */
+  position: relative;
 }
 nav a.selected {
   background-color: rgba(50, 150, 220, 0.3);
+}
+nav a.folder::before {
+  content: "▶";
+  color: #246;
+  position: absolute;
+  left: 0.5em;
+}
+nav a.folder.selected::before {
+  content: "▼";
 }
 nav a:hover:not(.selected) {
   background-color: rgba(50, 150, 220, 0.1);
@@ -79,6 +89,13 @@ nav a .icon {
   width: 1.2em;
   /* Get color emoji if we can */
   font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
+  order: 1;
+}
+nav a.child {
+  font-weight: 600;
+  padding: 0.4em 3em;
+  display: block;
+  color: #246;
 }
 main {
   padding: 0 4em;
@@ -205,10 +222,14 @@ a[href^="https://code.woboq.org/"] {
   }
   nav a .icon {
     margin-right: 0.1em;
+    order: -1;
   }
   nav hr {
     margin: 0;
   }
+  /* Folders/children are not shown in mini layout */
+  nav a.folder::before { content: none ! important; }
+  nav a.child { display: none; }
   pre { white-space: pre-wrap; }
   code { overflow-wrap: break-word; }
 }
