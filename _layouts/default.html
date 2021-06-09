@@ -31,7 +31,7 @@
         <span class="icon">{{entry.icon}}</span><span>{{ entry.title }}</span></a>
         {%if page.url contains entry.url%}
           {% for child in entry.children %}
-        <a href="{{child.url | relative_url}}" class="child {%if page.url == child.url%}selected{%endif%}">{{child.title}}</a>
+        <a href="{{child.url | relative_url}}" class="child {%if page.url contains child.url%}selected{%endif%}">{{child.title}}</a>
           {% endfor %}
         {%endif%}
       {% endif %}
