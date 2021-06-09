@@ -21,13 +21,12 @@
       url: /design/threads.html
     - title: The clangd index
       url: /design/indexing.html
+    - title: Remote index
+      url: /design/remote-index.html
 - title: Protocol extensions
   url: /extensions.html
   icon: '⊕'
 - separator
-- title: Remote Index
-  url: /remote-index.html
-  icon: '💻'
 - title: LLVM Remote Index service
   url: /llvm-remote-index.html
   icon: '🐲'

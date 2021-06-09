@@ -4,6 +4,7 @@ plugins:
 - jekyll-optional-front-matter
 - jekyll-default-layout
 - jekyll-titles-from-headings
+- jekyll-redirect-from
 markdown: kramdown
 kramdown:
   parse_block_html: true
