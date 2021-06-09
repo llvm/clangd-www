@@ -57,7 +57,7 @@ nav {
   flex-direction: column;
 }
 nav a {
-  padding: 0.8em 2em;
+  padding: 0.8em 1.5em;
   /* text ------- [icon] */
   display: flex;
   justify-content: space-between;
@@ -72,7 +72,7 @@ nav a.folder::before {
   content: "►";
   color: #246;
   position: absolute;
-  left: 0.5em;
+  left: 0.2em;
 }
 nav a.folder.selected::before {
   content: "▼";
@@ -93,9 +93,10 @@ nav a .icon {
 }
 nav a.child {
   font-weight: 600;
-  padding: 0.4em 3em;
+  padding: 0.4em 0.5em;
   display: block;
   color: #246;
+  border-left: 2em solid rgba(0,0,0,0.1);
 }
 main {
   padding: 0 4em;
