@@ -10,6 +10,15 @@
 - title: Troubleshooting
   url: /troubleshooting
   icon: '💥'
+- title: Guides
+  url: /guides/
+  icon: '📖'
+  children:
+    - title: Using a remote index
+      description: >
+        If your project has a clangd index server, then you can connect to it
+        to avoid slow local indexing of a large codebase.
+      url: /guides/remote-index
 - separator
 - title: Design
   url: /design/
