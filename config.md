@@ -222,6 +222,7 @@ configuration files with the ones from clangd configs taking precedence.
 #### Add
 
 List of checks to enable, can be globs.
+To enable all available checks use `Add: '*'`.
 
 #### Remove
 
