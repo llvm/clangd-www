@@ -101,6 +101,9 @@ nav a.child {
 main {
   padding: 0 4em;
   flex: 1 1 700px;
+  /* Avoid horizontal overflow.
+   * Default (min-width: auto) prevents main from shrinking overwide content. */
+  min-width: 0;
 }
 main img {
   max-width: 100%;
@@ -141,7 +144,10 @@ details summary:hover {
   background-color: rgba(50, 150, 220, 0.2);
   cursor: pointer;
 }
-pre > code { display: block; }
+pre > code {
+  display: block;
+  overflow-x: auto;
+}
 code {
   background-color: #ffe;
   border: 1px solid #feb;

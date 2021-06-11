@@ -1,10 +1,11 @@
+# System headers
 This guide tries to explain how clangd finds system headers while providing its
 functionality. It aims to provide users with enough understanding to resolve any
 issues around these headers being missing.
 
 {% include toc.md %}
 
-# What are system headers ?
+## What are system headers ?
 
 In the context of this guide, any header a project depends on but doesn't exist
 in the repository is considered a system header. These usually include: -
@@ -18,14 +19,14 @@ Clangd itself only ships with its own built-in headers, because they are tied to
 the version of clang embedded in clangd. The rest (including C++ STL) must be
 provided by your system.
 
-# How clangd finds those headers
+## How clangd finds those headers
 
 `Clangd` comes with an embedded `clang` parser. Hence it makes use of all the
 mechanisms that exist in clang for lookups, while adding some extra spices to
 increase chances of discovery on Mac environemnts. Here follows some information
 about what clang does.
 
-## Search directories mentioned with compile flags
+### Search directories mentioned with compile flags
 
 As most other compilers clang provides some command line flags to control system
 header search explicitly. Most important of these is `-isystem`, which adds a
@@ -46,7 +47,7 @@ and
 [env variables](https://clang.llvm.org/docs/CommandGuide/clang.html#envvar-C_INCLUDE_PATH,OBJC_INCLUDE_PATH,CPLUS_INCLUDE_PATH,OBJCPLUS_INCLUDE_PATH)
 respected by clang.
 
-## Heuristic search for system headers
+### Heuristic search for system headers
 
 Clang performs some
 [toolchain specific searches](https://github.com/llvm/llvm-project/tree/main/clang/lib/Driver/ToolChains/)
@@ -82,7 +83,7 @@ End of search list.
 Directories after `#include <...> search starts here` includes all the
 directories that will be used for system header search.
 
-### Directory of the driver
+#### Directory of the driver
 
 These heuristics often expect the standard library to be found near the
 compiler. Therefore clangd needs to know where the compiler is, especially when
@@ -98,7 +99,7 @@ For example, for a `compile_commands.json` entry like: `{ "directory":
 Note that, in case of a `compile_flags.txt` driver name defaults to `clang-tool`
 sitting next to `clangd` binary.
 
-### Target Triple
+#### Target Triple
 
 The second important factor is target triple, which specifies the architecture
 and OS to build for. It can be explicitly specified with `--target` compile flag
@@ -116,7 +117,7 @@ driver name, but is a lot more subtle and less convenient. So this guide doesn't
 go into much details about it, but you can find more
 [here](https://github.com/llvm/llvm-project/blob/de79919e9ec9c5ca1aaec54ca0a5f959739d48da/clang/include/clang/Driver/ToolChain.h#L286).
 
-## Query-driver
+### Query-driver
 
 Instead of trying to guess the header search paths, clangd can also try to query
 the actual compiler. For example if your compile flags has `/custom/compiler` as
@@ -148,13 +149,13 @@ clangd. You can find details about changing clangd arguments used by your editor
 in [here](https://clangd.llvm.org/installation#editor-plugins), but it is always
 best to check your editor/LSP client's documents directly.
 
-# Fixing missing system header issues
+## Fixing missing system header issues
 
 Since we've established some basic understanding of how system header search
 works for clang and clangd. Now let's talk about how to fix missing system
 header issues.
 
-## Headers not present in the system at all
+### Headers not present in the system at all
 
 As mentioned above, clangd doesn't ship with its own standard library. If you
 can build the project you are working on the same machine you are using clangd,
@@ -172,7 +173,7 @@ about choices or how to get them but here are some choices:
 After getting the headers clangd should hopefully be able to detect them,
 assuming they are not installed to a non-default location.
 
-## You can build your project but clangd is complaining about missing headers
+### You can build your project but clangd is complaining about missing headers
 
 In such a case you can start by checking your clangd logs to see compile flags
 being used by clangd. Easiest way to achieve this is by executing `clangd
@@ -196,13 +197,13 @@ your file. If it can't, it means you have problems with your compile command
 again and probably there's a discrepancy between what your build system uses and
 what's being fed into clangd.
 
-## Compile command provided to clangd works on its own
+### Compile command provided to clangd works on its own
 
 There are usually two reasons for this failure. Either driver mentioned in the
 compile command is relative or it is employing custom heuristics unknown to
 clang.
 
-### Relative driver name
+#### Relative driver name
 
 As mentioned above most of the clang's heuristics rely on the location of the
 driver. If clangd cannot figure out the absolute path for your driver, then all
@@ -213,7 +214,7 @@ path rather than relative paths. Other than that you can also try putting the
 directory containing your driver into `$PATH` so clangd can make it absolute
 itself.
 
-### Your driver has heuristics unknown to clang
+#### Your driver has heuristics unknown to clang
 
 This is the worst scenario to hit, and unfortunately is common for custom
 toolchains targetting embedded devices.
