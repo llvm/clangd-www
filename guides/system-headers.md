@@ -91,28 +91,29 @@ using a custom toolchain.
 Clangd makes use of the first argument of the compile flags as the driver's
 path. Ideally this argument should specify full path to the compiler.
 
-For example, for an entry like: `{ "directory": "/home/user/llvm/build",
-"command": "/usr/bin/clang++ -c -o file.o file.cc", "file": "file.cc" },` First
-argument is `/usr/bin/clang++`.
+For example, for a `compile_commands.json` entry like: `{ "directory":
+"/home/user/llvm/build", "command": "/usr/bin/clang++ -c -o file.o file.cc",
+"file": "file.cc" },` first argument is `/usr/bin/clang++`.
 
 Note that, in case of a `compile_flags.txt` driver name defaults to `clang-tool`
 sitting next to `clangd` binary.
 
 ### Target Triple
 
-The second important factor is target triple. It can be explicitly specified
-with `--target` compile flag or can be deduced implicitly from the driver name.
+The second important factor is target triple, which specifies the architecture
+and OS to build for. It can be explicitly specified with `--target` compile flag
+or can be deduced implicitly from the driver name.
 
-This enables `clang` to operate using different toolchains, for example with
-`--target=x86_64-w64-mingw32` clang will look for mingw installed headers, which
-is one common toolchain for windows. You can see its effects on the header
-search dirs by executing `clang --target=x86_64-w64-mingw32 -xc++ -v -c
-/dev/null` (and without the target info).
+This enables `clang` to try to locate appropriate headers for the target
+platform for example with `--target=x86_64-w64-mingw32` clang will look for
+mingw installed headers, which is one common toolchain for windows. You can see
+its effects on the header search dirs by executing `clang
+--target=x86_64-w64-mingw32 -xc++ -v -c /dev/null` (and without the target
+info).
 
 This can also be achieved by implicitly including target information in the
-driver name, but is a lot more subtle and there are no good ways to change it
-anyway. So this guide doesn't go into much details about it, but you can find
-more
+driver name, but is a lot more subtle and less convenient. So this guide doesn't
+go into much details about it, but you can find more
 [here](https://github.com/llvm/llvm-project/blob/de79919e9ec9c5ca1aaec54ca0a5f959739d48da/clang/include/clang/Driver/ToolChain.h#L286).
 
 ## Query-driver
@@ -120,7 +121,8 @@ more
 Instead of trying to guess the header search paths, clangd can also try to query
 the actual compiler. For example if your compile flags has `/custom/compiler` as
 the driver name, clangd will run something similar to `/custom/compiler -E -xc++
--v /dev/null` and parse its output.
+-v /dev/null` and parse its output (this should work with variants of gcc,
+clang, and other compilers with compatible interfaces).
 
 Note that this is a mechanism that solely exists in clangd and has nothing to do
 with clang.
