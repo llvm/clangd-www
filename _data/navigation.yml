@@ -19,6 +19,11 @@
         If your project has a clangd index server, then you can connect to it
         to avoid slow local indexing of a large codebase.
       url: /guides/remote-index
+    - title: System headers
+      description: >
+        Details about how system header detection in clangd works and how to fix
+        issues with missing system headers.
+      url: /guides/system-headers
 - separator
 - title: Design
   url: /design/
