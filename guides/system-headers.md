@@ -1,26 +1,24 @@
 This guide tries to explain how clangd finds system headers while providing its
-functionality. In the hopes of providing user with enough understanding to
-resolve any issues around these headers being missing.
+functionality. It aims to provide users with enough understanding to resolve any
+issues around these headers being missing.
 
 {% include toc.md %}
 
 # What are system headers ?
 
 In the context of this guide, any header a project depends on but doesn't exist
-in the repository is considered a system header. These usually include:
-- C++ STL, e.g: `<iostream>`
-- Third party libraries, e.g: `boost`
-- Posix, e.g: `<pthread.h>`
-- Built-in headers, e.g: `<stddef.h>`
+in the repository is considered a system header. These usually include: -
+Standard library, e.g: `<iostream>` - Third party libraries, e.g: `boost` -
+Posix, e.g: `<pthread.h>` - Compiler's built-in headers, e.g: `<stddef.h>`
 
-These headers are usually provided by either a custom toolchain, which might be
+These headers are usually provided either by a custom toolchain, which might be
 part of the repository, or directly via system installed libraries.
 
-Clangd itself only ships with its own built-in headers, because their tied to
+Clangd itself only ships with its own built-in headers, because they are tied to
 the version of clang embedded in clangd. The rest (including C++ STL) must be
 provided by your system.
 
-# How clangd finds those headers ?
+# How clangd finds those headers
 
 `Clangd` comes with an embedded `clang` parser. Hence it makes use of all the
 mechanisms that exist in clang for lookups, while adding some extra spices to
@@ -53,11 +51,11 @@ respected by clang.
 Clang performs some
 [toolchain specific searches](https://github.com/llvm/llvm-project/tree/main/clang/lib/Driver/ToolChains/)
 to find suitable directories for system header search. The heuristics used by
-most of these search algorithms primarily rely on the `directory containing the
-clang driver` and `the target triplet`.
+most of these search algorithms primarily rely on the **directory containing the
+clang driver** and **the target triple**.
 
-You can check investigate this search by invoking any clang with `-v`, for
-example `clang -v -c -xc++ /dev/null` (you can replace `/dev/null` with `nul` on
+You can investigate this search by invoking any clang with `-v`, for example
+`clang -v -c -xc++ /dev/null` (you can replace `/dev/null` with `nul` on
 windows). This prints out:
 
 ```
@@ -86,32 +84,23 @@ directories that will be used for system header search.
 
 ### Directory of the driver
 
-Since clangd invokes the driver using the flags mentioned in the compilation
-database, the directory is deduced from the first argument of the compile flags.
-For example, for an entry like:
-```
-{ "directory": "/home/user/llvm/build",
-  "command": "/usr/bin/clang++ -c -o file.o file.cc",
-  "file": "file.cc" },
-```
-First argument is `/usr/bin/clang++`. In case of a `compile_flags.txt` driver
-name defaults to `clang-tool` sitting next to `clangd` binary.
+These heuristics often expect the standard library to be found near the
+compiler. Therefore clangd needs to know where the compiler is, especially when
+using a custom toolchain.
 
-When the driver name mentioned in the compile flags is not absolute, clangd
-tries to make it absolute by:
+Clangd makes use of the first argument of the compile flags as the driver's
+path. Ideally this argument should specify full path to the compiler.
 
-1. Search for an executable in `$PATH` using driver name in the compile flags.
-2. Search for a generic driver like `gcc` or `clang` in `$PATH` and use its
-   directory.
-3. Just fallback to driver name in the flags as-is.
+For example, for an entry like: `{ "directory": "/home/user/llvm/build",
+"command": "/usr/bin/clang++ -c -o file.o file.cc", "file": "file.cc" },` First
+argument is `/usr/bin/clang++`.
 
-So if you are using a compiler from a custom toolchain make sure your
-compilation database mentions the driver name as an absolute path to increase
-the success rate of clang heuritics.
+Note that, in case of a `compile_flags.txt` driver name defaults to `clang-tool`
+sitting next to `clangd` binary.
 
-### Target Triplet
+### Target Triple
 
-The second important factor is target triplet. It can be explicitly specified
+The second important factor is target triple. It can be explicitly specified
 with `--target` compile flag or can be deduced implicitly from the driver name.
 
 This enables `clang` to operate using different toolchains, for example with
@@ -123,13 +112,18 @@ search dirs by executing `clang --target=x86_64-w64-mingw32 -xc++ -v -c
 This can also be achieved by implicitly including target information in the
 driver name, but is a lot more subtle and there are no good ways to change it
 anyway. So this guide doesn't go into much details about it, but you can find
-more [here](https://github.com/llvm/llvm-project/blob/de79919e9ec9c5ca1aaec54ca0a5f959739d48da/clang/include/clang/Driver/ToolChain.h#L286).
+more
+[here](https://github.com/llvm/llvm-project/blob/de79919e9ec9c5ca1aaec54ca0a5f959739d48da/clang/include/clang/Driver/ToolChain.h#L286).
 
 ## Query-driver
 
-This is a mechnaism that solely exists in clangd and has nothing to do with
-clang. It performs inference of target triplet and system includes by executing
-the driver mentioned in the compile commands.
+Instead of trying to guess the header search paths, clangd can also try to query
+the actual compiler. For example if your compile flags has `/custom/compiler` as
+the driver name, clangd will run something similar to `/custom/compiler -E -xc++
+-v /dev/null` and parse its output.
+
+Note that this is a mechanism that solely exists in clangd and has nothing to do
+with clang.
 
 It can be used as a last resort when clang's heuristics are not enough to detect
 standard library locations being used by your custom toolcahin.
@@ -137,14 +131,14 @@ standard library locations being used by your custom toolcahin.
 Since it implies executing arbitrary binaries, that might be checked-in with the
 project, clangd does not perform this inference automatically. You need to
 allowlist binaries you deem safe for execution using `--query-driver` **clangd**
-command line option. Please note that this option is just an allowlist and the real driver to be
-executed still comes from the compile flag. It is a list of comma separated
-globs and a driver from a compile flag needs to match at least one of these
-globs. For example to whitelist drivers in paths:
+command line option. Please note that this option is just an allowlist and the
+real driver to be executed still comes from the compile command. It is a list of
+comma separated globs and a driver from a compile command needs to match at
+least one of these globs. For example to whitelist drivers in paths:
 
-- `/path/to/my/project/arm-gcc`
-- `/path/to/my/project/arm-g++`
-- `/path/to/other/project/gcc`
+-   `/path/to/my/project/arm-gcc`
+-   `/path/to/my/project/arm-g++`
+-   `/path/to/other/project/gcc`
 
 You can pass
 `--query-driver="/path/to/my/project/arm-g*,/path/to/other/project/gcc"` into
@@ -169,9 +163,9 @@ If you know your system lacks one, you should get it from some place suitable
 for your platform. Unfortunately this document is not the best place to talk
 about choices or how to get them but here are some choices:
 
-- `libc++-dev` or `libstdc++-dev` packages on debian-like systems,
-- `mingw` for windows,
-- `libc++` or `libstdc++` for mac, either through `brew` or `XCode`.
+-   `libc++-dev` or `libstdc++-dev` packages on debian-like systems,
+-   `mingw` for windows,
+-   `libc++` or `libstdc++` for mac, either through `brew` or `XCode`.
 
 After getting the headers clangd should hopefully be able to detect them,
 assuming they are not installed to a non-default location.
@@ -223,17 +217,17 @@ This is the worst scenario to hit, and unfortunately is common for custom
 toolchains targetting embedded devices.
 
 You can execute the driver with `-v` option to see all the search directories it
-has found and the target triplet being used. Afterwards there are a couple
+has found and the target triple being used. Afterwards there are a couple
 options:
 
--   Explicitly providing target triplet in your compile flags and hope that
-    clang's heuristics can workout the rest.
+-   Explicitly providing target triple in your compile flags and hope that
+    clang's heuristics can work out the rest.
 -   Add each system header search path to your compile flags via `-isystem` or
     env variables as mentioned above. Note that you might need to disable
     clang's search for system headers using
     [-nostdlibinc](https://clang.llvm.org/docs/CommandGuide/clang.html#cmdoption-nostdlibinc)
     and variants.
--   Using clangd's `--query-driver` option to let clangd infer target triplet
-    and system headers by executing the driver mentioned in the compile flags.
+-   Using clangd's `--query-driver` option to let clangd infer target triple and
+    system headers by executing the driver mentioned in the compile flags.
 -   If it feels like your driver is actually performing a generic heuristic,
     send a patch to clang to improve it for all!
