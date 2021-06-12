@@ -46,3 +46,11 @@ parsed, and also by parsing the whole project in the background.
 
 [the clangd index](/design/indexing)
 {:.main-article}
+
+## Remote index
+
+The remote index system allows a codebase index to be built offline and shared
+across many clangd instances with an RPC server.
+
+[remote index](/design/remote-index)
+{:.main-article}
