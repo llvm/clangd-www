@@ -31,6 +31,8 @@
   children:
     - title: Code walkthrough
       url: /design/code
+    - title: Compile commands
+      url: /design/compile-commands
     - title: Threads & requests
       url: /design/threads
     - title: The clangd index
