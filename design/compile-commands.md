@@ -87,7 +87,7 @@ A [compilation database](https://clang.llvm.org/docs/JSONCompilationDatabase.htm
 We first check for a compilation database in the directory containing the
 source file, and then walk up into parent directories until we find one.
 
-`GlobalCompilationDatabase` is responsible for discovering, caching and
+[GlobalCompilationDatabase] is responsible for discovering, caching and
 refreshing compilation databases.
 
 #### Commands for header files
@@ -99,18 +99,18 @@ compile commands for them.
 
 If no command is available for a header, but a file has been opened that
 transitively includes it, then that file's command will be used. To enable this
-`TUScheduler` keeps a HeaderIncluderCache to look up the relevant file.
+[TUScheduler] keeps a `HeaderIncluderCache` to look up the relevant file.
 
 Otherwise when `compile_commands.json` is used, we'll pick some entry whose
 filename most closely matches that of the header. The idea is that `bar/foo.cc`
 is likely to include `bar/foo.h` and therefore have a compatible command.
-This is implemented in `InterpolatingCompilationDatabase`. As it's purely a
+This is implemented in [InterpolatingCompilationDatabase]. As it's purely a
 filename-based heuristic it occasionally goes wrong.
 It can also provide a decent default command for newly created files the build
 system doesn't know about yet.
 
 If a command has been "borrowed" from another file, this is noted when the
-compile command is logged.
+compile command is logged. (`... with command inferred from foo/bar.cc`).
 
 #### Fallback commands
 
@@ -121,7 +121,7 @@ allows clangd to work on toy examples without configuration.
 ### Tweaks always applied
 
 - bare command names like `clang` are made absolute (by looking them up on the
-  $PATH, querying `xcrun` on mac, or failing that guessing).
+  `$PATH`, querying `xcrun` on mac, or failing that guessing).
   This increases the chances of being able to find the standard library.
 - on mac, `-isysroot` is set to the default SDK (by querying `xcrun`).
   This more closely matches the behavior of Apple's `/usr/bin/clang` (which is
@@ -129,8 +129,8 @@ allows clangd to work on toy examples without configuration.
   Without this, the standard library again will not be found.
 - `-fsyntax-only` is added because we're just parsing, not compiling.
 - `-resource-dir=...` is added, because built-in headers like `<stddef.h>` must
-  be the ones installed with clangd
-- certain unsupported flags like `-plugin` are dropped
+  be the ones installed with clangd.
+- certain unsupported flags like `-plugin` are dropped.
 
 ### Query-driver
 
@@ -138,7 +138,7 @@ If the compile command names a compiler that is present, then clangd can query
 it to understand its default configuration (header search paths and target), and
 then adjust the compile command to configure the clang parser to match.
 
-The compiler (e.g. `custom-gcc`) must compatible enough with gcc to dump its
+The compiler (e.g. `custom-gcc`) must be compatible enough with gcc to dump its
 configuration in response to this command:
 
 ```
@@ -184,7 +184,7 @@ CompileFlags:
 Incorrect compile commands can cause problems of different severity.
 In all cases, the log contains the compile command that was used, and it can be
 easiest to feed variations of that command to `clang` to try to understand
-he problem.
+the problem.
 
 ### Unusable command
 
@@ -195,8 +195,8 @@ will not be available (will fail with "invalid AST").
 (This isn't great, maybe we should recover with a fallback command instead?)
 
 This can be recognized by the diagnostics (often "expected exactly one compiler
-job") by subsequent "invalid AST" errors,
-and by the "Could not build CompilerInvocation" log message.
+job") by subsequent "invalid AST" errors, and by the "Could not
+build CompilerInvocation" log message.
 
 ### Severe parsing problems
 
@@ -220,3 +220,7 @@ the defaults are different (e.g. GCC currently defaults to C++17, vs C++14 for
 clang).
 
 This will usually result in diagnostics that pinpoint the problem.
+
+[GlobalCompilationDatabase]: https://code.woboq.org/llvm/clang-tools-extra/clangd/GlobalCompilationDatabase.h.html#clang::clangd::GlobalCompilationDatabase
+[InterpolatingCompilationDatabase]: https://code.woboq.org/llvm/clang/lib/Tooling/InterpolatingCompilationDatabase.cpp.html#clang::tooling::(anonymousnamespace)::InterpolatingCompilationDatabase
+[TUScheduler]: https://code.woboq.org/llvm/clang-tools-extra/clangd/TUScheduler.h.html#clang::clangd::TUScheduler
