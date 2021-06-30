@@ -12,6 +12,23 @@ in the implementation we try to keep the code well-documented.
 [code walkthrough](/design/code)
 {:.main-article}
 
+## Compile commands
+
+Clangd needs to make choices about how to parse each open file, such as:
+ - Is it C or C++?
+ - Which version of C++?
+ - Where are included headers found?
+
+clangd determines a virtual compiler command for each file
+(e.g. `clang foo.cc -Iheaders/`) and uses this to configure its parser.
+Ideally this command comes from the build system.
+
+Compile flags can control many subtle pieces of the clang parser, so compile
+commands are an important configuration point.
+
+[Compile commands](/design/compile-commands)
+{:.main-article}
+
 ## Request handling
 
 clangd is based on the `clang` compiler, and at its core runs the clang parser
