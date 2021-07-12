@@ -167,6 +167,20 @@ clangd allows clients to use UTF-8 offsets instead. This allows clients that alw
     This allows UTF-8 to be used when the client prefers it.
   - servers that only support UTF-16 can add `offsetEncoding: "utf-16"` or simply not use the extension.
 
+## Type hierarchy
+{:.v9}
+
+Clangd supports the type hierarchy extension proposed for LSP.
+
+Type hierarchy allows the server to provide the client with information about
+the subclasses (derived classes) and superclasses (base classes) of the class
+referenced at a provided document location. Clients typically use this to show
+a tree view of the class and its subclasses or superclasses (or sometimes, in
+languages with single inheritance, a single tree showing both).
+
+The version of the protocol currently implemented is the one in
+[this proposal](https://github.com/microsoft/vscode-languageserver-node/pull/426).
+
 ## Code completion scores
 {:.v10}
 
