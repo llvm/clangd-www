@@ -74,6 +74,11 @@ You can also download binaries directly for macOS, windows, and Linux (x86-64):
 If you live on the bleeding edge, snapshot pre-releases are built weekly and
 available on the [github releases page](https://github.com/clangd/clangd/releases).
 
+### Compiling from sources
+
+You can find instructions in
+[llvm-project](https://github.com/llvm/llvm-project/tree/main/clang-tools-extra/clangd#building-and-testing-clangd).
+
 ## Editor plugins
 
 Language Server plugins are available for many editors. In principle clangd
