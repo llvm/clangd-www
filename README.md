@@ -1,4 +1,4 @@
-## clangd.github.io
+## [clangd.llvm.org](https://clangd.llvm.org/)
 
 This is the **source code** of clangd's website.
 

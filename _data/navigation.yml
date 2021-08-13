@@ -24,6 +24,9 @@
         Details about how system header detection in clangd works and how to fix
         issues with missing system headers.
       url: /guides/system-headers
+- title: FAQ
+  url: /faq
+  icon: '❓'
 - separator
 - title: Design
   url: /design/
