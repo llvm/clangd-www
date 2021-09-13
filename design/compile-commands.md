@@ -221,6 +221,18 @@ clang).
 
 This will usually result in diagnostics that pinpoint the problem.
 
+### Headers outside the project directory
+
+When opening a header outside the project directory (for example, a header from
+an external library that's included by a file in the project), clangd will
+typically fail to find a compilation database (which is usually located in the 
+project directory), and fall back to a default command that may not include
+flags that are important for parsing the header's code (for example, include
+paths to locate the headers that _it_ includes).
+
+See [this FAQ question](https://clangd.llvm.org/faq#how-do-I-fix-errors-I-get-when-opening-headers-outside-of-my-project-directory)
+for a way to work around this.
+
 [GlobalCompilationDatabase]: https://code.woboq.org/llvm/clang-tools-extra/clangd/GlobalCompilationDatabase.h.html#clang::clangd::GlobalCompilationDatabase
 [InterpolatingCompilationDatabase]: https://code.woboq.org/llvm/clang/lib/Tooling/InterpolatingCompilationDatabase.cpp.html#clang::tooling::(anonymousnamespace)::InterpolatingCompilationDatabase
 [TUScheduler]: https://code.woboq.org/llvm/clang-tools-extra/clangd/TUScheduler.h.html#clang::clangd::TUScheduler
