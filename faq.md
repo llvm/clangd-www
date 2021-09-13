@@ -103,3 +103,24 @@ than a 1000 symbols and you would like to get through all of them, please pass
 
 The same applies to the Remote Index Service but we are not respecting
 `--limit-references=0` on the server side to prevent DDoS attacks.
+
+## How do I fix errors I get when opening headers outside of my project directory?
+
+Clangd might fail to find suitable compile flags for headers outside of your 
+project directory (e.g. third party dependencies installed elsewhere -- for more 
+details see [here](https://clangd.llvm.org/design/compile-commands#headers-outside-the-project-directory)).
+
+To work around this, you can instruct clangd to use your project's compilation
+database for all files, not just files in the project directory.
+
+In clangd 12 and later, this can be done by adding the following to your
+[clangd config file](https://clangd.llvm.org/config.html):
+
+```yaml
+CompilationDatabase: <path>
+```
+
+where `<path>` is the directory containing the compilation database.
+
+In older versions of clangd, this can be accomplished by passing the same
+path as a `--compile-commands-dir=<path>` command-line argument to clangd.
