@@ -141,3 +141,22 @@ to choose a source file whose compile command to use when opening a header.
 The heuristics are currently based on filesystem paths and can sometimes
 choose the wrong source file, though 
 [improvements](https://github.com/clangd/clangd/issues/123) are planned.
+
+## Why does clangd produce false or missing diagnostics?
+
+To provide increased responsiveness, clangd skips parsing the bodies of
+functions defined in included headers. This optimization can result in:
+
+- False positive diagnotics, particularly around unused declarations
+  (if the relevant uses are in the code that was skipped). This can be
+  worked around by suppressing affected diagnostic categories in the
+  [config file](https://clangd.llvm.org/config.html#suppress).
+
+- Missing diagnostics, if they occur in code that was skipped. See
+  [this issue](https://github.com/clangd/clangd/issues/137) for some
+  discussion.
+
+If you believe a false or missing diagnostic is not related to this (and
+also not configuration-related, i.e. resulting from clang using the wrong
+compile command for a file), please file a bug in the
+[issue tracker](https://github.com/clangd/clangd/issues).
