@@ -117,7 +117,8 @@ In clangd 12 and later, this can be done by adding the following to your
 [clangd config file](https://clangd.llvm.org/config.html):
 
 ```yaml
-CompilationDatabase: <path>
+CompileFlags:
+  CompilationDatabase: <path>
 ```
 
 where `<path>` is the directory containing the compilation database.
