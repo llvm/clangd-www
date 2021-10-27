@@ -185,6 +185,10 @@ I[17:11:57.203] Compile command from CDB is: ...
 I[17:11:57.206] internal (cc1) args are: -cc1 ...
 ```
 
+Note that `--check` is only available starting from clangd-12. For earlier
+versions you can open the file in your editor and access clangd logs through
+your LSP plugin.
+
 If you are seeing a log line containing `Generic fallback command is` instead of
 the one above, it means clangd is not able to pick your compile commands. If you
 don't have any
