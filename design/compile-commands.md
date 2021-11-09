@@ -114,7 +114,7 @@ compile command is logged. (`... with command inferred from foo/bar.cc`).
 
 #### Fallback commands
 
-If no compilotion database is found, a very simple command like `clang foo.cc`
+If no compilation database is found, a very simple command like `clang foo.cc`
 is used. For a real project this will often fail to find `#include`s, but it
 allows clangd to work on toy examples without configuration.
 
