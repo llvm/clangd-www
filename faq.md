@@ -113,18 +113,8 @@ details see [here](https://clangd.llvm.org/design/compile-commands#headers-outsi
 To work around this, you can instruct clangd to use your project's compilation
 database for all files, not just files in the project directory.
 
-In clangd 12 and later, this can be done by adding the following to your
-[clangd config file](https://clangd.llvm.org/config.html):
-
-```yaml
-CompileFlags:
-  CompilationDatabase: <path>
-```
-
-where `<path>` is the directory containing the compilation database.
-
-In older versions of clangd, this can be accomplished by passing the same
-path as a `--compile-commands-dir=<path>` command-line argument to clangd.
+This can be done by passing the path of the directory containing the compilation
+datbase as a `--compile-commands-dir=<path>` command-line argument to clangd.
 
 ## What can I do if clangd chooses the wrong source file to infer commands for a header?
 
