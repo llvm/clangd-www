@@ -8,9 +8,9 @@ To use clangd, you need:
 
 ## Installing clangd
 
-You'll want a **recent** version of clangd. The current release is 12.0.
+You'll want a **recent** version of clangd. The current release is 13.0.
 
-After installing, `clangd --version` should print `clangd version 12.0.1` or later.
+After installing, `clangd --version` should print `clangd version 13.0.0` or later.
 
 (Version numbers are based on LLVM. clangd 7 was the first usable release).
 
@@ -41,7 +41,7 @@ Download the LLVM installer from [releases.llvm.org](http://releases.llvm.org/do
 <summary markdown="span">Debian/Ubuntu</summary>
 Installing the `clangd` package will usually give you a slightly older version.
 
-Try to install the latest packaged release (12.0):
+Try to install a packaged release (12.0):
 
 ```bash
 sudo apt-get install clangd-12

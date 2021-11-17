@@ -12,8 +12,8 @@ this central index instead of building your own.
 
 ## Obtaining a suitable version of clangd
 
-You need a remote-index-enabled version of clangd, such as the
-[clangd 12 release on github](https://github.com/clangd/clangd/releases/latest).
+You need a remote-index-enabled version (12 or later) of clangd, such as
+[the latest clangd release on github](https://github.com/clangd/clangd/releases/latest).
 
 The official LLVM releases and Debian etc packages of clangd 12 are not
 remote-index-enabled!
