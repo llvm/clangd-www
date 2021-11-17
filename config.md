@@ -4,6 +4,8 @@ The configuration mechanism is new in clangd 11, and more options will be
 exposed in this way in future.
 {:.v11}
 
+{% include toc.md %}
+
 ## Files
 
 Configuration is stored in YAML files. These are either:

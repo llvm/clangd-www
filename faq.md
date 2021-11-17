@@ -1,5 +1,7 @@
 # Frequently Asked Questions (FAQ)
 
+{% include toc.md %}
+
 ## How do I install clangd?
 
 Clangd is often distributed either within LLVM packages or in a separate
