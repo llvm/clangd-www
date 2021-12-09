@@ -288,6 +288,11 @@ ln -s ~/myproject/compile_commands.json ~/myproject-build/
 </details>
 
 <details>
+<summary markdown="span">Bazel-based projects</summary>
+Bazel can generate this file via [this extractor extension](https://github.com/hedronvision/bazel-compile-commands-extractor). Refer to instructions in the project README; it is intended for use with clangd. 
+</details>
+
+<details>
 <summary markdown="span">Other build systems, using Bear</summary>
 [Bear](https://github.com/rizsotto/Bear) is a tool to generate a
 compile_commands.json file by recording a complete build.
