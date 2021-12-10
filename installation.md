@@ -283,7 +283,7 @@ You should symlink it (or simply copy it) to the root of your source tree, if
 they are different.
 
 ```bash
-ln -s ~/myproject/compile_commands.json ~/myproject-build/
+ln -s ~/myproject-build/compile_commands.json ~/myproject/
 ```
 </details>
 
