@@ -23,7 +23,7 @@ provided by your system.
 
 `Clangd` comes with an embedded `clang` parser. Hence it makes use of all the
 mechanisms that exist in clang for lookups, while adding some extra spices to
-increase chances of discovery on Mac environemnts. Here follows some information
+increase chances of discovery on Mac environments. Here follows some information
 about what clang does.
 
 ### Search directories mentioned with compile flags
