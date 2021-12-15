@@ -204,7 +204,7 @@ Diagnostic codes that should be suppressed.
 
 Valid values are:
 
-- `*`, to disable all diagnostics
+- `'*'`, to disable all diagnostics
 - diagnostic codes exposed by clangd (e.g `unknown_type`, `-Wunused-result`)
 - clang internal diagnostic codes (e.g. `err_unknown_type`)
 - warning categories (e.g. `unused-result`)
@@ -223,7 +223,8 @@ configuration files with the ones from clangd configs taking precedence.
 
 #### Add
 
-List of checks to enable, can be globs.
+List of [checks](https://clang.llvm.org/extra/clang-tidy/checks/list.html).
+These can be globs, for example `Add: 'bugprone-*'`.
 
 #### Remove
 
