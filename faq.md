@@ -57,6 +57,8 @@ Index:
     MountPoint: /path/to/llvm/
 ```
 
+This can go in your project as `.clangd` or a global `clangd/config.yaml` file.
+
 ## How do I build clangd from sources?
 
 If you are a developer or downloading pre-built binaries is not an option, you
@@ -150,3 +152,13 @@ If you believe a false or missing diagnostic is not related to this (and
 also not configuration-related, i.e. resulting from clang using the wrong
 compile command for a file), please file a bug in the
 [issue tracker](https://github.com/clangd/clangd/issues).
+
+## Does clangd support CUDA?
+
+There is some support, but it's not very polished or tested.
+clangd uses clang to parse code and [clang can understand CUDA code](https://llvm.org/docs/CompileCudaWithLLVM.html).
+
+Generally you'll need to:
+ - ensure that your editor plugin is enabling clangd when CUDA files are open (e.g. enabling for extension `*.cu`)
+ - make sure that clangd understands these are CUDA files (e.g. by extension `*.cu` or adding the clang flag `-xcuda`)
+ - set the path to your cuda installation if it isn't detected, by adding the clang flag `--cuda-path=...`
