@@ -221,8 +221,8 @@ configuration files with the ones from clangd configs taking precedence.
 
 #### Add
 
-List of checks to enable, can be globs.
-To enable all available checks use `Add: '*'`.
+List of [checks](https://clang.llvm.org/extra/clang-tidy/checks/list.html).
+These can be globs, for example `Add: 'bugprone-*'`.
 
 #### Remove
 
