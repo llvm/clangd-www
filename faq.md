@@ -162,3 +162,23 @@ Generally you'll need to:
  - ensure that your editor plugin is enabling clangd when CUDA files are open (e.g. enabling for extension `*.cu`)
  - make sure that clangd understands these are CUDA files (e.g. by extension `*.cu` or adding the clang flag `-xcuda`)
  - set the path to your cuda installation if it isn't detected, by adding the clang flag `--cuda-path=...`
+
+## Error "Unable to handle compilation, expected exactly one compiler job" (macOS)
+
+If your project is configured to build for both ARM (M1) and Intel (x64), you'll see this error
+on clangd <= 13.
+
+[The problem](https://github.com/clangd/clangd/issues/827) 
+is that the flags `arch x86_64 -arch arm64` tell clang to parse the code twice in
+different configurations, and we're not sure which to use. (clangd 14 will pick the first one).
+
+You can work around the problem by tweaking the compile flags in your clangd config file:
+
+```
+CompileFlags:
+  Remove: [-arch]
+  Add: [-arch, x86_64]
+```
+
+(In other cases, this error message indicates a compile command we don't understand.
+If you're not on a Mac it's more likely your compile flags are badly malformed.)
