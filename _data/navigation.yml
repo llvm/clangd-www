@@ -53,7 +53,7 @@
   url: https://github.com/clangd/clangd/issues
   icon: '🐞'
 - title: Forum
-  url: https://llvm.discourse.group/c/llvm-project/clangd/34
+  url: https://github.com/clangd/clangd/discussions
   icon: '💡'
 - title: Chat (#clangd)
   url: https://discord.gg/xS7Z362
