@@ -202,7 +202,7 @@ Diagnostic codes that should be suppressed.
 
 Valid values are:
 
-- `*`, to disable all diagnostics
+- `'*'`, to disable all diagnostics
 - diagnostic codes exposed by clangd (e.g `unknown_type`, `-Wunused-result`)
 - clang internal diagnostic codes (e.g. `err_unknown_type`)
 - warning categories (e.g. `unused-result`)
