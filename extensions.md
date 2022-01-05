@@ -231,7 +231,7 @@ well as syntax (e.g. implicit casts).
      or that traversed by `clang::RecursiveASTVisitor`.
 
 **New server capability**: `astProvider : bool`:
- - Signals that the server supports `textDocmuent/ast` requests.
+ - Signals that the server supports `textDocument/ast` requests.
 
 ## Memory usage
 {:.v12}
@@ -253,3 +253,26 @@ tracking allocations directly).
 
 **New server capability**: `memoryUsageProvider : bool`:
  - Signals that the server supports `$/memoryUsage` requests.
+
+## Inlay hints
+{:.v14}
+
+Inlay hints are labels that are displayed by the editor in-line with the code.
+
+| **Without hints:** | <tt>memcpy(buf, data, n)</tt> |
+| **With hints:**    | <tt>memcpy(_dest:_ buf, _src:_ data, _count:_ n)</tt> |
+
+clangd can provide several categories of hints.
+
+**New client->server request**: `clangd/inlayHints`:
+ - Params: `InlayHints` object with properties:
+   - `textDocument : TextDocumentIdentifier`: the open file to inspect
+   - `range : Range?`: the region of the source code to retrieve hints for.
+ - Result: `InlayHints[]`, where `InlayHint` has properties:
+   - `kind : string`: The type of hint being provided, e.g. `"ParameterHint"`.
+   - `text : string`: The label that should be displayed, e.g. `"dest:"`.
+   - `position : Position`: The point between characters to show the hint.
+   - `range : Range`: The range the hint is associated with, e.g. the argument.
+
+**New server capability**: `clangdInlayHintsProvider` : bool`:
+ - Signals that the server supports `clangd/inlayHints` requests.
