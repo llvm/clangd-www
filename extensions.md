@@ -270,7 +270,7 @@ clangd can provide several categories of hints.
    - `range : Range?`: the region of the source code to retrieve hints for.
  - Result: `InlayHints[]`, where `InlayHint` has properties:
    - `kind : string`: The type of hint being provided, e.g. `"ParameterHint"`.
-   - `text : string`: The label that should be displayed, e.g. `"dest:"`.
+   - `label : string`: The label that should be displayed, e.g. `"dest:"`.
    - `position : Position`: The point between characters to show the hint.
    - `range : Range`: The range the hint is associated with, e.g. the argument.
 
