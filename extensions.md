@@ -276,3 +276,18 @@ clangd can provide several categories of hints.
 
 **New server capability**: `clangdInlayHintsProvider` : bool`:
  - Signals that the server supports `clangd/inlayHints` requests.
+
+_Compatibility_: Several language servers support inlay hint extensions.
+This extension is mostly compatible with
+[rust-analyzer/inlayHints](https://github.com/kjeremy/vscode-languageserver-node/blob/5849e59afd9d598666426f2640dfbd173eace02d/protocol/src/protocol.inlayHints.proposed.md).
+typescript-language-server also supports a similar
+[typescript/inlayHints](https://github.com/typescript-language-server/typescript-language-server#inlay-hints-typescriptinlayhints-experimental).
+
+Our hope is that some version of inlay hints is standardized in LSP. Once
+standard inlay hints are implemented in clangd, we will deprecate this extension
+and eventually remove it.
+
+See LSP
+[bug 956](https://github.com/microsoft/language-server-protocol/issues/956),
+[PR 609](https://github.com/microsoft/vscode-languageserver-node/pull/609),
+[PR 772](https://github.com/microsoft/vscode-languageserver-node/pull/772).
