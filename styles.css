@@ -107,6 +107,7 @@ main {
   /* Avoid horizontal overflow.
    * Default (min-width: auto) prevents main from shrinking overwide content. */
   min-width: 0;
+  line-height: 150%;
 }
 main img {
   max-width: 100%;
@@ -150,11 +151,12 @@ details summary:hover {
 pre > code {
   display: block;
   overflow-x: auto;
+  padding-left: 1em;
 }
 code {
   background-color: #ffe;
   border: 1px solid #feb;
-  padding: 1px;
+  padding: 5px 1px;
 }
 a[href^="https://code.woboq.org/"] {
   font-family: monospace;
