@@ -268,6 +268,7 @@ clangd can provide several categories of hints.
  - Params: `InlayHints` object with properties:
    - `textDocument : TextDocumentIdentifier`: the open file to inspect
    - `range : Range?`: the region of the source code to retrieve hints for.
+     If not set, returns hints for the whole document.
  - Result: `InlayHints[]`, where `InlayHint` has properties:
    - `kind : string`: The type of hint being provided, e.g. `"ParameterHint"`.
    - `label : string`: The label that should be displayed, e.g. `"dest:"`.
