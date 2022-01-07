@@ -265,7 +265,7 @@ Inlay hints are labels that are displayed by the editor in-line with the code.
 clangd can provide several categories of hints.
 
 **New client->server request**: `clangd/inlayHints`:
- - Params: `InlayHints` object with properties:
+ - Params: `InlayHintsParams` object with properties:
    - `textDocument : TextDocumentIdentifier`: the open file to inspect
    - `range : Range?`: the region of the source code to retrieve hints for.
      If not set, returns hints for the whole document.
