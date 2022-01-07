@@ -167,7 +167,7 @@ a[href^="https://code.woboq.org/"] {
 }
 
 /* Version marker ornaments */
-.v6::before, .v7::before, .v8::before, .v9::before, .v10::before, .v11::before, .v12::before, .v13::before {
+.v6::before, .v7::before, .v8::before, .v9::before, .v10::before, .v11::before, .v12::before, .v13::before, .v14::before {
   color: #008;
   border-radius: 3px;
   padding: 0.2em 0.6em;
@@ -187,6 +187,7 @@ a[href^="https://code.woboq.org/"] {
 .v11::before { content: "clangd-11"; }
 .v12::before { content: "clangd-12"; }
 .v13::before { content: "clangd-13"; }
+.v14::before { content: "clangd-14"; }
 
 .main-article {
   text-align: center;

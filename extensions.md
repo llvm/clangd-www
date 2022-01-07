@@ -231,7 +231,7 @@ well as syntax (e.g. implicit casts).
      or that traversed by `clang::RecursiveASTVisitor`.
 
 **New server capability**: `astProvider : bool`:
- - Signals that the server supports `textDocmuent/ast` requests.
+ - Signals that the server supports `textDocument/ast` requests.
 
 ## Memory usage
 {:.v12}
@@ -253,3 +253,42 @@ tracking allocations directly).
 
 **New server capability**: `memoryUsageProvider : bool`:
  - Signals that the server supports `$/memoryUsage` requests.
+
+## Inlay hints
+{:.v14}
+
+Inlay hints are labels that are displayed by the editor in-line with the code.
+
+| **Without hints:** | <tt>memcpy(buf, data, n)</tt> |
+| **With hints:**    | <tt>memcpy(_dest:_ buf, _src:_ data, _count:_ n)</tt> |
+
+clangd can provide several categories of hints.
+
+**New client->server request**: `clangd/inlayHints`:
+ - Params: `InlayHints` object with properties:
+   - `textDocument : TextDocumentIdentifier`: the open file to inspect
+   - `range : Range?`: the region of the source code to retrieve hints for.
+     If not set, returns hints for the whole document.
+ - Result: `InlayHints[]`, where `InlayHint` has properties:
+   - `kind : string`: The type of hint being provided, e.g. `"ParameterHint"`.
+   - `label : string`: The label that should be displayed, e.g. `"dest:"`.
+   - `position : Position`: The point between characters to show the hint.
+   - `range : Range`: The range the hint is associated with, e.g. the argument.
+
+**New server capability**: `clangdInlayHintsProvider` : bool`:
+ - Signals that the server supports `clangd/inlayHints` requests.
+
+_Compatibility_: Several language servers support inlay hint extensions.
+This extension is mostly compatible with
+[rust-analyzer/inlayHints](https://github.com/kjeremy/vscode-languageserver-node/blob/5849e59afd9d598666426f2640dfbd173eace02d/protocol/src/protocol.inlayHints.proposed.md).
+typescript-language-server also supports a similar
+[typescript/inlayHints](https://github.com/typescript-language-server/typescript-language-server#inlay-hints-typescriptinlayhints-experimental).
+
+Our hope is that some version of inlay hints is standardized in LSP. Once
+standard inlay hints are implemented in clangd, we will deprecate this extension
+and eventually remove it.
+
+See LSP
+[bug 956](https://github.com/microsoft/language-server-protocol/issues/956),
+[PR 609](https://github.com/microsoft/vscode-languageserver-node/pull/609),
+[PR 772](https://github.com/microsoft/vscode-languageserver-node/pull/772).
