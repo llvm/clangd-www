@@ -108,6 +108,7 @@ main {
    * Default (min-width: auto) prevents main from shrinking overwide content. */
   min-width: 0;
   line-height: 150%;
+  position: relative;
 }
 main img {
   max-width: 100%;
@@ -188,6 +189,12 @@ a[href^="https://code.woboq.org/"] {
 .v12::before { content: "clangd-12"; }
 .v13::before { content: "clangd-13"; }
 .v14::before { content: "clangd-14"; }
+#edit {
+  text-decoration: none;
+  position: absolute;
+  top: 1em;
+  right: 4em;
+}
 
 .main-article {
   text-align: center;
@@ -208,6 +215,7 @@ a[href^="https://code.woboq.org/"] {
     max-width: 100%;
   }
   main { padding: 0 1em; }
+  #edit { right: 1em; }
   aside {
     font-size: 80%;
     flex: 0 1 auto;
