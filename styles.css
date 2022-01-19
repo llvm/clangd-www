@@ -196,6 +196,27 @@ a[href^="https://code.woboq.org/"] {
   right: 4em;
 }
 
+/* Heading anchors (added by JS) */
+main h1, main h2, main h3, main h4 {
+  overflow-x: clip;
+  position: relative;
+}
+.anchor-link {
+  opacity: 50%;
+  margin-left: 0.25em;
+  color: #666;
+  text-decoration: none;
+  position: absolute;
+}
+:hover > .anchor-link { opacity: 100%; }
+.anchor-link span {
+  font-size: 60%;
+  display: none;
+  white-space: nowrap;
+  vertical-align: top;
+}
+.anchor-link:hover span { display: initial; }
+
 .main-article {
   text-align: center;
   font-style: italic;
