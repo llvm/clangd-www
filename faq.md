@@ -182,3 +182,17 @@ CompileFlags:
 
 (In other cases, this error message indicates a compile command we don't understand.
 If you're not on a Mac it's more likely your compile flags are badly malformed.)
+
+## How can I detect clangd in the preprocessor?
+
+clangd uses the clang parser, and defines preprocessor symbols like `__clang__`.
+Code that detects compilers will detect it as clang, which is usually good.
+If a library can't be parsed by clang, it generally can't be parsed by clangd either.
+
+Clangd does not define any extra symbols allowing you to detect it specifically.
+But you must write `#ifdef _CLANGD`, you can configure this:
+
+```
+CompileFlags:
+  Add: [-D_CLANGD=1]
+```
