@@ -312,4 +312,7 @@ flags one-per-line in `compile_flags.txt` in your source root.
 Clangd will assume the compile command is `clang $FLAGS some_file.cc`.
 
 Creating this file by hand is a reasonable place to start if your project is
-quite simple.
+quite simple. However background-indexing will not work, as clangd can't be
+sure which of the files are project sources.
+
+This file will be ignored if `compile_commands.json` is present.
