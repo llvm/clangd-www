@@ -8,9 +8,12 @@ issues around these headers being missing.
 ## What are system headers ?
 
 In the context of this guide, any header a project depends on but doesn't exist
-in the repository is considered a system header. These usually include: -
-Standard library, e.g: `<iostream>` - Third party libraries, e.g: `boost` -
-Posix, e.g: `<pthread.h>` - Compiler's built-in headers, e.g: `<stddef.h>`
+in the repository is considered a system header. These usually include:
+
+-   Standard library, e.g: `<iostream>`
+-   Third party libraries, e.g: `boost`
+-   Posix, e.g: `<pthread.h>`
+-   Compiler's built-in headers, e.g: `<stddef.h>`
 
 These headers are usually provided either by a custom toolchain, which might be
 part of the repository, or directly via system installed libraries.
