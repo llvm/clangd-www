@@ -14,7 +14,7 @@
   url: /guides/
   icon: '📖'
   children:
-    - title: Using a remote index
+    - title: Using remote index
       description: >
         Avoid indexing a large project locally and share an index between
         developers in your team by running clangd index server.
