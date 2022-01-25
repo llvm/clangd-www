@@ -16,8 +16,8 @@
   children:
     - title: Using a remote index
       description: >
-        If your project has a clangd index server, then you can connect to it
-        to avoid slow local indexing of a large codebase.
+        Avoid indexing a large project locally and share an index between
+        developers in your team by running clangd index server.
       url: /guides/remote-index
     - title: System headers
       description: >
