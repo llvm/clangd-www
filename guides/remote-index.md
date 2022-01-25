@@ -2,7 +2,7 @@
 redirect_from: /llvm-remote-index
 redirect_from: /llvm-remote-index.html
 ---
-# Using remote index
+# Using a remote index
 
 Usually clangd will build an [index](/design/indexing) of your project in the
 background. For large projects, this can be slow.
