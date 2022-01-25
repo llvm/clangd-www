@@ -262,3 +262,32 @@ Diagnostics:
 ### AllScopes
 Whether code completion should include suggestions from scopes that are
 not visible. The required scope prefix will be inserted.
+
+## InlayHints
+{:.v14}
+
+Configures the behaviour of the inlay-hints feature. Sample block (default):
+
+```yaml
+InlayHints:
+  Enabled: Yes
+  ParameterNames: Yes
+  DeducedTypes: Yes
+```
+
+### Enabled
+{:.v14}
+
+A boolean that enables/disables the inlay-hints feature for all kinds, when
+disabled, configuration for specific kinds are ignored.
+
+### ParameterNames
+{:.v14}
+
+A boolean that enables/disables inlay-hints for parameter names in function
+calls.
+
+### DeducedTypes
+{:.v14}
+
+A boolean that enables/disables inlay-hints for deduced types.
