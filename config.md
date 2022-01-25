@@ -256,6 +256,18 @@ Diagnostics:
     CheckOptions:
       readability-identifier-naming.VariableCase: CamelCase
 ```
+
+### Include Cleaner
+{:.v14}
+
+Enables [unused includes diagnostics](/design/include-cleaner). Possible
+values: `None` (default), `Strict`.
+
+```yaml
+Diagnostics:
+  UnusedIncludes: Strict
+```
+
 ## Completion
 {:.v13}
 
