@@ -24,6 +24,10 @@
         Details about how system header detection in clangd works and how to fix
         issues with missing system headers.
       url: /guides/system-headers
+    - title: Include Cleaner
+      description: >
+        Remove unused includes and reduce build times by using Include Cleaner.
+      url: /guides/include-cleaner
 - title: FAQ
   url: /faq
   icon: '❓'
