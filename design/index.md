@@ -71,3 +71,11 @@ across many clangd instances with an RPC server.
 
 [remote index](/design/remote-index)
 {:.main-article}
+
+## Include Cleaner
+
+Issues diagnostics for unused includes and provides tools for keeping a minimal
+set of required includes.
+
+[include cleaner](/design/include-cleaner)
+{:.main-article}

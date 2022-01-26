@@ -1,18 +1,15 @@
 # Include Cleaner
 
-The common pattern in C and C++ programs is that the source files often contain
-unnecessary includes. Most of the time, these includes were added at some point
-and actually used for some time, but over time the program evolved and the
-symbols defined in these headers were no longer used. Keeping an eye on what
-headers are actually required to build the file and manually updating them is
-time-consuming and error-prone. Over time, the stale inclusions can pile up and
-increase build times and complicate the dependncy graph.
+Manually managing includes in a C++ translation unit, especially in the face of
+transitive inclusions, requires a lot of effort. Include Cleaner aims to
+provide diagnostics to keep includes in an
+[IWYU](https://include-what-you-use.org/)-clean state.
 
-Include Cleaner is a
-[IWYU](https://github.com/include-what-you-use/include-what-you-use)-inspired
-feature in clangd that automates the process of maintaining a necessary set of
-included headers. It now is available in "preview" mode with an incomplete set
-of capabilities. If you experience any bugs, please submit a bug report in
+Include Cleaner is a IWYU-inspired feature in clangd that automates the process
+of maintaining a necessary set of included headers. It now is available in
+"preview" mode with an incomplete set of capabilities and can be enabled
+through [configuration file](/config#UnusedIncludes). If you experience any
+bugs, please submit a bug report in
 [clangd/issues](https://github.com/clangd/clangd/issues).
 
 {:.v14}
@@ -50,11 +47,18 @@ Here, `main.cpp` only makes use of symbols from `foo.h` and removing `#include
 "bar.h"` prevents unnecessary parsing of `bar.h` and allows breaking the
 dependncy on it.
 
-### Conservative filtering
+### Deciding what headers are used
 
-Include Cleaner strives to provide safe diagnostics to reduce the posibility of
-breaking the build. The tool will consider that every symbol in the "expansion"
-of the main file symbols to count as a usage. Example:
+Clangd relies on Clang AST to deduce which headers are used and which aren't,
+the whole Include Cleaner decision process is described below.
+
+#### Scanning the main file
+
+First, Include Cleaner will build the AST for the main file (the file currently
+opened in the editor). After the AST is built, Include Cleaner will recursively
+visit the AST nodes and collect locations of all referenced symbols (e.g.
+types, functions, global variables). The AST will contain macro and `auto`
+expansions. For example, in this case, `foo.h` will be considered as used:
 
 ```c++
 // foo.h
@@ -80,8 +84,34 @@ int main() {
 }
 ```
 
-In this case, both `macro.h` and `foo.h` will be marked as "used" because the
-macro expansion contains the function call. `auto` will have a similar effect.
+This means that Include Cleaner is conservatively treating symbols in the
+expanded code as usages as opposed to only explicitly spelled symbols.
+
+Include Cleaner will also traverse the unexpanded macro tokens to see where
+their definitions come from.
+
+After the process is complete, the declaration and definition locations will be
+collected and passed to the next stage.
+
+#### Marking the headers as used
+
+`SourceLocation` instances collected at the previous step will be converted to
+`FileID`s and deduplicated. In this stage, it is important to attribute the
+locations in some headers to their includes. Some of the `FileID`s correspond
+to non self-contained headers, meaning the user should actually include their
+parent rather than a header itself. Other important headers with this property
+are the ones manually marked as private through `IWYU pragma: private`. For
+them, the user explicitly asks includers to consider the public header.
+
+After the responsible headers are collected, they only step left is producing
+diagnostics for unused headers.
+
+#### Issuing warnings
+
+After most of the work is done, Include Cleaner needs to decide which headers
+are not used in the main file. All inclusions are scanned and checked for
+containing `IWYU pragma: keep`; if they do not, they are not used and will be
+warned about.
 
 ### IWYU pragmas
 
@@ -94,24 +124,7 @@ the most notable of which are:
 - `IWYU pragma: private` indicates that the current header is an implementation
   detail and another one should be included instead
 
-Right now, only the `keep` pragma is implemented, `private` will be implemented
-soon.
-
-## Using Include Cleaner
-
-To enable Include Cleaner, use the [configuration mechanism](/config). For
-example, add the following to your configuration file to enable it globally:
-
-```yaml
-Diagnostics:
-  UnusedIncludes: Strict
-```
-
-## Future plans and limitations
-
-Include Cleaner is in the active development stage: there are several
-limitations preventing us from enabling it by default but we expect to provide
-the full experience in clangd 15.0.0 release.
+## Future plans and Limitations
 
 ### Umbrella headers
 
@@ -132,8 +145,23 @@ macros and the fact that a symbol is allowed to come from multiple headers) but
 you can enable this unstable feature through passing `--include-cleaner-stdlib`
 flag to clangd invocation.
 
-### Canonicalization
+### Inserting Includes
 
 The complete version of Include Cleaner will not only warn about unused
 headers, but also provide a way to include used headers directly, not through a
 chain of transitive includes.
+
+### Template type aliases
+
+Include Cleaner does not currently support the templated type aliases because
+Clang AST does not record the fact that expanded type was reached through a
+type alias in cases like this:
+
+```c++
+// vec.h
+template<class T>
+using Vec = vector<T, Alloc<T>>;
+```
+
+So, if you include `vec.h` and use `Vec<int>` in your main file, IncludeCleaner
+will for now consider `<vector>` standard header to be used, not `vec.h`.

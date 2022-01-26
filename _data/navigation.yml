@@ -43,8 +43,6 @@
     - title: Remote index
       url: /design/remote-index
     - title: Include Cleaner
-      description: >
-        Remove unused includes and reduce build times by using Include Cleaner.
       url: /design/include-cleaner
 - title: Protocol extensions
   url: /extensions
