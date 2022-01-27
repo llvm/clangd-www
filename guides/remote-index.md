@@ -53,6 +53,7 @@ Queries to the index server may reveal information about the code you're editing
 Some open-source projects have public servers:
 
 - [LLVM](http://clangd-index.llvm.org/): `clangd-index.llvm.org:5900`
+- [Chromium](https://linux.clangd-index.chromium.org/): `linux.clangd-index.chromium.org:5900` (`linux` can instead be `chromeos`/`android`/`fuchsia`/`chromecast-linux`/`chromecast-android`)
 
 ## Running up an index server
 
