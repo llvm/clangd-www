@@ -7,7 +7,7 @@ provide diagnostics to keep includes in an
 
 Include Cleaner is available in "preview" mode with an incomplete set of
 capabilities and can be enabled through [configuration
-file](/config#UnusedIncludes). If you experience any bugs, please submit a bug
+file](/config#unusedincludes). If you experience any bugs, please submit a bug
 report in [clangd/issues](https://github.com/clangd/clangd/issues).
 
 {:.v14}
@@ -52,12 +52,11 @@ the whole Include Cleaner decision process is described below.
 
 #### Scanning the main file
 
-IncludeCleaner will traverse Clang AST of the main file (the file currently
-opened in the editor). It will recursively visit AST nodes and collect locations
-of all referenced symbols (e.g.  types, functions, global variables). Any
-declaration explicitly mentioned in the code, brought in via macro expansions,
-implicitly through type deductions or template instantiations will be marked as
-"used". Example:
+IncludeCleaner will traverse Clang AST of the main file. It will recursively
+visit AST nodes and collect locations of all referenced symbols (e.g.  types,
+functions, global variables). Any declaration explicitly mentioned in the code,
+brought in via macro expansions, implicitly through type deductions or template
+instantiations will be marked as "used". Example:
 
 ```c++
 // foo.h
@@ -105,15 +104,7 @@ collected and passed to the next stage.
 #### Marking the headers as used
 
 `SourceLocation` instances collected at the previous step will be converted to
-`FileID`s and deduplicated. In this stage, it is important to attribute the
-locations in some headers to their includes. Some of the `FileID`s correspond to
-non self-contained headers, meaning the user should actually include their
-parent rather than the header itself. Other important headers with this property
-are the ones manually marked as private through `IWYU pragma: private`. For
-them, the user explicitly asks includers to consider the public header.
-
-At this stage, Include Cleaner attributes symbols from implementation detail
-headers to their public interfaces (sometimes called an umbrella header).
+`FileID`s and deduplicated.
 
 This is achieved by looking at two hints in the code:
 
@@ -123,7 +114,7 @@ This is achieved by looking at two hints in the code:
   having a `.inc` extension). In which case Include Cleaner uses the first
   self-contained header in the include stack as the public interface.
 
-After the responsible headers are collected, they only step left is producing
+After the responsible headers are collected, the only step left is producing
 diagnostics for unused headers.
 
 #### Issuing warnings
