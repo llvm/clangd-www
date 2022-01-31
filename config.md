@@ -291,3 +291,19 @@ calls.
 {:.v14}
 
 A boolean that enables/disables inlay-hints for deduced types.
+
+## Hover
+{:.v14}
+
+Configures contents of the hover cards. Sample block (default):
+
+```yaml
+Hover:
+  ShowAKA: No
+```
+
+### ShowAKA
+{:.v14}
+
+A boolean that controls printing of desugared types, e.g:
+`vector<int>::value_type (aka int)`
