@@ -92,6 +92,7 @@ Affects how a source file is parsed.
 CompileFlags:                     # Tweak the parse settings
   Add: [-xc++, -Wall]             # treat all files as C++, enable more warnings
   Remove: -W*                     # strip all other warning-related flags
+  Compiler: clang++               # Change argv[0] of compile flags to `clang++`
 ```
 
 clangd emulates how clang would interpret a file.
@@ -138,6 +139,14 @@ Valid values are:
 - Ancestors: search all parent directories (the default)
 - None: do not use a compilation database, just default flags.
 
+### Compiler
+{:.v14}
+
+String to replace the executable name in the compile flags. The name controls
+flag parsing (clang vs clang-cl), target inference (gcc-arm-noneabi) etc.
+
+If the option matches a glob mentioned in `--query-driver`, then it'll be
+invoked for extraction of include paths.
 
 ## Index
 
