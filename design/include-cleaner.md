@@ -5,21 +5,19 @@ transitive inclusions, requires a lot of effort. Include Cleaner aims to
 provide diagnostics to keep includes in an
 [IWYU](https://include-what-you-use.org/)-clean state.
 
-Include Cleaner is a IWYU-inspired feature in clangd that automates the process
-of maintaining a necessary set of included headers. It now is available in
-"preview" mode with an incomplete set of capabilities and can be enabled
-through [configuration file](/config#UnusedIncludes). If you experience any
-bugs, please submit a bug report in
-[clangd/issues](https://github.com/clangd/clangd/issues).
+Include Cleaner is available in "preview" mode with an incomplete set of
+capabilities and can be enabled through [configuration
+file](/config#UnusedIncludes). If you experience any bugs, please submit a bug
+report in [clangd/issues](https://github.com/clangd/clangd/issues).
 
 {:.v14}
 
 ## How it works
 
-Include Cleaner issues diagnostics fro includes that are present but not used
+Include Cleaner issues diagnostics for includes that are present but not used
 in the main file. When you open a file, clangd will analyze the symbols the
-file uses and mark all headers defining these symbools as "used". The warnings
-will be issues for the headers that are included but not marked as "used".
+file uses and mark all headers defining these symbols as "used". The warnings
+will be issued for the headers that are included but not marked as "used".
 Example:
 
 ```c++
@@ -45,7 +43,7 @@ int main() {
 
 Here, `main.cpp` only makes use of symbols from `foo.h` and removing `#include
 "bar.h"` prevents unnecessary parsing of `bar.h` and allows breaking the
-dependncy on it.
+dependency on it.
 
 ### Deciding what headers are used
 
@@ -54,54 +52,76 @@ the whole Include Cleaner decision process is described below.
 
 #### Scanning the main file
 
-First, Include Cleaner will build the AST for the main file (the file currently
-opened in the editor). After the AST is built, Include Cleaner will recursively
-visit the AST nodes and collect locations of all referenced symbols (e.g.
-types, functions, global variables). The AST will contain macro and `auto`
-expansions. For example, in this case, `foo.h` will be considered as used:
+IncludeCleaner will traverse Clang AST of the main file (the file currently
+opened in the editor). It will recursively visit AST nodes and collect locations
+of all referenced symbols (e.g.  types, functions, global variables). Any
+declaration explicitly mentioned in the code, brought in via macro expansions,
+implicitly through type deductions or template instantiations will be marked as
+"used". Example:
 
 ```c++
 // foo.h
 
-int foo() { return 42; }
-```
+// USED
+int foo();
 
-```c++
-// macro.h
-
-#include "foo.h"
-
+// USED
 #define FOO foo
+
+// USED
+struct Bar {
+  Bar();
+}
+
+// USED
+struct Baz;
+
+// USED
+template <typename T> Baz getBaz();
 ```
 
 ```c++
 // main.cpp
 
-#include "macro.h"
+#include "foo.h"
 
 int main() {
+  // Uses foo() and FOO
   FOO();
+  // Uses Baz, getBaz and Bar.
+  auto baz = getBaz<Bar>();
 }
 ```
 
 This means that Include Cleaner is conservatively treating symbols in the
 expanded code as usages as opposed to only explicitly spelled symbols.
 
-Include Cleaner will also traverse the unexpanded macro tokens to see where
-their definitions come from.
+Include Cleaner will also traverse the macro names in the spelled code to
+collect used macros.
 
-After the process is complete, the declaration and definition locations will be
+After the process is complete, all declaration and definition locations will be
 collected and passed to the next stage.
 
 #### Marking the headers as used
 
 `SourceLocation` instances collected at the previous step will be converted to
 `FileID`s and deduplicated. In this stage, it is important to attribute the
-locations in some headers to their includes. Some of the `FileID`s correspond
-to non self-contained headers, meaning the user should actually include their
-parent rather than a header itself. Other important headers with this property
+locations in some headers to their includes. Some of the `FileID`s correspond to
+non self-contained headers, meaning the user should actually include their
+parent rather than the header itself. Other important headers with this property
 are the ones manually marked as private through `IWYU pragma: private`. For
 them, the user explicitly asks includers to consider the public header.
+
+At this stage, Include Cleaner attributes symbols from implementation detail
+headers to their public interfaces (sometimes called an umbrella header).
+
+This is achieved by looking at two hints in the code:
+
+- `IWYU pragma: private` directives, which explicitly tells a particular header
+  should only be included through another.
+- Header being non-self contained (e.g. missing header guards or pragma once,
+  having a `.inc` extension). In which case Include Cleaner uses the first
+  self-contained header in the include stack as the public interface.
 
 After the responsible headers are collected, they only step left is producing
 diagnostics for unused headers.
@@ -116,8 +136,8 @@ warned about.
 ### IWYU pragmas
 
 IWYU tool offers a set of
-[pragmas](https://github.com/include-what-you-use/include-what-you-use/blob/master/docs/IWYUPragmas.md),
-the most notable of which are:
+[pragmas](https://github.com/include-what-you-use/include-what-you-use/blob/master/docs/IWYUPragmas.md).
+Include Cleaner respects the following:
 
 - `IWYU pragma: keep` indicates the inclusion should not be removed from the
   main file
@@ -159,9 +179,9 @@ type alias in cases like this:
 
 ```c++
 // vec.h
-template<class T>
-using Vec = vector<T, Alloc<T>>;
+namespace ns {
+using std::vector;
+}
 ```
 
-So, if you include `vec.h` and use `Vec<int>` in your main file, IncludeCleaner
-will for now consider `<vector>` standard header to be used, not `vec.h`.
+Using `ns::vector` will now require `<vector>` header rather than `"vec.h"`.
