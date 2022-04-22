@@ -172,7 +172,7 @@ Legal values are `Build` (the default) or `Skip`.
 Used to define an external index source:
 
 - On-disk monolithic index produced by `clangd-indexer` or
-- Address of a [remote-index-server](./remote-index.md).
+- Address of a [remote-index-server](/guides/remote-index).
 
 `MountPoint` can be used to specify source root for the index. This is necessary
 to handle relative path conversions. Overall schema looks like this:
