@@ -1,7 +1,3 @@
----
-redirect_from: /remote-index
-redirect_from: /remote-index.html
----
 # Remote index
 
 A [project-wide index](/design/indexing) can be slow to build, particularly
