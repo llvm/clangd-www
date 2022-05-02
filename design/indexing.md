@@ -91,4 +91,4 @@ Remote index allows serving index on a separate machine and connecting to it
 from your device. This means you don't have to build the index yourself
 anymore and clangd will use significantly less memory. Hence developers can
 work from less powerful machines, while still using clangd to its fullest.
-For more details, see [remote index](/remote-index).
+For more details, see [remote index](/design/remote-index).
