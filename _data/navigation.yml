@@ -28,7 +28,7 @@
       description: >
         Identify unused #includes which slow down your build, and understand how
         clangd decides which headers are used.
-      url: /guides/unused-includes
+      url: /guides/include-cleaner
 - title: FAQ
   url: /faq
   icon: '❓'
