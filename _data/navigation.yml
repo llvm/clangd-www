@@ -24,6 +24,11 @@
         Details about how system header detection in clangd works and how to fix
         issues with missing system headers.
       url: /guides/system-headers
+    - title: Unused includes
+      description: >
+        Identify unused #includes which slow down your build, and understand how
+        clangd decides which headers are used.
+      url: /guides/unused-includes
 - title: FAQ
   url: /faq
   icon: '❓'

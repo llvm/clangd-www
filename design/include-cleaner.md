@@ -128,12 +128,7 @@ warned about.
 
 IWYU tool offers a set of
 [pragmas](https://github.com/include-what-you-use/include-what-you-use/blob/master/docs/IWYUPragmas.md).
-Include Cleaner respects the following:
-
-- `IWYU pragma: keep` indicates the inclusion should not be removed from the
-  main file
-- `IWYU pragma: private` indicates that the current header is an implementation
-  detail and another one should be included instead
+Include Cleaner respects `keep`, `private` and (partly) `export`.
 
 ## Future plans and Limitations
 
@@ -162,17 +157,3 @@ The complete version of Include Cleaner will not only warn about unused
 headers, but also provide a way to include used headers directly, not through a
 chain of transitive includes.
 
-### Template type aliases
-
-Include Cleaner does not currently support the templated type aliases because
-Clang AST does not record the fact that expanded type was reached through a
-type alias in cases like this:
-
-```c++
-// vec.h
-namespace ns {
-using std::vector;
-}
-```
-
-Using `ns::vector` will now require `<vector>` header rather than `"vec.h"`.
