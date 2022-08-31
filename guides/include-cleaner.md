@@ -95,8 +95,8 @@ Diagnostics:
 
 ### IWYU pragmas
 
-These are magic comments [compatible with the include-what-you-use tool]
-(https://github.com/include-what-you-use/include-what-you-use/blob/master/docs/IWYUPragmas.md).
+These are magic comments [compatible with the include-what-you-use tool](
+https://github.com/include-what-you-use/include-what-you-use/blob/master/docs/IWYUPragmas.md).
 clangd supports only a subset.
 
 * **keep**
