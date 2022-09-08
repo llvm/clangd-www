@@ -19,7 +19,7 @@ for how). These describe the messages exchanged between the editor and `clangd`,
 and what clangd was thinking.
 
 Even if you don't understand the contents, it's tremendously useful to include
-this when filing a bug. If you add `-log=verbose` to the clangd arguments, this
+this when filing a bug. If you add `--log=verbose` to the clangd arguments, this
 will include more detail (e.g. the full content of LSP messages).
 
 ## Lots of error diagnostics
@@ -48,7 +48,7 @@ clangd needs to parse the headers.
 The standard library headers are often found relative to the compiler.
 Try to configure your project with an absolute path to the compiler
 (`/usr/bin/gcc`, not `gcc`).
-The logs (with `-log=verbose`) can tell you the `cc1` command, including which
+The logs (with `--log=verbose`) can tell you the `cc1` command, including which
 paths were searched for the standard library. You can compare this to the output
 of `clang -### <args>`.
 
@@ -91,7 +91,7 @@ when parsing or indexing that file (or an included header). Again it's very
 useful to know what's in the file and minimize it as far as possible (especially
 include).
 
-A crash goes that goes away when disabling clang-tidy (`-clang-tidy=0`) is
+A crash goes that goes away when disabling clang-tidy (`--clang-tidy=0`) is
 likely specific to a particular check and pattern of code.
 
 Note that a background-indexing crash can appear to trigger on file open.
@@ -101,10 +101,10 @@ Note that a background-indexing crash can appear to trigger on file open.
 Unfortunately a crash while background-indexing any file can take down the whole
 clangd process. When you start clangd again, it will pick up where it left off,
 and crash again. You can tell that this is happening if adding the clangd flag
-`-background-index=0` avoids the crash.
+`--background-index=0` avoids the crash.
 
 Typically many files are indexed at once and it can be hard to tell which is
-crashing. Pass `-j=1 -log=verbose` to clangd to only index one file at a time
+crashing. Pass `-j=1 --log=verbose` to clangd to only index one file at a time
 and log its name. Once the file is identified, it can also be reduced to a
 simpler crashing example.
 
