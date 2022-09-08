@@ -32,8 +32,7 @@ only useful if the fragments have different `If` conditions).
 
 JSON is a subset of YAML, so you can use that syntax if you prefer.
 
-Changes should take effect immediately as you continue to edit code. For now,
-config file errors are reported only in the clangd logs.
+Changes should take effect immediately as you continue to edit code.
 
 ## Loading and combining fragments
 
