@@ -133,7 +133,7 @@ Flags added by the same CompileFlags entry will not be removed.
 ### CompilationDatabase
 {:.v12}
 
-Directory to search for compilation database (compile_comands.json etc).
+Directory to search for compilation database (compile_commands.json etc).
 Valid values are:
 - A single path to a directory (absolute, or relative to the fragment)
 - Ancestors: search all parent directories (the default)
