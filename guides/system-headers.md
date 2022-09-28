@@ -39,7 +39,7 @@ Best way to ensure clangd can find your system includes is by putting the
 directories to be searched into your compile flags via `-isystem`. You can
 achieve this with
 [compile\_flags.txt](https://clang.llvm.org/docs/JSONCompilationDatabase.html#alternatives),
-[compile\_commadns.json](https://clang.llvm.org/docs/JSONCompilationDatabase.html)
+[compile\_commands.json](https://clang.llvm.org/docs/JSONCompilationDatabase.html)
 or a
 [clangd configuration file](http://clangd.llvm.org/config.html#compileflags).
 
