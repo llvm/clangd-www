@@ -69,7 +69,9 @@ e.g. `PathMatch: [foo/.*, bar/.*]` matches files in either directory.
 
 Conditions based on a file's path use the following form:
 
-- if the fragment came from a project directory, the path is relative
+- if the fragment came from a project directory, the path is relative  
+(note: `./dir/.*` is an incorrect form for `dir` content in the project's root
+from the regex perspective, use `dir/.*` instead)
 - if the fragment is global (e.g. user config), the path is absolute
 - paths always use forward-slashes (UNIX-style)
 
