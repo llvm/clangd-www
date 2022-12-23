@@ -193,7 +193,7 @@ Index:
   mentioning `Background: Build` in a later fragment.
 
 ### StandardLibrary
-{:.v16}
+{:.v15}
 
 Controls whether clangd eagerly indexes the standard library (to give
 code completions of standard library symbols on an empty file). Sample block
@@ -201,7 +201,7 @@ code completions of standard library symbols on an empty file). Sample block
 
 ```
 Index:
-  StandardLibrary: Yes
+  StandardLibrary: No
 ```
 
 ## Style
