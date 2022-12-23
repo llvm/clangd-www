@@ -192,6 +192,18 @@ Index:
   files under the `MountPoint`. Users can turn it back on, by explicitly
   mentioning `Background: Build` in a later fragment.
 
+### StandardLibrary
+{:.v16}
+
+Controls whether clangd eagerly indexes the standard library (to give
+code completions of standard library symbols on an empty file). Sample block
+(default).
+
+```
+Index:
+  StandardLibrary: Yes
+```
+
 ## Style
 
 Describes the style of the codebase, beyond formatting.
