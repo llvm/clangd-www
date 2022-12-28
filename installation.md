@@ -8,9 +8,9 @@ To use clangd, you need:
 
 ## Installing clangd
 
-You'll want a **recent** version of clangd. The current release is 13.0.
+For best results, use the [most recent version](https://github.com/clangd/clangd/releases/latest) of clangd. 
 
-After installing, `clangd --version` should print `clangd version 13.0.0` or later.
+You can check the version currently installed with `clangd --version`.
 
 (Version numbers are based on LLVM. clangd 7 was the first usable release).
 
