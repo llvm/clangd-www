@@ -254,6 +254,21 @@ tracking allocations directly).
 **New server capability**: `memoryUsageProvider : bool`:
  - Signals that the server supports `$/memoryUsage` requests.
 
+## Reference Container
+{:.v16}
+
+When finding references to a symbol, it's often useful to know the name of the
+function or class in which the reference occurs. 
+
+**New property of `Location` object**: `containerName : string?`:
+ - Name of the function or class in which the reference occurs. Might be null,
+   e.g. if the containing symbol is indexed. Can also be an empty string, e.g.
+   for declarations at global scope. 
+
+**New client capability**: `textDocument.references.container`:
+ - Requests that clangd adds the `containerName` property to the `Location`
+   objects returned by `textDocument/references`
+
 ## Inlay hints
 {:.v14}
 
