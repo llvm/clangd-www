@@ -262,7 +262,7 @@ function or class in which the reference occurs.
 
 **New property of `Location` object**: `containerName : string?`:
  - Name of the function or class in which the reference occurs. Might be null,
-   e.g. if the containing symbol is indexed. Can also be an empty string, e.g.
+   e.g. if the containing symbol is not indexed. Can also be an empty string, e.g.
    for declarations at global scope. 
 
 **New client capability**: `textDocument.references.container`:
