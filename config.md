@@ -303,6 +303,7 @@ Configures the behaviour of the inlay-hints feature. Sample block (default):
 
 ```yaml
 InlayHints:
+  Designators: Yes
   Enabled: Yes
   ParameterNames: Yes
   DeducedTypes: Yes
@@ -324,6 +325,11 @@ calls.
 {:.v14}
 
 A boolean that enables/disables inlay-hints for deduced types.
+
+### Designators
+{:.v14}
+
+A boolean that enables/disables inlay-hints for array designators. eg: `std::vector<int> arr = {[0]= 1, [1]= 2}` (`Designators: true`). `std::vector<int> arr = {1, 2}` (`Designators: false`)
 
 ## Hover
 {:.v14}
