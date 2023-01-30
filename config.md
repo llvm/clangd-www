@@ -329,7 +329,7 @@ A boolean that enables/disables inlay-hints for deduced types.
 ### Designators
 {:.v14}
 
-A boolean that enables/disables inlay-hints for array designators. eg: `std::vector<int> arr = {[0]= 1, [1]= 2}` (`Designators: true`). `std::vector<int> arr = {1, 2}` (`Designators: false`)
+A boolean that enables/disables inlay-hints for designators in aggregate initialization. (eg: `Designators: true`: `std::vector<int> arr = {[0]= 1, [1]= 2}` ; `Designators: false`: `std::vector<int> arr = {1, 2}`)
 
 ## Hover
 {:.v14}
