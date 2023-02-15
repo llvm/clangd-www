@@ -42,7 +42,7 @@ times when it's needed, especially with external libraries.
 - If X is an internal header that should not be included directly, add a comment
   `// IWYU pragma: private; include "Y.h"`.
 - Suppress the warning with `// IWYU pragma: keep`.
-- Suprress all warnings for `X.h` in your configuration.
+- Suppress all warnings for `X.h` in your configuration.
 
 **A header is marked unusued, but is needed by other headers I later include**
 
