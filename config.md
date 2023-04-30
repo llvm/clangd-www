@@ -113,8 +113,8 @@ List of flags to append to the compile command.
 List of flags to remove from the compile command.
 
 - If the value is a recognized clang flag (like `-I`) then it will be
-  removed along with any arguments. Synonyms like `--include-dir=` will
-  also be removed.
+  removed along with any arguments. Synonyms like `--include-directory=`
+  will also be removed.
 - Otherwise, if the value ends in `*` (like `-DFOO=*`) then any argument
   with the prefix will be removed.
 - Otherwise any argument exactly matching the value is removed.
