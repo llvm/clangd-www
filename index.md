@@ -11,4 +11,4 @@ Here's Visual Studio Code with the clangd plugin, demonstrating code completion:
 clangd is based on the [Clang](https://clang.llvm.org) C++ compiler, and is part
 of the [LLVM](https://llvm.org) project.
 
-{% include features.md %}
+{% include_relative features.md %}
