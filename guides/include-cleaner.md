@@ -16,8 +16,8 @@ This means:
 This is opinionated, and stricter than "will it compile". It implies adding
 `#includes` that the compiler does not strictly need. Some `#includes` that
 satisfy the compiler should be replaced with more specific ones.
-If your codebase does not broadly aim to follow this style, you should disable
-these features.
+If your codebase broadly aims to follow this style, you should enable these
+features.
 
 ## Show which headers are used
 
@@ -29,7 +29,7 @@ Hovering on a name will show you which header provides that symbol:
 Hovering on an `#include` will show which of its symbols are used in the file.
 ![#include hover showing symbols in VSCode](../screenshots/header_symbols.png)
 
-Using "find references" you can navigate to these uses.
+Using "find references" in your editor you can navigate to these uses.
 
 ## "Unused include" warning
 
@@ -40,7 +40,7 @@ times, and make code harder to refactor. clangd can warn about this:
 
 ![Unused include warning in VSCode](../screenshots/unused_include.png)
 
-Often, these `#include` directive has no effect and can simply be removed.
+Often, these `#include` directives have no effect and can simply be removed.
 This isn't always the case: the analysis makes assumptions about code style.
 
 ## "Missing include" warning
@@ -52,15 +52,15 @@ hides dependencies. clangd can show such uses:
 
 ![Missing include warning in VSCode](../screenshots/missing_include.png)
 
-Generally clangd can suggest the correct `#include` to add here. In some
-cases there might be multiple options.
+Generally clangd can suggest a correct `#include` to add here. In some
+cases where multiple headers provide a symbol, you may prefer a different one.
 
 ## Scenarios and solutions
 
-**An included header X is marked unused, but itself #includes Y, which I use**
+**An included header X is marked unused, but it #includes Y, which I use**
 
 **clangd says I should include header Y, but I'm already including X, which
-itself includes Y**
+includes Y**
 
 This is a transitive include. Generally you should avoid this, but there are
 times when it's needed, especially with external libraries.
@@ -109,11 +109,11 @@ section). You may have to add missing includes too, or do other cleanups.
 
 This is merely a suggestion: including `Y` should also hide the warning.
 
-clangd tries to pick the best header, preferring those that are public,
-self-contained, which provide full definitions (for classes and templates),
-and whose name matches the symbol's name.
+clangd tries to pick the best header, preferring those that public,
+self-contained, provide full definitions (for classes and templates), and have
+a name matching the symbol's name.
 
-However there are limitations, most notably: only headers that are already
+However, there are limitations. Most notably: only headers that are already
 transitively included are considered. You may have to insert the correct
 #include yourself.
 
@@ -130,8 +130,8 @@ only the `<cstdio>` header is acceptable.
 
 ### Configuration
 
-In your configuration file, set Diagnostics.UnusedIncludes and
-Diagnostics.MissingIncludes to `Strict` or `None`.
+In your configuration file, set `Diagnostics.UnusedIncludes` and
+`Diagnostics.MissingIncludes` to `Strict` or `None`.
 You can also disable analysis of particular files (using `If` blocks),
 and suppress all warnings of certain headers.
 
