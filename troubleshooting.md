@@ -53,7 +53,8 @@ paths were searched for the standard library. You can compare this to the output
 of `clang -### <args>`.
 
 If you're using an unusual compiler (e.g. a cross-compiler for a different
-platform) you may want to pass `--query-driver=/path/to/mygcc` to allow clangd
+platform) you may want to pass `--query-driver=/path/to/mygcc` or
+`--query-driver=/path/to/mygcc,/path/to/myg++` when using C++ to allow clangd
 to extract the include paths from it directly.
 
 ### Can't find compiler built-in headers (`<stddef.h>` etc)
