@@ -22,11 +22,15 @@ Example:
 
 ```c++
 // foo.h
+#pragma once
+
 class Foo {};
 ```
 
 ```c++
 // bar.h
+#pragma once
+
 class Bar {};
 ```
 
@@ -60,6 +64,7 @@ instantiations will be marked as "used". Example:
 
 ```c++
 // foo.h
+#pragma once
 
 // USED
 int foo();
