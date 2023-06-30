@@ -144,7 +144,7 @@ use, which is a common practice in Open Source projects. A notable example of
 this is Googletest: the `gtest/gtest.h` top-level header does not contain any
 definitions: it includes a number of "internal" headers that are not
 recommended to users. The users should always write `#include
-"gtest/ghtest.h"`. The way to propagate that information to Include Cleaner is
+"gtest/gtest.h"`. The way to propagate that information to Include Cleaner is
 using `// IWYU pragma: private, include "public.h"` in your `private.h` header
 that is being exported.
 
