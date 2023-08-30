@@ -45,7 +45,7 @@ This isn't always the case: the analysis makes assumptions about code style.
 
 ## "Missing include" warning
 
-{:.v16}
+{:.v17}
 
 Similarly, using symbols from a header without `#include`ing it is brittle and
 hides dependencies. clangd can show such uses:
