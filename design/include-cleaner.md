@@ -133,7 +133,8 @@ warned about.
 
 IWYU tool offers a set of
 [pragmas](https://github.com/include-what-you-use/include-what-you-use/blob/master/docs/IWYUPragmas.md).
-Include Cleaner respects `keep`, `private` and (partly) `export`.
+Include Cleaner respects `keep`, `always_keep`, `private`, and
+`export`/`begin_exports`/`end_exports`.
 
 ## Future plans and Limitations
 
