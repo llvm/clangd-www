@@ -303,6 +303,7 @@ Configures the behaviour of the inlay-hints feature. Sample block (default):
 
 ```yaml
 InlayHints:
+  BlockEnd: No
   Designators: Yes
   Enabled: Yes
   ParameterNames: Yes
@@ -330,6 +331,18 @@ A boolean that enables/disables inlay-hints for deduced types.
 {:.v14}
 
 A boolean that enables/disables inlay-hints for designators in aggregate initialization. (eg: `Designators: true`: `std::vector<int> arr = {[0]= 1, [1]= 2}` ; `Designators: false`: `std::vector<int> arr = {1, 2}`)
+
+### BlockEnd
+{:.v17}
+
+A boolean that enables/disables inlay-hints for block end comment. An example is shown below (comments are inlay hints):
+
+```c++
+void foo() {
+  struct S {
+  }; // struct S
+} // foo
+```
 
 ## Hover
 {:.v14}
