@@ -281,13 +281,27 @@ Diagnostics:
 {:.v14}
 
 Enables Include Cleaner's [unused includes
-diagnostics](/design/include-cleaner). Possible values: `None` (default),
-`Strict`.
+diagnostics](/design/include-cleaner). Possible values: `None`,
+`Strict` (default since clangd 17).
 
 ```yaml
 Diagnostics:
   UnusedIncludes: Strict
 ```
+
+### Includes
+
+#### IgnoreHeader
+{:.v15}
+
+A list of regexes. Include Cleaner will not produce diagnostics for headers
+whose path is a suffix match for any of these.
+
+### MissingIncludes
+{:.v17}
+
+Enables Include Cleaner's [missing includes diagnostics](/design/include-cleaner).
+Possible values: `None` (default), `Strict`.
 
 ## Completion
 {:.v13}
@@ -308,6 +322,7 @@ InlayHints:
   Enabled: Yes
   ParameterNames: Yes
   DeducedTypes: Yes
+  TypeNameLimit: 24
 ```
 
 ### Enabled
@@ -343,6 +358,12 @@ void foo() {
   }; // struct S
 } // foo
 ```
+
+### TypeNameLimit
+{:.v17}
+
+Character limit for type hints. Hints that would be longer are not shown.
+0 means no limit.
 
 ## Hover
 {:.v14}
