@@ -359,3 +359,28 @@ Hover:
 
 A boolean that controls printing of desugared types, e.g:
 `vector<int>::value_type (aka int)`
+
+## Semantic Tokens
+{:.v17}
+
+Configure semantic highlighting. Sample block (default):
+
+```yaml
+SemanticTokens:
+  DisabledKinds: []
+  DisabledModifiers: []
+```
+
+### DisabledKinds
+{:.v17}
+
+Specify semantic token kinds that clangd should not send to client.
+
+Available kinds could be found [here](features#kinds) in the Kind column.
+
+### DisabledModifiers
+{:.v17}
+
+Specify semantic token modifiers that clangd should not send to client.
+
+Available modifiers could be found [here](features#modifiers) in the Modifier column.
