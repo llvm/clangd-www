@@ -160,3 +160,79 @@ Known limitations
 > editors, e.g. VSCode, provide a way to preview the rename changes before
 > applying them; while some just apply the changes directly.
 {:.tip}
+
+## Semantic Highlighting
+
+clangd computes semantic highlight tokens to enhance the source code theming.
+{:.v9}
+
+![screenshot: highlight](screenshots/semantic_highlight.png)
+
+A token may be associated with one highlight kind and multiple highlight modifiers, as defined by the following section.
+
+### Kinds
+
+clangd supports following standard LSP token kinds:
+
+| Kind              | LSP Name      | Since Version | Note                       
+|-------------------|---------------|---------------|--------------------------
+| Variable          | variable      | 9             |                          
+| LocalVariable     | variable      | 9             |                          
+| StaticField       | variable      | 9             |                          
+| Parameter         | parameter     | 9             |                          
+| StaticMethod      | function      | 9             |                          
+| Function          | function      | 9             |                          
+| Method            | method        | 9             |                          
+| Field             | property      | 9             |                          
+| Class             | class         | 9             |                          
+| Interface         | interface     | 12            | Objective-C only         
+| Enum              | enum          | 9             |                          
+| EnumConstant      | enumMember    | 9             |                          
+| Type              | type          | 12            |                          
+| Typedef           | type          | 9             |                          
+| Primitive         | type          | 9             |                          
+| TemplateParameter | typeParameter | 9             |                          
+| Namespace         | namespace     | 9             |                          
+| Macro             | macro         | 9             |                          
+| Modifier          | modifier      | 16            | `override`/`final`       
+| Operator          | operator      | 15            | Including `new`/`delete` 
+| Bracket           | bracket       | 15            | All `()[]{}`             
+| Label             | label         | 15            |                          
+
+On top of that, as an extension, clangd supports following additional token kinds:
+
+| Kind         | LSP Name     | Since Version | Note                           
+|--------------|--------------|---------------|--------------------------------
+| Unknown      | unknown      | 12            | Dependent names                
+| Concept      | concept      | 12            |                                
+| InactiveCode | inactiveCode | 11            | Inactive preprocessor branches
+
+### Modifiers
+
+clangd supports following standard LSP token modifiers:
+
+| Modifier       | LSP Name       | Since Version | Note
+|----------------|----------------|---------------|----------------------
+| Declaration    | declaration    | 12            |
+| Definition     | definition     | 16            |
+| Deprecated     | deprecated     | 12            |
+| Readonly       | readonly       | 12            |
+| Static         | static         | 12            |
+| Abstract       | abstract       | 12            | For abstract methods
+| DefaultLibrary | defaultLibrary | 13            | From standard library
+
+On top of that, as an extension, clangd supports following additional token modifiers:
+
+| Modifier                | LSP Name                | Since Version | Note
+|-------------------------|-------------------------|---------------|----------------------------
+| Deduced                 | deduced                 | 12            | For `auto`
+| Virtual                 | virtual                 | 13            |
+| DependentName           | dependentName           | 12            |
+| UsedAsMutableReference  | usedAsMutableReference  | 14            | Mutable reference argument    
+| UsedAsMutablePointer    | usedAsMutablePointer    | 15            | Mutable pointer argument 
+| ConstructorOrDestructor | constructorOrDestructor | 15            | ctor/dtor name 
+| UserDefined             | userDefined             | 15            |
+| FunctionScope           | functionScope           | 12            |
+| ClassScope              | classScope              | 12            |
+| FileScope               | fileScope               | 12            |
+| GlobalScope             | globalScope             | 12            |
