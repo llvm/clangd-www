@@ -163,7 +163,8 @@ Known limitations
 
 ## Semantic Highlighting
 
-clangd computes semantic highlight tokens to enhance the source code theming. {:.v9}
+clangd computes semantic highlight tokens to enhance the source code theming.
+{:.v9}
 
 ![screenshot: highlight](screenshots/semantic_highlight.png)
 
