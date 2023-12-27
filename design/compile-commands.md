@@ -230,7 +230,7 @@ project directory), and fall back to a default command that may not include
 flags that are important for parsing the header's code (for example, include
 paths to locate the headers that _it_ includes).
 
-See [this FAQ question](https://clangd.llvm.org/faq#how-do-I-fix-errors-I-get-when-opening-headers-outside-of-my-project-directory)
+See [this FAQ question](https://clangd.llvm.org/faq#how-do-i-fix-errors-i-get-when-opening-headers-outside-of-my-project-directory)
 for a way to work around this.
 
 [GlobalCompilationDatabase]: https://code.woboq.org/llvm/clang-tools-extra/clangd/GlobalCompilationDatabase.h.html#clang::clangd::GlobalCompilationDatabase
