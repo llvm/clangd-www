@@ -277,6 +277,23 @@ Diagnostics:
       readability-identifier-naming.VariableCase: CamelCase
 ```
 
+#### FastCheckFilter
+{:.v18}
+
+Whether to run clang-tidy checks that may slow down clangd.
+
+Valid values are:
+- `Strict`: Run only checks measured to be fast. This excludes recently-added
+   checks that we have not timed yet. This is the default.
+- `Loose`: Run checks unless they are known to be slow.
+- `None`: Run checks regardless of their speed.
+
+```yaml
+Diagnostics:
+  ClangTidy:
+    FastCheckFilter: Strict
+```
+
 ### UnusedIncludes
 {:.v14}
 
