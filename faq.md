@@ -118,7 +118,7 @@ To work around this, you can instruct clangd to use your project's compilation
 database for all files, not just files in the project directory.
 
 This can be done by passing the path of the directory containing the compilation
-datbase as a `--compile-commands-dir=<path>` command-line argument to clangd.
+database as a `--compile-commands-dir=<path>` command-line argument to clangd.
 
 ## What can I do if clangd chooses the wrong source file to infer commands for a header?
 
