@@ -85,13 +85,13 @@ Index:
 ## How do I make additional headers visible to clangd?
 
 If you have some headers outside of the visibility of clangd, you can either
-include individual headers (`-include=/headers/file.h`) or add
+include individual headers (`--include=/headers/file.h`) or add
 directories to the include path (`-I/other/headers`). The easiest way to do
 that is through configuration file:
 
 ```yaml
 CompileFlags:
-  Add: [-include=/headers/file.h, -I/other/headers]
+  Add: [--include=/headers/file.h, -I/other/headers]
 ```
 
 ## Why does clangd not return all references for a symbol?
