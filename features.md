@@ -198,6 +198,7 @@ clangd supports following standard LSP token kinds:
 | Operator          | operator      | 15            | Including `new`/`delete` 
 | Bracket           | bracket       | 15            | All `()[]{}`             
 | Label             | label         | 15            |                          
+| InactiveCode      | comment       | 11            | Inactive preprocessor branches
 
 On top of that, as an extension, clangd supports following additional token kinds:
 
@@ -205,7 +206,6 @@ On top of that, as an extension, clangd supports following additional token kind
 |--------------|--------------|---------------|--------------------------------
 | Unknown      | unknown      | 12            | Dependent names                
 | Concept      | concept      | 12            |                                
-| InactiveCode | inactiveCode | 11            | Inactive preprocessor branches
 
 ### Modifiers
 
