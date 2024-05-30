@@ -211,7 +211,7 @@ Describes the style of the codebase, beyond formatting.
 ### FullyQualifiedNamespaces
 
 Namespaces that should always be fully qualified, meaning no "using"
-declarations, always spell out the whole name (with or without leading::). 
+declarations, always spell out the whole name (with or without leading::).
 All nested namespaces are affected as well.
 Affects availability of the AddUsing tweak.
 
@@ -313,6 +313,12 @@ Diagnostics:
 
 A list of regexes. Include Cleaner will not produce diagnostics for headers
 whose path is a suffix match for any of these.
+
+#### AnalyzeAngledIncludes
+{:.v19}
+
+A boolean that enables/disables detection of unused angled includes that are not from the Standard Library.
+Disabled by default to avoid false-positives caused by umbrella headers.
 
 ### MissingIncludes
 {:.v17}

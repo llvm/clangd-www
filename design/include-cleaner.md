@@ -149,13 +149,15 @@ recommended to users. The users should always write `#include
 using `// IWYU pragma: private, include "public.h"` in your `private.h` header
 that is being exported.
 
-### Standard library
+### Standard library (before clangd-17)
 
 By default, Include Cleaner will not diagnose headers from the Standard
 Library. Standard Library headers support is not complete yet (due to the
 macros and the fact that a symbol is allowed to come from multiple headers) but
 you can enable this unstable feature through passing `--include-cleaner-stdlib`
 flag to clangd invocation.
+
+Since clangd-17, Standard Library headers are always diagnosed and the flag is ignored.
 
 ### Inserting Includes
 
