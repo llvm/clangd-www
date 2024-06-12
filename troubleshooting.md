@@ -58,7 +58,7 @@ or `--query-driver=/path/to/mygcc,/path/to/myg++` when using C++ to allow clangd
 to extract the include paths from it directly. 
 
 It is recommended to use `--query-driver` over specifying system include paths
-manually using [configuration files](config#files) as getting the latter right 
+manually using [configuration files](config#compileflags) as getting the latter right 
 can be tricky (the order of include paths are important, for instance). 
 Generally the value of `--query-driver` should match the command emitted by 
 your build system in `compile_commands.json`, such as `/usr/bin/c++`.
