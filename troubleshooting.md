@@ -49,7 +49,7 @@ The standard library headers are often found relative to the compiler.
 Try to configure your project with an absolute path to the compiler
 (`/usr/bin/gcc`, not `gcc`).
 The logs (with `--log=verbose`) can tell you the `cc1` command, including which
-paths searched for the standard library. You can compare this to the output
+paths were searched for the standard library. You can compare this to the output
 of `clang -### <args>`.
 
 If you're using an unusual compiler (e.g. a cross-compiler for a different
@@ -57,10 +57,11 @@ platform, or MinGW on Windows) you may want to pass `--query-driver=/path/to/myg
 or `--query-driver=/path/to/mygcc,/path/to/myg++` when using C++ to allow clangd
 to extract the include paths from it directly. 
 
-It is preferable to use `--query-driver` over [configuration files](config#files)
-to resolve standard library includes where possible as using both may cause 
-include conflicts. Usually you should set this to match the command emitted by 
-your build system in `compile_commands.json` (`/usr/bin/c++` for most).
+It is recommended to use `--query-driver` over specifying system include paths
+manually using [configuration files](config#files) as getting the latter right 
+can be tricky (the order of include paths are important, for instance). 
+Generally the value of `--query-driver` should match the command emitted by 
+your build system in `compile_commands.json`, such as `/usr/bin/c++`.
 
 ### Can't find compiler built-in headers (`<stddef.h>` etc)
 
