@@ -81,16 +81,20 @@ You can find instructions in
 
 ## Editor plugins
 
-Language Server plugins are available for many editors. In principle clangd
-should work with any of them, though feature set and interface may vary.
+clangd runs through [Language Server Protocol](https://microsoft.github.io/language-server-protocol/), editors that
+support LSP can communicate with clangd to provide features like code completion, diagnostics, go-to-definition, etc.
+In principle clangd should work with any of them, though feature set and interface may vary.
 
 Here are some plugins we know work well with clangd:
 
 <details>
-<summary markdown="span">Vim</summary>
-[YouCompleteMe](https://ycm-core.github.io/YouCompleteMe/) can be installed with
-clangd support. **This is not on by default**, you must install it with
-`install.py --clangd-completer`.
+<summary markdown="span">Vim/Neovim</summary>
+Vim and Neovim have several plugins that can communicate with clangd.
+
+### YouCompleteMe
+
+Supports both Vim and Neovim. Note that clangd support is not enabled by default in [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe),
+you must install it with `install.py --clangd-completer`.
 
 We recommend changing a couple of YCM's default settings. In `.vimrc` add:
 ```
@@ -111,7 +115,7 @@ YouCompleteMe supports many of clangd's features:
 - find declarations, references, and definitions (`:YcmCompleter GoTo` etc)
 - rename symbol (`:YcmCompleter RefactorRename`)
 
-### Under the hood
+Under the hood:
 
 - **Debug logs**: run `:YcmDebugInfo` to see clangd status, and `:YcmToggleLogs`
   to view clangd's debug logs.
@@ -123,11 +127,60 @@ YouCompleteMe supports many of clangd's features:
 
 - **Alternate clangd binary**: set `g:ycm_clangd_binary_path` in `.vimrc`.
 
----
+### coc-clangd
 
-[LanguageClient-neovim](https://github.com/autozimu/LanguageClient-neovim)
-also has [instructions for using clangd](https://github.com/autozimu/LanguageClient-neovim/wiki/Clangd),
-and **may** be easier to install.
+Supports both Vim and Neovim. [coc-clangd](https://github.com/clangd/coc-clangd) is an extension for
+[coc.nvim](https://github.com/neoclide/coc.nvim), you need to [install coc.nvim](https://github.com/neoclide/coc.nvim/wiki/Install-coc.nvim) first.
+
+`:CocInstall coc-clangd` in Vim/Neovim to install coc-clangd. coc-clangd will try to find clangd from your `$PATH`,
+if not found, run `:CocCommand clangd.install` to install the [latest release](https://github.com/clangd/clangd/releases/latest)
+from GitHub, or set `clangd.path` in `:CocConfig` to use custom clangd binary.
+
+coc-clangd provides configurations for clangd, you can set them in `:CocConfig`:
+
+```json
+{
+  "clangd.path": "/path/to/custom/clangd",
+  "clangd.arguments": ["--background-index", "--clang-tidy"],
+  "clangd.fallbackFlags": ["-std=c++23"]
+}
+```
+
+Check [coc-clangd's README](https://github.com/clangd/coc-clangd?tab=readme-ov-file#configurations) for more options.
+
+coc-clangd also provides commands to interact with clangd:
+
+- `:CocCommand clangd.switchSourceHeader`, switch between source/header files
+- `:CocCommand clangd.symbolInfo`, resolve symbol info under the cursor
+- `:CocCommand clangd.memoryUsage`, show memory usage
+- `:CocCommand clangd.install`, install latest release from GitHub
+- `:CocCommand clangd.update`, check and update clangd from GitHub
+
+There are two ways to get request/response logs from coc-clangd:
+
+1. Set `"clangd.trace.server": "verbose"` in `:CocConfig`, and check the output in `:CocCommand workspace.showOutput clangd`.
+2. Set `"clangd.trace.file": "/tmp/clangd.log"`, clangd will output logs to the file.
+
+### Neovim built-in LSP client
+
+Neovim only. Neovim has a built-in LSP client, which can be configured to work with clangd.
+
+1. install [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) with your plugin manager
+2. enable clangd in your init.lua: `require'lspconfig'.clangd.setup{}`
+3. you can pass additional arguments to clangd to trace logs or enable more features:
+
+```lua
+local lspconfig = require('lspconfig')
+lspconfig.clangd.setup({
+  name = 'clangd',
+  cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
+  initialization_options = {
+    fallback_flags = { '-std=c++17' },
+  },
+})
+```
+
+You can also use [clangd_extensions.nvim](https://github.com/p00f/clangd_extensions.nvim) directly, with more off-spec features support.
 </details>
 
 <details>
