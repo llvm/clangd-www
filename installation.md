@@ -59,6 +59,19 @@ sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
 </details>
 
 <details>
+<summary markdown="span">FreeBSD</summary>
+Installing a `llvm` package will give you a recent version.
+
+To install a packaged release (12.0):
+
+```bash
+sudo pkg install llvm12
+```
+
+This will install clangd as `/usr/local/bin/clangd12`.
+</details>
+
+<details>
 <summary markdown="span">Other systems</summary>
 Most distributions include clangd in a `clangd` package, in a `clang-tools`
 package, or in the full `llvm` distribution.
