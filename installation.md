@@ -172,7 +172,6 @@ Neovim only. Neovim has a built-in LSP client, which can be configured to work w
 ```lua
 local lspconfig = require('lspconfig')
 lspconfig.clangd.setup({
-  name = 'clangd',
   cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
   init_options = {
     fallback_flags = { '-std=c++17' },
