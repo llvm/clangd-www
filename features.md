@@ -241,4 +241,4 @@ On top of that, as an extension, clangd supports following additional token modi
 
 Clangd supports C++20 modules experimentally.
 We can enable this support by `--experimental-modules-support` option.
-The feature is still in experimental stage. Feedbacks are welcomed.
+The feature is still in experimental stage. Feedback is welcome.
