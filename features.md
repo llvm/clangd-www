@@ -236,3 +236,9 @@ On top of that, as an extension, clangd supports following additional token modi
 | ClassScope              | classScope              | 12            |
 | FileScope               | fileScope               | 12            |
 | GlobalScope             | globalScope             | 12            |
+
+## Experimental C++20 Modules Support
+
+Clangd supports C++20 modules experimentally.
+We can enable this support by `--experimental-modules-support` option.
+The feature is still in experimental stage. Feedbacks are welcomed.
