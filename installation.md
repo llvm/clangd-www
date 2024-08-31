@@ -167,7 +167,8 @@ Neovim only. Neovim has a built-in LSP client, which can be configured to work w
 
 1. install [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) with your plugin manager
 2. enable clangd in your init.lua: `require'lspconfig'.clangd.setup{}`
-3. you can pass additional arguments to clangd to trace logs or enable more features:
+3. the `ClangdSwitchSourceHeader` and `ClangdShowSymbolInfo` commands will be enabled when you are in a C/C++ file
+4. you can pass additional arguments to clangd to trace logs or enable more features:
 
 ```lua
 local lspconfig = require('lspconfig')
@@ -179,7 +180,8 @@ lspconfig.clangd.setup({
 })
 ```
 
-You can also use [clangd_extensions.nvim](https://github.com/p00f/clangd_extensions.nvim) directly, with more off-spec features support.
+You can also create your own LSP configuration by using the `vim.lsp.start` function. For more details, check `:help vim.lsp.start`
+or use [clangd_extensions.nvim](https://github.com/p00f/clangd_extensions.nvim) directly, with more off-spec features support.
 </details>
 
 <details>
