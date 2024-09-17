@@ -357,6 +357,9 @@ compile_commands.json file by recording a complete build.
 
 For a `make`-based build, you can run `make clean; bear -- make` to generate the
 file (and run a clean build!).
+
+On Windows, a tool similar to Bear called [compiledb](https://github.com/nickdiego/compiledb)
+can be used.
 </details>
 
 Other tools can also generate this file. See [the compile_commands.json
