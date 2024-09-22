@@ -73,7 +73,7 @@ times when it's needed, especially with external libraries.
 - Suppress unused-include warnings with `// IWYU pragma: keep`.
 - Suppress all warnings for `X.h` in your configuration.
 
-**A header is marked unusued, but is needed by other headers I later include**
+**A header is marked unused, but is needed by other headers I later include**
 
 The later headers are not self-contained; our idea of dependencies breaks down.
 
