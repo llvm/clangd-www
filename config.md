@@ -90,7 +90,7 @@ Affects how a source file is parsed.
 ```yaml
 CompileFlags:                     # Tweak the parse settings
   Add: [-xc++, -Wall]             # treat all files as C++, enable more warnings
-  Remove: -W*                     # strip all other warning-related flags
+  Remove: [-W*]                     # strip all other warning-related flags
   Compiler: clang++               # Change argv[0] of compile flags to `clang++`
 ```
 
