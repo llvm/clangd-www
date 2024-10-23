@@ -263,15 +263,15 @@ vscode-clangd has excellent support for all clangd features, including:
 
 <details>
 <summary markdown="span">Sublime Text</summary>
-[tomv564/LSP](https://github.com/tomv564/LSP) works with clangd out of the box.
+[sublimelsp/LSP](https://github.com/sublimelsp/LSP) together with [sublimelsp/LSP-clangd](https://github.com/sublimelsp/LSP-clangd) works with clangd out of the box.
 
 Select **Tools**-->**Install Package Control** (if you haven't installed it yet).
 
 Press `Ctrl-Shift-P` and select **Package Control: Install Package**. Select
 **LSP**.
 
-Press `Ctrl-Shift-P` and select **LSP: Enable Language Server Globally**. Select
-**clangd**.
+Press `Ctrl-Shift-P` and select **Package Control: Install Package**. Select
+**LSP-clangd**.
 
 Open a C++ file, and you should see diagnostics and completion:
 
@@ -287,12 +287,9 @@ The LSP package has excellent support for all most clangd features, including:
 
 ### Under the hood
 
-Settings can be tweaked under **Preferences**-->**Package Settings**-->**LSP**.
+Settings can be tweaked under **Preferences**-->**Package Settings**-->**LSP**-->**servers**-->**LSP-clangd** or from the Command Palette by selecting **Preferences: LSP-clangd Settings**.
 
-- **Debug logs**: add `"log_stderr": true`
-- **Command-line flags and alternate clangd binary**: inside the
-  `"clients": {"clangd": { ... } }` section, add
-  `"command": ["/path/to/clangd", "-log=verbose"]` etc.
+- **Command-line flags and alternate clangd binary**: check inside **Preferences: LSP-clangd Settings** for relevant option and documentation.
 
 </details>
 
