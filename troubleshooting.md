@@ -139,5 +139,10 @@ It will be more useful if you have `llvm-symbolizer` on your PATH.
 This is typically part of the `llvm` package.
 It may be installed as e.g. `llvm-symbolizer-10`, and you need to add a symlink.
 
+On Windows, debug symbols are stored in a separate PDB, and this file needs
+to be present in the same directory as clangd.exe to symbolize stack traces.
+For official releases, debug symbols can be downloaded as a separate package
+from https://github.com/clangd/clangd/releases.
+
 [installation]: /installation
 [bug report]: https://github.com/clangd/clangd/issues
