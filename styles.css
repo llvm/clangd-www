@@ -169,7 +169,8 @@ a[href^="https://code.woboq.org/"] {
 
 /* Version marker ornaments */
 .v6::before, .v7::before, .v8::before, .v9::before, .v10::before, .v11::before, .v12::before,
-.v13::before, .v14::before, .v15::before, .v16::before, .v17::before, .v18::before, .v19::before {
+.v13::before, .v14::before, .v15::before, .v16::before, .v17::before, .v18::before, .v19::before,
+.v20::before {
   color: #008;
   border-radius: 3px;
   padding: 0.2em 0.6em;
@@ -195,6 +196,7 @@ a[href^="https://code.woboq.org/"] {
 .v17::before { content: "clangd-17"; }
 .v18::before { content: "clangd-18"; }
 .v19::before { content: "clangd-19"; }
+.v20::before { content: "clangd-20"; }
 #edit {
   text-decoration: none;
   position: absolute;
