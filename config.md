@@ -215,6 +215,26 @@ declarations, always spell out the whole name (with or without leading::).
 All nested namespaces are affected as well.
 Affects availability of the AddUsing tweak.
 
+### QuotedHeaders
+{:.v20}
+
+A list of regexes. Headers whose path matches one of these regexes are
+inserted using `""` syntax.
+
+### AngledHeaders
+{:.v20}
+
+A list of regexes. Headers whose path matches one of these regexes are
+inserted using `<>` syntax.
+
+Example:
+
+```
+Style:
+  QuotedHeaders: "src/.*"
+  AngledHeaders: ["path/sdk/.*", "third-party/.*"]
+```
+
 ## Diagnostics
 {:.v12}
 
@@ -327,11 +347,29 @@ Enables Include Cleaner's [missing includes diagnostics](/design/include-cleaner
 Possible values: `None` (default), `Strict`.
 
 ## Completion
-{:.v13}
 
 ### AllScopes
+{:.v13}
 Whether code completion should include suggestions from scopes that are
 not visible. The required scope prefix will be inserted.
+
+### ArgumentLists
+{:.v20}
+
+Determines what is inserted in argument list position when completing a
+call to a function. Here are the valid values and examples of the
+corresponding behaviour, assuming a function `foo(int arg)` exists
+(`^` represents the cursor position):
+
+- `None`: `fo^` completes to `foo`
+- `OpenDelimeter`: `fo^` completes to `foo(^`
+- `Delimeters`: `fo^` completes to `foo(^)`
+- `FullPlaceholders`: `fo^` completes to `foo(int arg)`, with `int arg` selected
+
+The default is `FullPlaceholders`.
+
+This option governs the completion of template names as well, where
+the delimiters are `<>`.
 
 ## InlayHints
 {:.v14}
@@ -345,6 +383,7 @@ InlayHints:
   Enabled: Yes
   ParameterNames: Yes
   DeducedTypes: Yes
+  DefaultArguments: No
   TypeNameLimit: 24
 ```
 
@@ -380,6 +419,21 @@ void foo() {
   struct S {
   }; // struct S
 } // foo
+```
+
+### DefaultArguments
+{:.v20}
+
+A boolean that enables/disables inlay hints for default arguments. Example:
+
+```c++
+void foo(int a, int b = 42);
+void bar() {
+  // This line will be displayed as `foo(a: 41, b: 42);`
+  // The `a:` is the usual parameter hint.
+  // The `, b: 42` is a default argument hint.
+  foo(41);
+}
 ```
 
 ### TypeNameLimit
