@@ -361,9 +361,9 @@ call to a function. Here are the valid values and examples of the
 corresponding behaviour, assuming a function `foo(int arg)` exists
 (`^` represents the cursor position):
 
-- `None`: `fo^` completes to `foo`
-- `OpenDelimeter`: `fo^` completes to `foo(^`
-- `Delimeters`: `fo^` completes to `foo(^)`
+- `None`: `fo^` completes to `foo^`
+- `OpenDelimiter`: `fo^` completes to `foo(^`
+- `Delimiters`: `fo^` completes to `foo(^)`
 - `FullPlaceholders`: `fo^` completes to `foo(int arg)`, with `int arg` selected
 
 The default is `FullPlaceholders`.
