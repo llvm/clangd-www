@@ -150,10 +150,11 @@ invoked for extraction of include paths.
 ### BuiltinHeaders
 {:.v21}
 
-Controls whether Clangd should includes its own built-in headers (like stddef.h), or use the system header found from the query driver.
+Controls whether Clangd should include its own built-in headers (like
+stddef.h), or use the system header found from the query driver.
 
 Valid values are:
-- `Clangd`: Use builtin headers from `clangd`.
+- `Clangd`: Use builtin headers from `clangd`. This is the default.
 - `QueryDriver`: Use the headers extracted from the compiler via the
   `--query-driver` command line argument. If a query driver is not supplied or
   does not match the compiler, then the `Clangd` builtin headers will be the
@@ -163,6 +164,10 @@ Valid values are:
 CompileFlags:
   BuiltinHeaders: QueryDriver
 ```
+
+Note that if the driver is not clang, this will result in the clang frontend
+(embedded in clangd) processing the builtin headers of another compiler, which
+could lead to unexpected results such as false positive diagnostics.
 
 ## Index
 
