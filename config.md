@@ -165,9 +165,10 @@ CompileFlags:
   BuiltinHeaders: QueryDriver
 ```
 
-Note that if the driver is not clang, this will result in the clang frontend
-(embedded in clangd) processing the builtin headers of another compiler, which
-could lead to unexpected results such as false positive diagnostics.
+**Note**: if the driver is not clang, `BuiltinHeaders: QueryDriver` will result
+in the clang frontend (embedded in clangd) processing the builtin headers of
+another compiler, which could lead to unexpected results such as false positive
+diagnostics.
 
 ## Index
 
