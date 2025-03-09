@@ -147,6 +147,29 @@ flag parsing (clang vs clang-cl), target inference (gcc-arm-noneabi) etc.
 If the option matches a glob mentioned in `--query-driver`, then it'll be
 invoked for extraction of include paths.
 
+### BuiltinHeaders
+{:.v21}
+
+Controls whether Clangd should include its own built-in headers (like
+stddef.h), or use the system header found from the query driver.
+
+Valid values are:
+- `Clangd`: Use builtin headers from `clangd`. This is the default.
+- `QueryDriver`: Use the headers extracted from the compiler via the
+  `--query-driver` command line argument. If a query driver is not supplied or
+  does not match the compiler, then the `Clangd` builtin headers will be the
+  fallback.
+
+```yaml
+CompileFlags:
+  BuiltinHeaders: QueryDriver
+```
+
+**Note**: if the driver is not clang, `BuiltinHeaders: QueryDriver` will result
+in the clang frontend (embedded in clangd) processing the builtin headers of
+another compiler, which could lead to unexpected results such as false positive
+diagnostics.
+
 ## Index
 
 Controls how clangd understands code outside the current file.
