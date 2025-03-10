@@ -19,3 +19,6 @@ jekyll serve
 ```
 
 The instance at http://localhost:4000/ will refresh when you edit any file.
+
+Or you can simply just
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/llvm/clangd-www)

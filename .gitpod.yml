@@ -1,0 +1,11 @@
+tasks:
+  - before: |-
+      export
+      GEM_HOME=/workspace/gems
+      PATH=$GEM_HOME/bin:$PATH
+    init: gem install github-pages
+    command: jekyll serve
+
+ports:
+  - port: 4000
+    onOpen: open-preview
