@@ -224,7 +224,7 @@ code completions of standard library symbols on an empty file). Sample block
 
 ```
 Index:
-  StandardLibrary: Yes
+  StandardLibrary: true
 ```
 
 ## Style
@@ -401,12 +401,12 @@ Configures the behaviour of the inlay-hints feature. Sample block (default):
 
 ```yaml
 InlayHints:
-  BlockEnd: No
-  Designators: Yes
-  Enabled: Yes
-  ParameterNames: Yes
-  DeducedTypes: Yes
-  DefaultArguments: No
+  BlockEnd: false
+  Designators: true
+  Enabled: true
+  ParameterNames: true
+  DeducedTypes: true
+  DefaultArguments: false
   TypeNameLimit: 24
 ```
 
@@ -472,7 +472,7 @@ Configures contents of the hover cards. Sample block (default):
 
 ```yaml
 Hover:
-  ShowAKA: No
+  ShowAKA: false
 ```
 
 ### ShowAKA
