@@ -362,6 +362,8 @@ can be used.
 Other tools can also generate this file. See [the compile_commands.json
 specification](https://clang.llvm.org/docs/JSONCompilationDatabase.html).
 
+If you don't want to `compile_commands.json`, then you need to set the `--query-driver` and configure the `Compiler` option in `.clangd`.
+
 ### `compile_flags.txt`
 
 If all files in a project use the same build flags, you can put those
