@@ -371,10 +371,19 @@ Possible values: `None` (default), `Strict`.
 
 ## Completion
 
+Configures code completion features. Sample block (default):
+
+```yaml
+Completion:
+    AllScopes: Yes
+    ArgumentLists: FullPlaceholders
+    HeaderInsertion: IWYU
+```
+
 ### AllScopes
 {:.v13}
 Whether code completion should include suggestions from scopes that are
-not visible. The required scope prefix will be inserted.
+not visible. The required scope prefix will be inserted. Default is `Yes`.
 
 ### ArgumentLists
 {:.v20}
@@ -401,7 +410,7 @@ Add `#include` directives when accepting code completions. Config
 equivalent of the CLI option `--header-insertion`. Valid values are:
 - `IWYU`: Include what you use. Insert the owning header for top-level
     symbols, unless the header is already directly included or the
-    symbol is forward-declared.
+    symbol is forward-declared. This is the default. 
 - `Never`: Never insert headers.
 
 ## InlayHints
