@@ -394,6 +394,16 @@ The default is `FullPlaceholders`.
 This option governs the completion of template names as well, where
 the delimiters are `<>`.
 
+### HeaderInsertion
+{:.v21}
+
+Add `#include` directives when accepting code completions. Config
+equivalent of the CLI option `--header-insertion`. Valid values are:
+- `IWYU`: Include what you use. Insert the owning header for top-level
+    symbols, unless the header is already directly included or the
+    symbol is forward-declared.
+- `Never`: Never insert headers.
+
 ## InlayHints
 {:.v14}
 
