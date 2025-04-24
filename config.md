@@ -375,15 +375,15 @@ Configures code completion features. Sample block (default):
 
 ```yaml
 Completion:
-    AllScopes: Yes
-    ArgumentLists: FullPlaceholders
-    HeaderInsertion: IWYU
+  AllScopes: Yes
+  ArgumentLists: FullPlaceholders
+  HeaderInsertion: IWYU
 ```
 
 ### AllScopes
 {:.v13}
 Whether code completion should include suggestions from scopes that are
-not visible. The required scope prefix will be inserted. Default is `Yes`.
+not visible. The required scope prefix will be inserted. The default is `Yes`.
 
 ### ArgumentLists
 {:.v20}
