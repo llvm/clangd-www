@@ -378,6 +378,7 @@ Completion:
   AllScopes: Yes
   ArgumentLists: FullPlaceholders
   HeaderInsertion: IWYU
+  CodePatterns: All
 ```
 
 ### AllScopes
@@ -412,6 +413,16 @@ equivalent of the CLI option `--header-insertion`. Valid values are:
     symbols, unless the header is already directly included or the
     symbol is forward-declared. This is the default. 
 - `Never`: Never insert headers.
+
+### CodePatterns
+{:.v21}
+
+Completion will suggest code snippets and code patterns.
+Valid values are:
+- `All`: All the code snippets and patterns are suggested.
+- `None`: None of the code snippets and patterns are suggested.
+
+The default is `All`.
 
 ## InlayHints
 {:.v14}
