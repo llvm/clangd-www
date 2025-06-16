@@ -134,6 +134,10 @@ index). This was added to support integration with indexes outside clangd.
 ## UTF-8 offsets
 {:.v9}
 
+> **WARNING**
+> This extension has been deprecated with `clangd-21` in favor of the `positionEncoding` introduced in LSP 3.17. It'll go away with `clangd-23`.
+> See [the official LSP specification](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocuments)
+
 LSP specifies that offsets within lines are in UTF-16 code units (for `Position`s and also delta-encoded document updates).
 This choice of encoding is a legacy of VSCode's JavaScript implementation.
 
