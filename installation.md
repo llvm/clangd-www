@@ -352,8 +352,11 @@ Bazel can generate this file via [this extractor extension](https://github.com/h
 [Bear](https://github.com/rizsotto/Bear) is a tool to generate a
 compile_commands.json file by recording a complete build.
 
-For a `make`-based build, you can run `make clean; bear -- make` to generate the
-file (and run a clean build!).
+For a `make`-based build, you can run 
+- `make clean; bear -- make` (for bear 3.0.x versions)
+- `make clean; bear make` (for bear 2.4.x versions)
+
+to generate the file (and run a clean build!).
 
 On Windows, a tool similar to Bear called [compiledb](https://github.com/nickdiego/compiledb)
 can be used.
