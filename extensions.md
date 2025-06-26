@@ -88,6 +88,22 @@ at a particular revision.
  - if unset, diagnostics will be produced for this version or some subsequent
    one in a bounded amount of time.
 
+## Force AST rebuild
+{:.v11}
+
+Clangd makes an effort to invalidate ASTs when dependent files change, but
+there are some changes it does not detect, for example when an unresolved
+include becomes resolved because the header file has been created.
+
+If the client knows a rebuild will be necessary (e.g. because it just
+generated the missing header), it can use this extension to force clangd to
+do a rebuild.
+
+**New property of `textDocument/didChange` request**: `forceRebuild: bool`
+ - If specified and true, clangd will rebuild the file's AST, including 
+   for the preamble region. Warning: this is slow compared to incremental
+   rebuilds.
+
 ## Diagnostic categories
 {:.v8}
 
