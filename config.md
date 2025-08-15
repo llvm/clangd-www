@@ -535,3 +535,23 @@ Available kinds could be found [here](features#kinds) in the Kind column.
 Specify semantic token modifiers that clangd should not send to client.
 
 Available modifiers could be found [here](features#modifiers) in the Modifier column.
+
+## Documentation
+{:.v22}
+
+Specify server side documentation code comment interpretation.
+Affects the format of the documentation string sent to the client for hover and code completions.
+Sample block (default):
+
+```yaml
+Documentation:
+  CommentFormat: PlainText
+```
+
+### CommentFormat
+
+Determines the comment format of code documentation.
+
+- `PlainText`: interpret code documentation as plain text. Markdown specific syntax will be escaped. On clients supporting markdown, this will result in showing markdown syntax without rendering. E.g. using \*\*bold text\*\* in the documentation comment will be shown as \*\*bold text\*\* and not as **bold text** in the hover/code completion.
+- `Markdown`: interpret documentation comments as markdown. Markdown syntax will not be escaped, except for HTML tags. On clients supporting markdown, this will result in rendering all markdown syntax.
+- `Doxygen`: interpret code documentation as [doxygen](https://www.doxygen.nl/) comments. In addition to treating the documentation as markdown, this will parse the documentation with Clang's doxygen parser. It will highlight used doxygen commands, convert doxygen commands to markdown syntax and extend hover content with e.g. function parameter or return documentation.
