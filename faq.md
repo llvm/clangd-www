@@ -196,3 +196,30 @@ But you must write `#ifdef _CLANGD`, you can configure this:
 CompileFlags:
   Add: [-D_CLANGD=1]
 ```
+
+## When will a recently added feature appear in a clangd release?
+
+Clangd follows LLVM's [release schedule](https://llvm.org/docs/HowToReleaseLLVM.html#release-timeline).
+
+Roughly speaking, LLVM release branches are created twice a year, in January and
+July, and stable releases are cut from them in March and September.
+
+So a clangd feature that lands on trunk between January and July will be available
+in a stable release the following September, and a clangd feature that lands on
+trunk between July and January will be available in a stable release the following
+March.
+
+For exact dates, you can check the [LLVM announcements forum](https://discourse.llvm.org/c/announce/46).
+
+You can also check what branches a commit is present on by checking the associated 
+tags in GitHub. For example, you can tell
+[this commit](https://github.com/llvm/llvm-project/commit/85d60a441ab810e25605fb4555971b1d0a996e5c)
+is present on the 21 branch because it's labelled with a tag named `llvmorg-21.1.0`, while
+[this commit](https://github.com/llvm/llvm-project/commit/a3e2b64b0ddf42abf065377d77a9957edd142585)
+is not.
+
+If you'd like to use a new clangd feature before it appears in a stable release, you
+can obtain a weekly snapshot release from the project's
+[GitHub releases page](https://github.com/clangd/clangd/releases). In addition, 
+for Debian-based operating systems, nightly packages are available from
+[apt.llvm.org](https://apt.llvm.org).
