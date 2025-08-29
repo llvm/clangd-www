@@ -503,6 +503,7 @@ Configures contents of the hover cards. Sample block (default):
 ```yaml
 Hover:
   ShowAKA: false
+  MacroContentsLimit: 2048
 ```
 
 ### ShowAKA
@@ -510,6 +511,14 @@ Hover:
 
 A boolean that controls printing of desugared types, e.g:
 `vector<int>::value_type (aka int)`
+
+### MacroContentsLimit
+{:.v22}
+
+Character limit for hovered macro expansions. Expansions that would be longer are not shown.
+0 means no limit.
+
+The default is `2048`.
 
 ## Semantic Tokens
 {:.v17}
