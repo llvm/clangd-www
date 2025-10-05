@@ -232,7 +232,7 @@ main h1, main h2, main h3, main h4 {
   font-style: italic;
   background-color: rgba(0,0,0,0.05);
   padding: 0.3em 0;
-  margin: -0.5em 0;
+  margin: -0.5em 0 0.5em;
   text-decoration: none;
 }
 .main-article::before {
