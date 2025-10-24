@@ -67,6 +67,20 @@ Each separate condition must match (combined with AND).
 When one condition has multiple values, any may match (combined with OR).
 e.g. `PathMatch: [foo/.*, bar/.*]` matches files in either directory.
 
+As a complete example this may look something like:
+
+```yaml
+# ... Prior fragments
+---
+If:                               # Apply this config conditionally
+  PathMatch: [.*\.h, .*\.c]       # to all headers OR c files
+  PathExclude: internal/.*        # except all files within "internal" 
+CompileFlags:
+  Add: [-DEXTERNAL]
+---
+# ... Further fragments
+```
+
 Conditions based on a file's path use the following form:
 
 - if the fragment came from a project directory, the path is relative
