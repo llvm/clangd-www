@@ -94,6 +94,17 @@ CompileFlags:
   Add: [--include=/headers/file.h, -I/other/headers]
 ```
 
+## How do I disable header insertion in code completion?
+
+You can disable this feature through your [configuration file](https://clangd.llvm.org/config#headerinsertion):
+
+```yaml
+Completion:
+  HeaderInsertion: Never
+```
+
+Alternatively, you can use the clangd CLI option `--header-insertion=never`.
+
 ## Why does clangd not return all references for a symbol?
 
 One of the potential reasons is that clangd has not indexed all the files in
