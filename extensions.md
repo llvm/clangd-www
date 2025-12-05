@@ -294,7 +294,7 @@ clangd can provide several categories of hints.
    - `position : Position`: The point between characters to show the hint.
    - `range : Range`: The range the hint is associated with, e.g. the argument.
 
-**New server capability**: `clangdInlayHintsProvider` : bool`:
+**New server capability**: `clangdInlayHintsProvider : bool`:
  - Signals that the server supports `clangd/inlayHints` requests.
 
 _Compatibility_: Several language servers support inlay hint extensions.
