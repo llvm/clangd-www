@@ -311,3 +311,18 @@ See LSP
 [bug 956](https://github.com/microsoft/language-server-protocol/issues/956),
 [PR 609](https://github.com/microsoft/vscode-languageserver-node/pull/609),
 [PR 772](https://github.com/microsoft/vscode-languageserver-node/pull/772).
+
+## Inactive regions
+{:.v17}
+
+Source code can contain regions that are disabled by e.g. `#if 0` directives.
+Clangd can analyze the code to determine which regions are inactive.
+This allows the client to better highlight inactive code regions, for example by reducing their opacity.
+
+**New server->client notification**: `textDocument/inactiveRegions`.
+  - Params: `InactiveRegions` object with properties:
+    - `uri : string`: the document whose status is being updated.
+    - `regions: Range[]`: an array of ranges that are inactive.
+
+**New client capability**: `textDocument.inactiveRegionsCapabilities.inactiveRegions : bool`
+  - Enables receiving `textDocument/inactiveRegions` notifications.
