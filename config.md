@@ -442,16 +442,18 @@ The default is `All`.
 ### MacroFilter
 {:.v22}
 
-For exact preix match, use ``ExactPrefix`` (default). This retains previous 
-behavior of suggesting macros which match the prefix exactly. A prefix is 
-the token before the cursor when code-completion was invoked. To fuzzy-match 
-macros during autocomplete, use ``FuzzyMatch`` option. This excludes macros 
-that contain a leading or trailing underscore to prevent noise (from system 
-headers). For an example, see [this test case](https://github.com/llvm/llvm-project/blob/0c1257cd46456513016b106d964dc5ad47c6289b/clang-tools-extra/clangd/unittests/CodeCompleteTests.cpp#L4695-L4751). 
+Controls whether exact or fuzzy matching is used to decide which macro
+symbols to offer during code completion.
 
 Valid values are: 
-- `ExactPrefix`: Suggest macros that match the exact prefix
-- `FuzzyMatch`: Fuzzy-match macros, but exclude macros that contain a leading or trailing underscore
+
+- `ExactPrefix`: Only suggest macros whose names are an exact prefix match
+  for the token before the cursor when code completion is invoked. This is
+  the default.
+- `FuzzyMatch`: Include macro suggestions whose names are a fuzzy match for
+  the token before the cursor, similar to non-macro symbols. Macros whose
+  name starts or ends with an underscore are still excluded from fuzzy match
+  results, to avoid noise (e.g. system headers define many such macros).
 
 ## InlayHints
 {:.v14}
