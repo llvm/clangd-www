@@ -393,6 +393,7 @@ Completion:
   ArgumentLists: FullPlaceholders
   HeaderInsertion: IWYU
   CodePatterns: All
+  MacroFilter: ExactPrefix
 ```
 
 ### AllScopes
@@ -437,6 +438,20 @@ Valid values are:
 - `None`: None of the code snippets and patterns are suggested.
 
 The default is `All`.
+
+### MacroFilter
+{:.v22}
+
+For exact preix match, use ``ExactPrefix`` (default). This retains previous 
+behavior of suggesting macros which match the prefix exactly. A prefix is 
+the token before the cursor when code-completion was invoked. To fuzzy-match 
+macros during autocomplete, use ``FuzzyMatch`` option. This excludes macros 
+that contain a leading or trailing underscore to prevent noise (from system 
+headers). For an example, see [this test case](https://github.com/llvm/llvm-project/blob/0c1257cd46456513016b106d964dc5ad47c6289b/clang-tools-extra/clangd/unittests/CodeCompleteTests.cpp#L4695-L4751). 
+
+Valid values are: 
+- `ExactPrefix`: Suggest macros that match the exact prefix
+- `FuzzyMatch`: Fuzzy-match macros, but exclude macros that contain a leading or trailing underscore
 
 ## InlayHints
 {:.v14}
