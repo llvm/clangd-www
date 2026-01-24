@@ -121,6 +121,18 @@ documentation, and definition.
 
 Hovering over `auto` will show the underlying type.
 
+### Documentation Parsing
+{:.v22}
+
+Symbol documentation content interpretation is configurable.
+It supports Markdown
+
+![screenshot: hover markdown](screenshots/hover_markdown.png)
+
+and Doxygen documentation comments, which extends the hover information even more
+
+![screenshot: hover doxygen](screenshots/hover_doxygen.png)
+
 ## Formatting
 
 clangd embeds [clang-format](https://clang.llvm.org/docs/ClangFormat.html),
