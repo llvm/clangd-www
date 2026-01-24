@@ -122,6 +122,7 @@ documentation, and definition.
 Hovering over `auto` will show the underlying type.
 
 ### Documentation Parsing
+{:.v22}
 
 Symbol documentation content interpretation is configurable.
 It supports Markdown
