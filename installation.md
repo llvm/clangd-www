@@ -164,21 +164,52 @@ There are two ways to get request/response logs from coc-clangd:
 ### Neovim built-in LSP client
 
 Neovim only. Neovim has a built-in LSP client, which can be configured to work with clangd.
+Warning: the setup procedure is slightly different if you are running Neovim on versions before or after the `0.11` release.
 
-1. install [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) with your plugin manager
-2. enable clangd in your init.lua: `require'lspconfig'.clangd.setup{}`
-3. the `ClangdSwitchSourceHeader` and `ClangdShowSymbolInfo` commands will be enabled when you are in a C/C++ file
-4. you can pass additional arguments to clangd to trace logs or enable more features:
+1. Install [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) with your plugin manager.
+2. Enable `clangd` in your `init.lua`:
 
-```lua
-local lspconfig = require('lspconfig')
-lspconfig.clangd.setup({
-  cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
-  init_options = {
-    fallbackFlags = { '-std=c++17' },
-  },
-})
-```
+    ```lua
+    -- For version 0.10.x and below:
+    require('lspconfig').clangd.setup({})
+
+    -- For version 0.11.x and above:
+    if not vim.lsp.is_enabled('clangd') then
+        -- No arguments will result in the default
+        -- `nvim-lspconfig` setup being used:
+        vim.lsp.enable('clangd')
+    end
+    ```
+
+3. The following commands will be enabled when you are in a C/C++ file:
+    - `v0.10.x` and below: `ClangdSwitchSourceHeader` and `ClangdShowSymbolInfo` ;
+    - `v0.11.x` and above: `LspClangdSwitchSourceHeader` and `LspClangdShowSymbolInfo`.
+
+4. You can pass additional arguments to `clangd` to trace logs or enable more features. For example, in your `init.lua`:
+
+    ```lua
+    local clangd = {
+        -- Add custom command-line flags:
+        cmd = { 'clangd', '--background-index', '--clang-tidy', '--log=verbose', },
+        cmd_env = {
+            -- Optional, allows to set the path to clangd's log file:
+            CLANGD_TRACE = vim.fn.stdpath('log') .. '/clangd.log',
+        },
+        init_options = {
+            fallbackFlags = { '-std=c++17' },
+        }
+    }
+
+    -- -------------------------------------- --
+    -- For version 0.10.x and below:
+    require('lspconfig').clangd.setup(clangd)
+
+    -- -------------------------------------- --
+    -- For version 0.11.x and above:
+    if not vim.lsp.is_enabled('clangd') then
+        vim.lsp.enable('clangd', clangd)
+    end
+    ```
 
 You can also create your own LSP configuration by using the `vim.lsp.start` function. For more details, check `:help vim.lsp.start`
 or use [clangd_extensions.nvim](https://github.com/p00f/clangd_extensions.nvim) directly, with more off-spec features support.
