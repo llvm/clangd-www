@@ -90,8 +90,88 @@ Here are some plugins we know work well with clangd:
 <details>
 <summary markdown="span">Vim/Neovim</summary>
 Vim and Neovim have several plugins that can communicate with clangd.
+We provide some examples here using some widely-used plugins from both editors, but there are many others available.
 
-### YouCompleteMe
+<details>
+<summary markdown="span">Built-in LSP client (Neovim only)</summary>
+
+Neovim has a built-in LSP client, which can be configured to work with `clangd`.
+Warning: the setup procedure is slightly different if you are running Neovim on versions before or after the `0.11` release.
+Here is a very basic setup procedure to get `clangd` working within Neovim:
+
+1. Install [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) with your plugin manager.
+2. Enable `clangd` in your `init.lua`:
+
+    ```lua
+    -- Leaving this empty will use the default options from the
+    -- `nvim-lspconfig` plugin. See |:h vim.lsp.Config| for all
+    -- available fields, and see below for more customization.
+    local clangd_opts = {}
+
+    -- ------------------------------------------ --
+    -- For version 0.10.x and below:
+    require('lspconfig').clangd.setup(clangd_opts)
+
+    -- ------------------------------------------ --
+    -- For version 0.11.x and above:
+    if not vim.lsp.is_enabled('clangd') then
+        vim.lsp.enable('clangd', clangd_opts)
+    end
+    ```
+
+3. The following commands will be enabled when you are in a C/C++ file:
+    - `v0.10.x` and below: `ClangdSwitchSourceHeader` and `ClangdShowSymbolInfo` ;
+    - `v0.11.x` and above: `LspClangdSwitchSourceHeader` and `LspClangdShowSymbolInfo`.
+
+You can also create your own LSP configuration by using the `vim.lsp.start` function. For more details, check `:help vim.lsp.start`
+or use [clangd_extensions.nvim](https://github.com/p00f/clangd_extensions.nvim) directly, with more off-spec features support.
+
+#### Customize `clangd`'s behaviour
+
+You can pass additional arguments to `clangd` to trace logs or enable more features through the `clangd_opts` table defined above.
+
+```lua
+local clangd_opts = {
+    -- Add custom command-line flags:
+    cmd = { 'clangd', '--background-index', '--clang-tidy' },
+    -- Customize clangd's behaviour:
+    init_options = { fallbackFlags = { '-std=c++17' }, },
+}
+```
+
+Note: the `init_options` field in your `clangd` options table must contain key-value fields from the `initialiazationOptions` structure,
+as described in the ["Compilation Commands" section in the page on protocol extensions](extensions#compilation-commands).
+
+#### Use a custom version of `clangd`
+
+If you want to use a locally-compiled version of `clangd`, or one that is not in your `$PATH`, you can specify it in the `cmd` field in your configuration:
+
+```lua
+local clangd_opts = {
+    cmd = { '/my/custom/clangd', },
+}
+```
+
+#### Enable more detailed logging information
+
+You can ask `clangd` to log more information using its `--log=<level>` argument.
+By default, the messages it produces are captured by Neovim, and made available using the `:LspLog` command.
+You can also redirect that output to a file of your choosing using `clangd`-supported environment variables:
+
+```lua
+local clangd_opts = {
+    cmd = { 'clangd', '--log=verbose', },
+    cmd_env = {
+        -- Instructs clangd to write its log to this file:
+        CLANGD_TRACE = '/my/custom/path/to/clangd.log',
+    },
+}
+```
+
+</details>
+
+<details>
+<summary markdown="span">YouCompleteMe</summary>
 
 Supports both Vim and Neovim. Note that clangd support is not enabled by default in [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe),
 you must install it with `install.py --clangd-completer`.
@@ -127,7 +207,10 @@ Under the hood:
 
 - **Alternate clangd binary**: set `g:ycm_clangd_binary_path` in `.vimrc`.
 
-### coc-clangd
+</details>
+
+<details>
+<summary markdown="span">`coc.nvim` and `coc-clangd`</summary>
 
 Supports both Vim and Neovim. [coc-clangd](https://github.com/clangd/coc-clangd) is an extension for
 [coc.nvim](https://github.com/neoclide/coc.nvim), you need to [install coc.nvim](https://github.com/neoclide/coc.nvim/wiki/Install-coc.nvim) first.
@@ -160,28 +243,8 @@ There are two ways to get request/response logs from coc-clangd:
 
 1. Set `"clangd.trace.server": "verbose"` in `:CocConfig`, and check the output in `:CocCommand workspace.showOutput clangd`.
 2. Set `"clangd.trace.file": "/tmp/clangd.log"`, clangd will output logs to the file.
+</details>
 
-### Neovim built-in LSP client
-
-Neovim only. Neovim has a built-in LSP client, which can be configured to work with clangd.
-
-1. install [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) with your plugin manager
-2. enable clangd in your init.lua: `require'lspconfig'.clangd.setup{}`
-3. the `ClangdSwitchSourceHeader` and `ClangdShowSymbolInfo` commands will be enabled when you are in a C/C++ file
-4. you can pass additional arguments to clangd to trace logs or enable more features:
-
-```lua
-local lspconfig = require('lspconfig')
-lspconfig.clangd.setup({
-  cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
-  init_options = {
-    fallbackFlags = { '-std=c++17' },
-  },
-})
-```
-
-You can also create your own LSP configuration by using the `vim.lsp.start` function. For more details, check `:help vim.lsp.start`
-or use [clangd_extensions.nvim](https://github.com/p00f/clangd_extensions.nvim) directly, with more off-spec features support.
 </details>
 
 <details>
