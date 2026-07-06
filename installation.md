@@ -413,7 +413,7 @@ Bazel can generate this file via [this extractor extension](https://github.com/h
 <details>
 <summary markdown="span">Other build systems, using Bear</summary>
 [Bear](https://github.com/rizsotto/Bear) is a tool to generate a
-compile_commands.json file by recording a complete build. It works with
+`compile_commands.json` file by recording a complete build. It works with
 any build system that runs a compiler (make, autotools, custom scripts,
 ...), recognizes a wide range of toolchains (GCC, Clang, MSVC, and many
 cross, embedded, and HPC compilers), and runs on Linux, macOS, Windows,
