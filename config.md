@@ -114,7 +114,9 @@ require setting the include path (with the `-I` flag), defining preprocessor
 symbols, configuring warnings etc.
 
 Often, a compilation database specifies these compile commands. clangd
-searches for `compile_commands.json` in parents of the source file.
+searches for `compile_commands.json` in parents of the source file and
+also in subdirectories named `build/`.
+See [Project setup](/installation#project-setup).
 
 This section modifies how the compile command is constructed.
 
