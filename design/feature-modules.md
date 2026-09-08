@@ -34,8 +34,8 @@ called, since an embedder need not use LSP.
 
 ### Facilities
 
-When [ClangdServer] constructs a module, it calls `initialize()` with a
-`FeatureModule::Facilities` value:
+When [ClangdServer] is constructed with a `FeatureModuleSet`, it calls
+`initialize()` on each module with a `FeatureModule::Facilities` value:
 
 ```c++
 struct Facilities {
@@ -478,7 +478,7 @@ through `featureModule<T>()`.
 
 ## Examples and testing
 
-The LLVM checkout contains small executable examples in its unit tests:
+clangd's unit tests contain small examples:
 
 - [FeatureModulesTests.cpp][hook tests] tests tweak contributions, diagnostic
   suppression, and preprocessor changes through `TestTU::FeatureModules`.
