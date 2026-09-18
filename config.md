@@ -353,6 +353,24 @@ Diagnostics:
     FastCheckFilter: Strict
 ```
 
+#### ExperimentalCustomChecks
+{:.v24}
+
+Enable [query-based custom
+checks](https://clang.llvm.org/extra/clang-tidy/QueryBasedCustomChecks.html).
+Disabled by default.
+
+The custom-check definitions and check selection remain part of the clang-tidy
+configuration. Query-based custom checks are enabled only with `Loose` or `None`
+values of `FastCheckFilter`, and are disabled when it is set to `Strict`.
+
+```yaml
+Diagnostics:
+  ClangTidy:
+    ExperimentalCustomChecks: true
+    FastCheckFilter: Loose
+```
+
 ### UnusedIncludes
 {:.v14}
 
