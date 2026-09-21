@@ -270,20 +270,58 @@ Each listener's callbacks run on one thread, but different builds can run
 concurrently. Keep per-build state in the listener, and synchronize any state
 shared with the module or with other listeners.
 
+The hooks cover different stages of a build:
+
+| Hook | When it runs | Typical use |
+| --- | --- | --- |
+| `beforePPCallbacks()` | In main-file and preamble builds, after frontend setup but before clangd installs its include collectors and, for main files, preamble replay. | Register preprocessing observers that need replayed preamble events. |
+| `beforeExecute()` | In main-file and preamble builds, just before the frontend action executes. | Configure parsing or install an AST consumer. |
+| `afterExecute()` | In main-file builds only, after parsing, token collection, and AST traversal-scope restriction, before the preprocessor's `EndSourceFile()`. | Run AST matchers or other analysis over the main-file declarations. |
+| `sawDiagnostic()` | When a primary diagnostic is first recorded, before its notes and fixes are attached. | Inspect the original Clang diagnostic or suppress it early. |
+| `finalizeDiagnostic()` | When collected diagnostics are taken from `StoreDiags`, after notes and fixes are attached. | Transform complete diagnostics, including their notes and fixes. |
+
+#### Before installing preprocessing callbacks
+
+`beforePPCallbacks(CompilerInstance &)` runs after the preprocessor and AST
+consumer have been set up, before clangd installs its include and macro
+collectors. In a main-file build, it also runs before [ReplayPreamble] captures
+the preprocessing callbacks that will receive replayed events.
+
+Reusing a preamble skips the main file's initial preprocessing directives.
+`ReplayPreamble` synthesizes selected events from that region, such as
+`InclusionDirective` callbacks for saved direct includes. An observer installed
+in `beforeExecute()` is too late to receive these events: the replay machinery
+has already captured its recipients. Use `beforePPCallbacks()` to register
+[PPCallbacks] that need to observe them, for example an include check that must
+also account for includes in the preamble. Prefer `beforeExecute()` when this
+early registration is unnecessary.
+
+Both main-file and preamble builds call this hook. During preamble construction,
+callbacks observe the actual preprocessing; during a main-file build using that
+preamble, they can observe the selected replayed events. Replay does not
+preprocess the headers again or reproduce every preprocessing event. Keep the
+two builds' state separate to avoid counting an event twice. The
+`BeforePPCallbacks` test in [FeatureModulesTests.cpp][hook tests] registers an
+include recorder only during the main-file build and verifies that it sees the
+saved `#include "header.h"`.
+
 #### Before executing the frontend action
 
 `beforeExecute(CompilerInstance &)` runs after `BeginSourceFile()` succeeds and
 before the frontend action's `Execute()` starts parsing. The preprocessor,
 AST context, and AST consumer already exist. In a main-file build, clangd has
 also installed its own parsing callbacks and clang-tidy preprocessor checks.
-In a preamble build, the hook is forwarded through Clang's
-`PreambleCallbacks::BeforeExecute()`.
+In a preamble build, both `beforePPCallbacks()` and `beforeExecute()` are
+forwarded through Clang's `PreambleCallbacks::BeforeExecute()`, with clangd's
+include collectors installed between the two module hooks.
 
 This timing lets a module configure the compiler objects for the upcoming
 parse. For example, it can:
 
 - Attach `PPCallbacks` through `CI.getPreprocessor().addPPCallbacks()` to
   observe includes, macro definitions and expansions, or conditional directives.
+  Use `beforePPCallbacks()` instead if these observers need replayed preamble
+  events.
 - Adjust preprocessor behavior. The `BeforeExecute` test in
   [FeatureModulesTests.cpp][hook tests] suppresses missing-include errors and
   checks includes in both the preamble and the main-file body.
@@ -363,8 +401,34 @@ must tolerate repeated initialization.
 This hook runs after the frontend's initial setup, so installing a wrapper does
 not redo earlier setup of AST mutation or deserialization listeners. The
 example adds ordinary AST consumer callbacks for the upcoming parse.
-Likewise, preprocessor callbacks observe events delivered after installation;
-they do not cause the contents of a reused preamble to be preprocessed again.
+Preprocessor callbacks installed here observe subsequent preprocessing events,
+but miss the preamble events handled by the replay machinery described above.
+
+#### After executing the frontend action
+
+`afterExecute(CompilerInstance &)` runs only for main-file builds. The frontend
+action has finished, clangd has collected the tokens and restricted the AST
+traversal scope to the main-file top-level declarations, and the existing
+clang-tidy AST checks have run. The preprocessor has not yet received
+`EndSourceFile()`, so diagnostics emitted by this hook still go through clangd's
+diagnostic collection.
+
+This is a suitable point to run AST matchers or gather information for later
+requests from the completed AST. Use `CI.getASTContext().getTraversalScope()`
+or a traversal that respects that scope to avoid repeatedly analyzing the
+headers on each edit. The header declarations remain in the AST and may be
+referenced by main-file declarations; restricting the traversal scope does not
+remove them.
+
+For analysis that only needs the completed main-file AST, overriding this hook
+avoids installing an additional consumer. Use the `beforeExecute()` consumer
+pattern above when the feature needs callbacks during parsing or participation
+in preamble builds. An AST consumer's `HandleTranslationUnit()` runs during
+`Execute()`, before clangd applies the traversal-scope restriction.
+
+The `AfterExecute` test in [FeatureModulesTests.cpp][hook tests] examines this
+scope for a file containing `#include "header.h"` and `void mainFileFunc();`.
+It sees `mainFileFunc`, but not the `headerFunc` declaration from the header.
 
 #### Observing and modifying diagnostics
 
@@ -387,7 +451,8 @@ process and publish. A module can:
   undo an error's effect on Clang's parsing or error state.
 - Add a custom fix to `Diag.Fixes`, or record information to offer a related
   tweak later. Clang's fix-its and notes are added after this hook, so this is
-  not a callback over a fully assembled diagnostic and its fixes.
+  not a callback over a fully assembled diagnostic and its fixes. Use
+  `finalizeDiagnostic()` when the transformation needs those notes or fixes.
 
 For example, this listener method promotes warnings to errors in the editor
 and adds explanatory text, while leaving other severities alone. It requires
@@ -410,13 +475,44 @@ instead of changing every warning.
 Listeners are called in module set order with the same diagnostic, so later
 modules see earlier modifications. Further diagnostic processing and filtering
 still happens after these calls; the hook does not directly publish to LSP.
+
+#### Finalizing diagnostics
+
+`finalizeDiagnostic(clangd::Diag &)` runs for both main-file and preamble
+diagnostics when [StoreDiags]::`take()` prepares its result. Notes and fixes
+have been attached, and diagnostic names, sources, and tags have been filled
+in where available. The hook receives the assembled clangd diagnostic, without
+the original `clang::Diagnostic` argument supplied to `sawDiagnostic()`.
+
+Use it to inspect or rewrite notes, add or remove fixes, or record information
+that depends on the complete diagnostic. For example, this listener method
+customizes the titles of all the collected fixes (with `Diagnostics.h`
+included):
+
+```c++
+void finalizeDiagnostic(clangd::Diag &D) override {
+  for (auto &Fix : D.Fixes)
+    Fix.Message = "Project fix: " + Fix.Message;
+}
+```
+
+Doing this in `sawDiagnostic()` would miss fixes added later. The
+`FinalizeDiagnostic` test in [FeatureModulesTests.cpp][hook tests] uses a typo
+in a call to `foo()` and verifies that the finalizer sees both the note and
+the suggested correction.
+
+Finalizers run in module set order, before `StoreDiags` deduplicates its output.
+Diagnostics already dropped during collection do not reach this hook. Use
+`sawDiagnostic()` for early suppression; finalization is not another pass
+through the collection-time suppression logic.
+
 Diagnostics from a reused preamble are reused too, rather than replayed through
-new listeners on each main-file build.
+either diagnostic hook on each main-file build.
 
 These hooks are wired into `ParsedAST` and preamble construction. They are not
 a general callback for every compiler invocation or every diagnostic clangd
 publishes: features that produce diagnostics outside this path do not
-automatically pass through `sawDiagnostic()`.
+automatically pass through `sawDiagnostic()` or `finalizeDiagnostic()`.
 In particular, background indexing has its own parsing path and does not call
 these module hooks. An AST consumer installed here therefore does not run
 project-wide simply because background indexing is enabled.
@@ -481,7 +577,9 @@ through `featureModule<T>()`.
 clangd's unit tests contain small examples:
 
 - [FeatureModulesTests.cpp][hook tests] tests tweak contributions, diagnostic
-  suppression, and preprocessor changes through `TestTU::FeatureModules`.
+  suppression and finalization, preamble event replay, preprocessor changes,
+  and analysis after AST traversal-scope restriction through
+  `TestTU::FeatureModules`.
 - [FeatureModulesRegistryTests.cpp][registry tests] tests static registration
   and instantiation through `fromRegistry()`.
 - [ClangdLSPServerTests.cpp][LSP tests] tests incoming and outgoing LSP messages,
@@ -500,6 +598,8 @@ clangd's unit tests contain small examples:
 [StoreDiags]: https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/Diagnostics.h
 [ParsedAST]: https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/ParsedAST.h
 [Preamble]: https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/Preamble.h
+[ReplayPreamble]: https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/ParsedAST.cpp
+[PPCallbacks]: https://github.com/llvm/llvm-project/blob/main/clang/include/clang/Lex/PPCallbacks.h
 [tool build]: https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/tool/CMakeLists.txt
 [hook tests]: https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/unittests/FeatureModulesTests.cpp
 [registry tests]: https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/unittests/FeatureModulesRegistryTests.cpp
