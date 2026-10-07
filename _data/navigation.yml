@@ -49,6 +49,8 @@
       url: /design/remote-index
     - title: Include Cleaner
       url: /design/include-cleaner
+    - title: Feature modules
+      url: /design/feature-modules
 - title: Protocol extensions
   url: /extensions
   icon: '⊕'

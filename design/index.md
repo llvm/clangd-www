@@ -45,6 +45,15 @@ on these threads, though code completion is a notable exception.
 [threads and request handling](/design/threads)
 {:.main-article}
 
+## Feature modules
+
+Feature modules extend clangd with LSP methods, code actions, and hooks into
+parsing and diagnostics. A module keeps the parts of a feature together while
+using the server's scheduler, index, and filesystem.
+
+[feature modules](/design/feature-modules)
+{:.main-article}
+
 ## Index
 
 C/C++/Objective-C are designed so that you can parse one source file at a time,
