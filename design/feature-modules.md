@@ -274,11 +274,54 @@ The hooks cover different stages of a build:
 
 | Hook | When it runs | Typical use |
 | --- | --- | --- |
+| `beforeBeginSourceFile()` | In main-file builds only, immediately before `BeginSourceFile()` initializes the frontend. | Configure diagnostics that may be emitted during frontend initialization. |
 | `beforePPCallbacks()` | In main-file and preamble builds, after frontend setup but before clangd installs its include collectors and, for main files, preamble replay. | Register preprocessing observers that need replayed preamble events. |
 | `beforeExecute()` | In main-file and preamble builds, just before the frontend action executes. | Configure parsing or install an AST consumer. |
 | `afterExecute()` | In main-file builds only, after parsing, token collection, and AST traversal-scope restriction, before the preprocessor's `EndSourceFile()`. | Run AST matchers or other analysis over the main-file declarations. |
 | `sawDiagnostic()` | When a primary diagnostic is first recorded, before its notes and fixes are attached. | Inspect the original Clang diagnostic or suppress it early. |
 | `finalizeDiagnostic()` | When collected diagnostics are taken from `StoreDiags`, after notes and fixes are attached. | Transform complete diagnostics, including their notes and fixes. |
+
+#### Before initializing the frontend
+
+`beforeBeginSourceFile(CompilerInstance &)` runs for main-file builds immediately
+before the frontend action's `BeginSourceFile()`. It is not called for preamble
+builds. At this point, the virtual filesystem, diagnostics engine, target, and
+file manager are available. The source manager, preprocessor, AST context, and
+AST consumer have not been set up yet.
+
+Use this hook to configure diagnostics emitted during frontend initialization,
+such as while initializing preprocessor macros or loading precompiled modules.
+Both `beforePPCallbacks()` and `beforeExecute()` run after `BeginSourceFile()`
+and are too late to configure those diagnostics. For example, warning options
+from clang-tidy's `ExtraArgs` and `ExtraArgsBefore` can be applied here before
+initialization emits warnings.
+
+This listener method promotes the embedded-newline macro warning to an error
+in Clang's diagnostics engine. It requires
+[DiagnosticFrontend.h][DiagnosticFrontend.h] and
+[CompilerInstance.h][CompilerInstance.h]:
+
+```c++
+void beforeBeginSourceFile(CompilerInstance &CI) override {
+  CI.getDiagnostics().setSeverity(
+      diag::warn_fe_macro_contains_embedded_newline, diag::Severity::Error,
+      SourceLocation());
+}
+```
+
+The `BeforeBeginSourceFileDiagnostics` test in
+[FeatureModulesTests.cpp][hook tests] supplies a macro definition containing a
+newline and checks that Clang counts the warning as an error. clangd still
+filters out this location-less diagnostic, so it does not reach
+`sawDiagnostic()` or appear in the editor. Changing the compiler's diagnostic
+configuration does not bypass clangd's normal reporting filters.
+
+Keep the frontend inputs and options affecting compilation semantics consistent
+with the preamble, which may already have been built. For example, changing
+macro definitions here could cause the main-file parse to disagree with its
+preamble. Use the later hooks when the feature needs the preprocessor or AST
+objects. The `BeforeBeginSourceFile` test verifies that this early hook is called
+for the main-file build even when the translation unit also builds a preamble.
 
 #### Before installing preprocessing callbacks
 
@@ -577,9 +620,9 @@ through `featureModule<T>()`.
 clangd's unit tests contain small examples:
 
 - [FeatureModulesTests.cpp][hook tests] tests tweak contributions, diagnostic
-  suppression and finalization, preamble event replay, preprocessor changes,
-  and analysis after AST traversal-scope restriction through
-  `TestTU::FeatureModules`.
+  configuration before frontend initialization, suppression and finalization,
+  preamble event replay, preprocessor changes, and analysis after AST
+  traversal-scope restriction through `TestTU::FeatureModules`.
 - [FeatureModulesRegistryTests.cpp][registry tests] tests static registration
   and instantiation through `fromRegistry()`.
 - [ClangdLSPServerTests.cpp][LSP tests] tests incoming and outgoing LSP messages,
@@ -595,6 +638,8 @@ clangd's unit tests contain small examples:
 [Tweak]: https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/refactor/Tweak.h
 [Tweak.cpp]: https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/refactor/Tweak.cpp
 [MultiplexConsumer]: https://github.com/llvm/llvm-project/blob/main/clang/include/clang/Frontend/MultiplexConsumer.h
+[DiagnosticFrontend.h]: https://github.com/llvm/llvm-project/blob/main/clang/include/clang/Basic/DiagnosticFrontend.h
+[CompilerInstance.h]: https://github.com/llvm/llvm-project/blob/main/clang/include/clang/Frontend/CompilerInstance.h
 [StoreDiags]: https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/Diagnostics.h
 [ParsedAST]: https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/ParsedAST.h
 [Preamble]: https://github.com/llvm/llvm-project/blob/main/clang-tools-extra/clangd/Preamble.h
